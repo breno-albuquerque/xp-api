@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import IConnection from './interfaces/IConnection';
+import IConnection from '../interfaces/connection/IConnection';
 
 type QueryVariable = string | number;
 

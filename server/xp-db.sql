@@ -16,33 +16,33 @@ CREATE TABLE `xp-db`.Ativos (
 
 CREATE TABLE `xp-db`.Depositos (
 	id  INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    conta_id INTEGER NOT NULL,
+    contaId INTEGER NOT NULL,
     valor FLOAT NOT NULL,
-    FOREIGN KEY (conta_id) REFERENCES Contas(id)
+    FOREIGN KEY (contaId) REFERENCES Contas(id)
 );
 
 CREATE TABLE `xp-db`.Saques (
 	id  INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    conta_id INTEGER NOT NULL,
+    contaId INTEGER NOT NULL,
     valor FLOAT NOT NULL,
-    FOREIGN KEY (conta_id) REFERENCES Contas(id)
+    FOREIGN KEY (contaId) REFERENCES Contas(id)
 );
 
 CREATE TABLE `xp-db`.Investimentos (
-	conta_id  INTEGER NOT NULL,
-    ativo_id INTEGER NOT NULL,
+	contaId  INTEGER NOT NULL,
+    ativoId INTEGER NOT NULL,
     quantidade INTEGER NOT NULL,
-    FOREIGN KEY (conta_id) REFERENCES Contas(id),
-    FOREIGN KEY (ativo_id) REFERENCES Ativos(id)
+    FOREIGN KEY (contaId) REFERENCES Contas(id),
+    FOREIGN KEY (ativoId) REFERENCES Ativos(id)
 );
 
 CREATE TABLE `xp-db`.Operações (
-	conta_id  INTEGER NOT NULL,
-    ativo_id INTEGER NOT NULL,
+	contaId  INTEGER NOT NULL,
+    ativoId INTEGER NOT NULL,
     tipo VARCHAR(5) NOT NULL,
     valor_total FLOAT NOT NULL,
-    FOREIGN KEY (conta_id) REFERENCES Contas(id),
-    FOREIGN KEY (ativo_id) REFERENCES Ativos(id)
+    FOREIGN KEY (contaId) REFERENCES Contas(id),
+    FOREIGN KEY (ativoId) REFERENCES Ativos(id)
 );
 
 INSERT INTO `xp-db`.Ativos (simbolo) 
