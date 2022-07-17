@@ -5,6 +5,6 @@ const create = async (conta) => {
   return result;
 }
 
-export {
+export default {
   create
 }
