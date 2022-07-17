@@ -44,3 +44,10 @@ CREATE TABLE `xp-db`.Operações (
     FOREIGN KEY (conta_id) REFERENCES Contas(id),
     FOREIGN KEY (ativo_id) REFERENCES Ativos(id)
 );
+
+INSERT INTO `xp-db`.Ativos (simbolo) 
+VALUES 
+  ('RRRP3'),
+  ('TTEN3'),
+  ('EALT3'),
+  ('EALT4');
