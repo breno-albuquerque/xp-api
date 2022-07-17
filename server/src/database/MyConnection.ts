@@ -13,7 +13,7 @@ class MyConnection implements IConnection {
     database: process.env.MYSQL_DATABASE
   });
 
-  public async run(query: string, values: QueryVariable[]): Promise<any> {
+  public async run(query: string, values?: QueryVariable[]): Promise<any> {
      const [result] = await this.connection.execute(query, values);
      return result;
   }
