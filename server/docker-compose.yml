@@ -20,7 +20,10 @@ services:
       MYSQL_HOST: db
       MYSQL_DATABASE: xp-db
 
-  
+    tty: true
+    stdin_open: true
+    command: bash
+
   db:
     image: mysql:8.0.21
 
