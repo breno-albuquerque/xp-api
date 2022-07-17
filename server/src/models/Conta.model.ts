@@ -1,11 +1,12 @@
 import MyConnection from "../database/MyConnection";
+import INewConta from "../interfaces/conta/INewConta";
 
 
 class ContaModel {
 
-  public static async create(values: any) {
-    const { email, password } = values
-    const result = await MyConnection.run('INSERT INTO Conta (email, password) VALUES (?, ?)' ,[email, password]);
+  public static async create(query: string, values: INewConta) {
+    const { email, password } = values;
+    const result = await MyConnection.run(query, [email, password]);
     return result;
   }
 

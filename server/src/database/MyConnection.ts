@@ -4,7 +4,9 @@ import IConnection from '../interfaces/connection/IConnection';
 type QueryVariable = string | number;
 
 class MyConnection implements IConnection {
-  public queries: any;
+  public queries: any = {
+    createConta: 'INSERT INTO Contas (email, password) VALUES (?, ?)'
+  };
 
   private connection = mysql.createPool({
     host: process.env.MYSQL_HOST,

@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import ContaController from '../controllers/Conta.controller';
+import ContaRouter from './Conta.route';
 
 const router = Router();
 
-router.post('/conta', ContaController.create);
+router.use('/conta', ContaRouter);
 
 export default router;
