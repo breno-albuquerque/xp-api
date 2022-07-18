@@ -5,7 +5,6 @@ const router = Router();
 
 router.get('/:contaId', ContaController.getById);
 
-router.post('/register', ContaController.create);
-router.post('/login', ContaController.login);
+// router.post('/deposito', ContaController.deposit);
 
 export default router;
