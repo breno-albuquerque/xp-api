@@ -23,7 +23,7 @@ class ContaService {
   public static async withdrawal(contaId: number, valor: number) {
     const conta = await this.getById(contaId);
     const newValue = conta.saldo - valor;
-    if (newValue < 0) throw new HttpException(HttpStatus.UNPROCESSABLE, 'Valor do saque maior do que o saldo');
+    if (newValue < 0) throw new HttpException(HttpStatus.UNPROCESSABLE, 'Saldo insuficiente');
 
     await SaqueModel.create(MyConnection, [contaId, valor]);
     await ContaModel.update(MyConnection, [newValue, contaId]);
