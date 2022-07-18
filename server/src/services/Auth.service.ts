@@ -8,7 +8,7 @@ import ContaModel from "../models/Conta.model";
 
 class AuthService {
   private static async verifyEmail(conta: INewConta): Promise<void> {
-    const isRegistered = await ContaModel.getByEmail(MyConnection.queries.getContaByEmail, conta.email);
+    const isRegistered = await ContaModel.getByEmail(MyConnection, conta.email);
     if (isRegistered) throw new HttpException(HttpStatus.CONFLICT, 'Email já cadastrado');
   }
 
@@ -16,14 +16,14 @@ class AuthService {
     await this.verifyEmail(conta);
 
     const hash = await bcrypt.hash(conta.senha, 5);
-    const insertId = await ContaModel.create(MyConnection.queries.createConta, { ...conta, senha: hash });
+    const insertId = await ContaModel.create(MyConnection, { ...conta, senha: hash });
 
     const token = jwt.generateToken({ id: insertId, ...conta });
     return token;
   }
 
   public static async login(conta: INewConta): Promise<string> {
-      const dadosConta = await ContaModel.getByEmail(MyConnection.queries.getContaByEmail, conta.email);
+      const dadosConta = await ContaModel.getByEmail(MyConnection, conta.email);
       if (!dadosConta) throw new HttpException(HttpStatus.UNAUTHORIZED, 'Email ou senha inválidos');
 
       const isMatch = await bcrypt.compare(conta.senha, dadosConta.senha);

@@ -6,7 +6,7 @@ import HttpStatus from "../utils/http.status";
 
 class ContaService {
   public static async getById(contaId: number): Promise<IConta> {
-    const conta = await ContaModel.getById(MyConnection.queries.getContaById, contaId);
+    const conta = await ContaModel.getById(MyConnection, contaId);
     if (!conta) throw new HttpException(HttpStatus.NOT_FOUND, 'Conta não encontrada');
     return conta;
   }

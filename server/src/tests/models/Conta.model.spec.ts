@@ -19,7 +19,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
     describe('Quando passa uma conta válida', () => {
       it('Deve retornar o id da conta inserida', async () => {
         const result = await ContaModel
-          .create(MyConnection.queries.createConta, newContaMock);
+          .create(MyConnection, newContaMock);
   
         expect(result).to.be.a('number');
         expect(result).to.equal(1);
@@ -41,7 +41,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   
       it('Deve retornar a conta correspondente', async () => {
         const result = await ContaModel
-          .getById(MyConnection.queries.getById, 1);
+          .getById(MyConnection, 1);
   
         expect(result).to.equal(contaMock);
         expect(result.id).to.equal(1);
@@ -61,7 +61,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   
       it('Deve retornar undefined', async () => {
         const result = await ContaModel
-          .getById(MyConnection.queries.getById, 100);
+          .getById(MyConnection, 100);
   
         expect(result).to.be.undefined;
       });
@@ -82,7 +82,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   
       it('Deve retornar a conta correspondente', async () => {
         const result = await ContaModel
-          .getByEmail(MyConnection.queries.getById, 'conta@mock.com');
+          .getByEmail(MyConnection, 'conta@mock.com');
   
         expect(result).to.equal(contaMock);
         expect(result.email).to.equal('conta@mock.com');
@@ -102,7 +102,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   
       it('Deve retornar undefined', async () => {
         const result = await ContaModel
-          .getByEmail(MyConnection.queries.getById,'email@inexistente.com');
+          .getByEmail(MyConnection,'email@inexistente.com');
   
         expect(result).to.be.undefined;
       });
