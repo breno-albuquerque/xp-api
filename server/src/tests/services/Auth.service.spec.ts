@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import chai, { expect } from "chai";
 import sinon from "sinon";
 
 import MyConnection from "../../database/MyConnection";
@@ -6,27 +6,32 @@ import ContaModel from "../../models/Conta.model";
 import AuthService from "../../services/Auth.service";
 import HttpException from "../../utils/http.exception";
 import jwt from "../../utils/jwt.token";
+import bcrypt from 'bcrypt';
+
+import chaiAsPromised = require('chai-as-promised');
+
+chai.use(chaiAsPromised);
+
+const newContaMock = {
+  nome: 'Conta Mock',
+  cpf: '11111111111',
+  email: 'conta@mock.com',
+  senha: '123456'
+}
+
+const contaMock = {
+  id: 1,
+  nome: 'Conta Mock',
+  cpf: '11111111111',
+  email: 'conta@mock.com',
+  senha: '123456',
+  saldo: 0
+}
+
+const tokenMock = 'jwt-mock';
 
 describe('Testa métodos da classe AuthService em Auth.service.ts', () => {
   describe('Método create', () => {
-    const newContaMock = {
-      nome: 'Conta Mock',
-      cpf: '11111111111',
-      email: 'conta@mock.com',
-      senha: '123456'
-    }
-  
-    const contaMock = {
-      id: 1,
-      nome: 'Conta Mock',
-      cpf: '11111111111',
-      email: 'conta@mock.com',
-      senha: '123456',
-      saldo: 0
-    }
-  
-    const tokenMock = 'jwt-mock';
-  
     describe('Quando passa uma conta válida para cadastro', () => {
       let stub1: sinon.SinonStub;
       let stub2: sinon.SinonStub;
@@ -41,6 +46,7 @@ describe('Testa métodos da classe AuthService em Auth.service.ts', () => {
       afterEach(async () => {
         stub1.restore();
         stub2.restore();
+        stub3.restore()
       });
   
       it('Deve retornar um Jason Web Token', async () => {
@@ -60,35 +66,72 @@ describe('Testa métodos da classe AuthService em Auth.service.ts', () => {
       afterEach(async () => {
         stub.restore();
       });
-      it('Uma excessão deve ser lançada', async () => {
 
+      it('Uma excessão deve ser lançada com a mensagem "Email já cadastrado"', async () => {
+        await expect(AuthService.create(newContaMock))
+          .to.be.rejectedWith(HttpException, 'Email já cadastrado');
       });
-      it ('A excessão deve possuir status 409 e a mensagem "Email já cadastrado"', async () => {
-  
-      })
     });
   });
   
-  describe('Método login', () => {
+  describe('Método login', () => { 
     describe('Quando passa uma conta válida e existente', () => {
-      it('Deve retornar um Jason Web Token', async () => {
+      let stub1: sinon.SinonStub;
+      let stub2: sinon.SinonStub;
+      let stub3: sinon.SinonStub;
   
+      beforeEach(async () => {
+        stub1 = sinon.stub(ContaModel, 'getByEmail').resolves(contaMock);
+        stub2 = sinon.stub(jwt, 'generateToken').returns(tokenMock);
+        stub3 = sinon.stub(bcrypt, 'compare').resolves(true);
+      });
+    
+      afterEach(async () => {
+        stub1.restore();
+        stub2.restore();
+        stub3.restore();
+      });
+
+      it('Deve retornar um Jason Web Token', async () => {
+        const result = await AuthService.login(newContaMock);
+
+        expect(result).to.be.a('string');
+        expect(result).to.equal(tokenMock);
       });
     });
     describe('Quando passa uma conta com email não cadastrado', () => {
-      it('Uma excessão deve ser lançada', async () => {
+      let stub: sinon.SinonStub;
   
+      beforeEach(async () => {
+        stub = sinon.stub(ContaModel, 'getByEmail').resolves(undefined);
       });
-      it('A excessão deve possuir status 401 e a mensagem "Email ou senha inválidos"', async () => {
-  
+    
+      afterEach(async () => {
+        stub.restore();
+      });
+
+      it('Uma excessão deve ser lançada com a mensagem "Email ou senha inválidos"', async () => {
+        await expect(AuthService.login(newContaMock))
+          .to.be.rejectedWith(HttpException, 'Email ou senha inválidos');
       });
     });
-    describe('Quando passa uma conta com email válido e senha incompatível', () => {
-      it('Uma excessão deve ser lançada', async () => {
+    describe('Quando passa uma conta com email válido e senha incompatível ', () => {
+      let stub1: sinon.SinonStub;
+      let stub2: sinon.SinonStub;
   
+      beforeEach(async () => {
+        stub1 = sinon.stub(ContaModel, 'getByEmail').resolves(contaMock);
+        stub2 = sinon.stub(bcrypt, 'compare').resolves(false);
       });
-      it('A excessão deve possuir status 401 e a mensagem "Email ou senha inválidos"', async () => {
-  
+    
+      afterEach(async () => {
+        stub1.restore();
+        stub2.restore();
+      });
+
+      it('Uma excessão deve ser lançada com a mensagem "Email ou senha inválidos"', async () => {
+        await expect(AuthService.login(newContaMock))
+        .to.be.rejectedWith(HttpException, 'Email ou senha inválidos');
       });
     });
   })
