@@ -5,11 +5,13 @@ import INewConta from "../interfaces/conta/INewConta";
 
 class ContaModel {
   public static async getById(query: string, id: number): Promise<IConta> {
+
     const [result] = await MyConnection.run(query, [id]) as RowDataPacket[];
     return result as IConta;
   }
 
   public static async create(query: string, conta: INewConta): Promise<number> {
+    console.log(query, conta)
     const { nome, cpf, email, senha } = conta;
     const result = await MyConnection.run(query, [nome, cpf, email, senha]) as ResultSetHeader;
     return result.insertId;

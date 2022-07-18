@@ -2,6 +2,7 @@ import { expect } from "chai";
 import sinon from "sinon";
 
 import MyConnection from "../../database/MyConnection";
+import ContaModel from "../../models/Conta.model";
 
 const newContaMock = {
   nome: 'Conta Mock',
@@ -22,7 +23,7 @@ describe('Testa método create', () => {
   let stub: sinon.SinonStub;
 
   beforeEach(async () => {
-    stub = sinon.stub(MyConnection, 'run').resolves([{ insertId: contaMock.id }]);
+    stub = sinon.stub(MyConnection, 'run').resolves({ insertId: contaMock.id });
   });
 
   afterEach(async () => {
@@ -31,10 +32,11 @@ describe('Testa método create', () => {
 
   describe('Quando passa uma conta válida', () => {
     it('Deve retornar o id da conta inserida', async () => {
-      const [result] = await MyConnection
-        .run(MyConnection.queries.createConta, Object.values(newContaMock));
+      const result = await ContaModel
+        .create(MyConnection.queries.createConta, newContaMock);
 
-      expect(result.insertId).to.equal(1);
+      expect(result).to.be.a('number');
+      expect(result).to.equal(1);
     });
   })
 });
@@ -52,8 +54,8 @@ describe('Testa método getById', () => {
     });
 
     it('Deve retornar a conta correspondente', async () => {
-      const [result] = await MyConnection
-        .run(MyConnection.queries.getById, [1]);
+      const result = await ContaModel
+        .getById(MyConnection.queries.getById, 1);
 
       expect(result).to.equal(contaMock);
       expect(result.id).to.equal(1);
@@ -72,8 +74,8 @@ describe('Testa método getById', () => {
     });
 
     it('Deve retornar undefined', async () => {
-      const [result] = await MyConnection
-        .run(MyConnection.queries.getById, [100]);
+      const result = await ContaModel
+        .getById(MyConnection.queries.getById, 100);
 
       expect(result).to.be.undefined;
     });
@@ -93,8 +95,8 @@ describe('Testa o método getByEmail', () => {
     });
 
     it('Deve retornar a conta correspondente', async () => {
-      const [result] = await MyConnection
-        .run(MyConnection.queries.getById, ['conta@mock.com']);
+      const result = await ContaModel
+        .getByEmail(MyConnection.queries.getById, 'conta@mock.com');
 
       expect(result).to.equal(contaMock);
       expect(result.email).to.equal('conta@mock.com');
@@ -113,8 +115,8 @@ describe('Testa o método getByEmail', () => {
     });
 
     it('Deve retornar undefined', async () => {
-      const [result] = await MyConnection
-        .run(MyConnection.queries.getById, ['email@inexistente.com']);
+      const result = await ContaModel
+        .getByEmail(MyConnection.queries.getById,'email@inexistente.com');
 
       expect(result).to.be.undefined;
     });
