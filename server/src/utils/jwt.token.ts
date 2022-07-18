@@ -23,7 +23,7 @@ const verifyToken = (token: string) => {
   }
 };
 
-export {
+export default {
   generateToken,
   verifyToken
 }

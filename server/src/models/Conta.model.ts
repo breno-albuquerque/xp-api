@@ -11,7 +11,6 @@ class ContaModel {
   }
 
   public static async create(query: string, conta: INewConta): Promise<number> {
-    console.log(query, conta)
     const { nome, cpf, email, senha } = conta;
     const result = await MyConnection.run(query, [nome, cpf, email, senha]) as ResultSetHeader;
     return result.insertId;

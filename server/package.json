@@ -7,7 +7,7 @@
     "dev": "nodemon --exec npx ts-node src/server.ts",
     "start": "npm run build && node ./dist/server.js",
     "build": "tsc",
-    "test": "mocha -r ts-node/register ./src/tests/**/*.{test,spec}.[t,j]s"
+    "test": "mocha -r ts-node/register"
   },
   "keywords": [],
   "author": "",

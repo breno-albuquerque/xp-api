@@ -2,7 +2,7 @@ import MyConnection from "../database/MyConnection";
 import INewConta from "../interfaces/conta/INewConta";
 import HttpException from "../utils/http.exception";
 import HttpStatus from "../utils/http.status";
-import { generateToken } from "../utils/jwt.token";
+import  jwt from "../utils/jwt.token";
 import bcrypt from 'bcrypt';
 import ContaModel from "../models/Conta.model";
 
@@ -18,7 +18,7 @@ class AuthService {
     const hash = await bcrypt.hash(conta.senha, 5);
     const insertId = await ContaModel.create(MyConnection.queries.createConta, { ...conta, senha: hash });
 
-    const token = generateToken({ id: insertId, ...conta });
+    const token = jwt.generateToken({ id: insertId, ...conta });
     return token;
   }
 
@@ -29,7 +29,7 @@ class AuthService {
       const isMatch = await bcrypt.compare(conta.senha, dadosConta.senha);
       if (!isMatch) throw new HttpException(HttpStatus.UNAUTHORIZED, 'Email ou senha inválidos');
 
-      const token = generateToken({ id: dadosConta.id, ...conta });
+      const token = jwt.generateToken({ id: dadosConta.id, ...conta });
       return token;
   }
 }
