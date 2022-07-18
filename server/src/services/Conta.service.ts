@@ -2,6 +2,7 @@ import MyConnection from "../database/MyConnection";
 import IConta from "../interfaces/conta/IConta";
 import ContaModel from "../models/Conta.model"
 import DepositoModel from '../models/Deposito.model';
+import SaqueModel from "../models/Saque.model";
 import HttpException from "../utils/http.exception";
 import HttpStatus from "../utils/http.status";
 
@@ -17,6 +18,15 @@ class ContaService {
     
     await DepositoModel.create(MyConnection, [contaId, valor]);
     await ContaModel.update(MyConnection, [conta.saldo + valor, contaId]);
+  }
+
+  public static async withdrawal(contaId: number, valor: number) {
+    const conta = await this.getById(contaId);
+    const newValue = conta.saldo - valor;
+    if (newValue < 0) throw new HttpException(HttpStatus.UNPROCESSABLE, 'Valor do saque maior do que o saldo');
+
+    await SaqueModel.create(MyConnection, [contaId, valor]);
+    await ContaModel.update(MyConnection, [newValue, contaId]);
   }
 }
 
