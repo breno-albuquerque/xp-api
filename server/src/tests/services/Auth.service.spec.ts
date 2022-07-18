@@ -5,26 +5,10 @@ import AuthService from "../../services/Auth.service";
 import HttpException from "../../utils/http.exception";
 import jwt from "../../utils/jwt.token";
 import bcrypt from 'bcrypt';
-
+import { newContaMock, contaMock } from "../mocks/conta.mock.spec";
 import chaiAsPromised = require('chai-as-promised');
 
 chai.use(chaiAsPromised);
-
-const newContaMock = {
-  nome: 'Conta Mock',
-  cpf: '11111111111',
-  email: 'conta@mock.com',
-  senha: '123456'
-}
-
-const contaMock = {
-  id: 1,
-  nome: 'Conta Mock',
-  cpf: '11111111111',
-  email: 'conta@mock.com',
-  senha: '123456',
-  saldo: 0
-}
 
 const tokenMock = 'jwt-mock';
 

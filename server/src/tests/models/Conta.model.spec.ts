@@ -1,23 +1,8 @@
 import { expect } from "chai";
 import sinon from "sinon";
-
 import MyConnection from "../../database/MyConnection";
 import ContaModel from "../../models/Conta.model";
-
-const newContaMock = {
-  nome: 'Conta Mock',
-  cpf: '11111111111',
-  email: 'conta@mock.com',
-  senha: '123456'
-}
-const contaMock = {
-  id: 1,
-  nome: 'Conta Mock',
-  cpf: '11111111111',
-  email: 'conta@mock.com',
-  senha: '123456',
-  saldo: 0
-}
+import { newContaMock, contaMock } from "../mocks/conta.mock.spec";
 
 describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   describe('Testa método create', () => {

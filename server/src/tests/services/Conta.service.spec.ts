@@ -4,17 +4,9 @@ import ContaModel from '../../models/Conta.model';
 import HttpException from '../../utils/http.exception';
 import sinon from 'sinon';
 import chaiAsPromised = require('chai-as-promised');
+import { contaMock } from "../mocks/conta.mock.spec";
 
 chai.use(chaiAsPromised);
-
-const contaMock = {
-  id: 1,
-  nome: 'Conta Mock',
-  cpf: '11111111111',
-  email: 'conta@mock.com',
-  senha: '123456',
-  saldo: 0
-}
 
 describe('Testa métodos da classe ContaService em Conta.service', () => {
   describe('Método getById', async () => {

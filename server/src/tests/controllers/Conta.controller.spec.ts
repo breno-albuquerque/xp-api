@@ -4,18 +4,10 @@ import sinon from 'sinon';
 import ContaController from '../../controllers/Conta.controller';
 import ContaService from '../../services/Conta.service';
 import sinonChai from 'sinon-chai';
+import { contaMock } from "../mocks/conta.mock.spec";
 
 chai.should();
 chai.use(sinonChai);
-
-const contaMock = {
-  id: 1,
-  nome: 'Conta Mock',
-  cpf: '11111111111',
-  email: 'conta@mock.com',
-  senha: '123456',
-  saldo: 0
-}
 
 describe('Testa funções do ContaController', () => {
   describe('Função getById', async () => {
