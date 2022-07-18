@@ -1,7 +1,5 @@
 import chai, { expect } from "chai";
 import sinon from "sinon";
-
-import MyConnection from "../../database/MyConnection";
 import ContaModel from "../../models/Conta.model";
 import AuthService from "../../services/Auth.service";
 import HttpException from "../../utils/http.exception";
@@ -46,7 +44,7 @@ describe('Testa métodos da classe AuthService em Auth.service.ts', () => {
       afterEach(async () => {
         stub1.restore();
         stub2.restore();
-        stub3.restore()
+        stub3.restore();
       });
   
       it('Deve retornar um Jason Web Token', async () => {
@@ -56,6 +54,7 @@ describe('Testa métodos da classe AuthService em Auth.service.ts', () => {
         expect(result).to.equal(tokenMock);
       });
     });
+
     describe('Quando passa uma conta com email já cadastrado', () => {
       let stub: sinon.SinonStub;
 
@@ -99,6 +98,7 @@ describe('Testa métodos da classe AuthService em Auth.service.ts', () => {
         expect(result).to.equal(tokenMock);
       });
     });
+
     describe('Quando passa uma conta com email não cadastrado', () => {
       let stub: sinon.SinonStub;
   
@@ -115,6 +115,7 @@ describe('Testa métodos da classe AuthService em Auth.service.ts', () => {
           .to.be.rejectedWith(HttpException, 'Email ou senha inválidos');
       });
     });
+
     describe('Quando passa uma conta com email válido e senha incompatível ', () => {
       let stub1: sinon.SinonStub;
       let stub2: sinon.SinonStub;
@@ -131,8 +132,8 @@ describe('Testa métodos da classe AuthService em Auth.service.ts', () => {
 
       it('Uma excessão deve ser lançada com a mensagem "Email ou senha inválidos"', async () => {
         await expect(AuthService.login(newContaMock))
-        .to.be.rejectedWith(HttpException, 'Email ou senha inválidos');
+          .to.be.rejectedWith(HttpException, 'Email ou senha inválidos');
       });
     });
-  })
-})
+  });
+});
