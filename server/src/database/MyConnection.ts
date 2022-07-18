@@ -5,7 +5,7 @@ type QueryVariable = string | number;
 
 class MyConnection implements IConnection {
   public queries: any = {
-    createConta: 'INSERT INTO Contas (email, password) VALUES (?, ?)',
+    createConta: 'INSERT INTO Contas (nome, cpf, email, senha) VALUES (?, ?, ?, ?)',
     getContaById: 'SELECT * FROM Contas WHERE id = ?',
     getContaByEmail: 'SELECT * FROM Contas WHERE email = ?',
 /*     deposit: 'INSERT INTO Depositos (contaId, valor) VALUES (?, ?)' */

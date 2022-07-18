@@ -1,6 +1,8 @@
 interface INewConta {
+  nome: string,
+  cpf: string,
   email: string,
-  password: string,
+  senha: string
 }
 
 export default INewConta;
