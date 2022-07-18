@@ -121,7 +121,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
         stub.restore();
       });
   
-      it('Deve retornar a conta correspondente', async () => {
+      it('Deve retornar o número 1, correspondente a uma linha afetada', async () => {
         const result = await ContaModel
           .update(MyConnection, [100, 1]);
   
