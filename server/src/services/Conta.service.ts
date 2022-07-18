@@ -13,8 +13,11 @@ class ContaService {
   }
 
   public static async deposit(contaId: number, valor: number): Promise<void> {
+    console.log(contaId, valor)
     const conta = await this.getById(contaId);
-    await DepositoModel.create(MyConnection, [valor, contaId]);
+    console.log(conta.saldo)
+    await DepositoModel.create(MyConnection, [contaId, valor]);
+    console.log('aqui', conta.saldo + valor, contaId)
     await ContaModel.update(MyConnection, [conta.saldo + valor, contaId]);
   }
 }

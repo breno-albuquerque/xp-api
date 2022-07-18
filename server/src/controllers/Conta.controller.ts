@@ -15,7 +15,7 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
 const deposit = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { CodCliente, Valor } = req.body;
-    await ContaService.deposit(parseInt(CodCliente), parseInt(Valor));
+    await ContaService.deposit(parseInt(CodCliente), parseFloat(Valor));
     return res.status(HttpStatus.CREATED).end();
   } catch (error) {
     next(error);

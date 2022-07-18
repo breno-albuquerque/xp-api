@@ -23,7 +23,8 @@ class ContaModel {
   }
 
   public static async update(conn: IConnection, values: number[]): Promise<number> {
-    const result = await MyConnection.run(conn.queries.update, values) as ResultSetHeader;
+    console.log(values)
+    const result = await MyConnection.run(conn.queries.updateConta, values) as ResultSetHeader;
     return result.affectedRows;
   }
 }

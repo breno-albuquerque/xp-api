@@ -8,7 +8,7 @@ class MyConnection implements IConnection {
     createConta: 'INSERT INTO Contas (nome, cpf, email, senha) VALUES (?, ?, ?, ?)',
     getContaById: 'SELECT * FROM Contas WHERE id = ?',
     getContaByEmail: 'SELECT * FROM Contas WHERE email = ?',
-    updateConta: 'UPDATE Contas SET cash=? WHERE id=?',
+    updateConta: 'UPDATE Contas SET saldo=? WHERE id=?',
     createDeposito: 'INSERT INTO Depositos (contaId, valor) VALUES (?, ?)'
   };
 
@@ -20,7 +20,6 @@ class MyConnection implements IConnection {
   });
 
   public async run(query: string, values?: QueryVariable[]): Promise<any> {
-    console.log(query)
      const [result] = await MyConnection.connection.execute(query, values);
      return result;
   }
