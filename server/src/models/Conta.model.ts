@@ -6,7 +6,6 @@ import INewConta from "../interfaces/conta/INewConta";
 
 class ContaModel {
   public static async getById(conn: IConnection, id: number): Promise<IConta> {
-    console.log('here', conn.queries.getById)
     const [result] = await MyConnection.run(conn.queries.getContaById, [id]) as RowDataPacket[];
     return result as IConta;
   }
@@ -23,7 +22,6 @@ class ContaModel {
   }
 
   public static async update(conn: IConnection, values: number[]): Promise<number> {
-    console.log(values)
     const result = await MyConnection.run(conn.queries.updateConta, values) as ResultSetHeader;
     return result.affectedRows;
   }
