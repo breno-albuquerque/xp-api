@@ -9,7 +9,7 @@ const jwtConfig: SignOptions = {
   algorithm: 'HS256',
 };
 
-const generateToken = (payload: Omit<IConta, 'password, saldo'>): string => {
+const generateToken = (payload: any): string => {
   const token: string = sign(payload, SECRET, jwtConfig);
   return token;
 };

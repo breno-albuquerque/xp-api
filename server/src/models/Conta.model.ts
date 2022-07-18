@@ -1,12 +1,13 @@
-import { RowDataPacket } from "mysql2";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 import MyConnection from "../database/MyConnection";
 import IConta from "../interfaces/conta/IConta";
 import INewConta from "../interfaces/conta/INewConta";
 
 class ContaModel {
-  public static async create(query: string, conta: INewConta): Promise<void> {
+  public static async create(query: string, conta: INewConta): Promise<number> {
     const { email, password } = conta;
-    await MyConnection.run(query, [email, password]);
+    const result = await MyConnection.run(query, [email, password]) as ResultSetHeader;
+    return result.insertId;
   }
 
   public static async getById(query: string, id: number): Promise<IConta> {
