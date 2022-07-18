@@ -1,10 +1,13 @@
 import MyConnection from "../database/MyConnection";
 import IConta from "../interfaces/conta/IConta";
 import ContaModel from "../models/Conta.model"
+import HttpException from "../utils/http.exception";
+import HttpStatus from "../utils/http.status";
 
 class ContaService {
   public static async getById(contaId: number): Promise<IConta> {
     const conta = await ContaModel.getById(MyConnection.queries.getContaById, contaId);
+    if (!conta) throw new HttpException(HttpStatus.NOT_FOUND, 'Conta não encontrada');
     return conta;
   }
 
