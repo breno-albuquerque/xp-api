@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import sinon from "sinon";
 
-import ContaModel from "../../models/Conta.model";
 import MyConnection from "../../database/MyConnection";
 
 const newContaMock = {
@@ -38,3 +37,43 @@ describe('Testa método create', () => {
   });
 });
 
+describe('Testa método getById', () => {
+  describe('Quando passa um id existente', () => {
+    let stub: sinon.SinonStub;
+  
+    beforeEach(async () => {
+      stub = sinon.stub(MyConnection, 'run').resolves([contaMock]);
+    });
+  
+    afterEach(async () => {
+      stub.restore();
+    });
+
+    it('Deve retornar a conta correspondente', async () => {
+      const [result] = await MyConnection
+        .run(MyConnection.queries.getById, [1]);
+
+      expect(result).to.equal(contaMock);
+      expect(result.id).to.equal(1);
+    });
+  });
+
+  describe('Quando passa um id inexistente', () => {
+    let stub: sinon.SinonStub;
+  
+    beforeEach(async () => {
+      stub = sinon.stub(MyConnection, 'run').resolves([undefined]);
+    });
+  
+    afterEach(async () => {
+      stub.restore();
+    });
+
+    it('Deve retornar undefined', async () => {
+      const [result] = await MyConnection
+        .run(MyConnection.queries.getById, [100]);
+
+      expect(result).to.be.undefined;
+    });
+  });
+});

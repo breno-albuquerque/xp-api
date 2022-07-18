@@ -6,6 +6,7 @@ import INewConta from "../interfaces/conta/INewConta";
 class ContaModel {
   public static async getById(query: string, id: number): Promise<IConta> {
     const [result] = await MyConnection.run(query, [id]) as RowDataPacket[];
+    console.log(result);
     return result as IConta;
   }
 

@@ -11,7 +11,7 @@ class MyConnection implements IConnection {
 /*     deposit: 'INSERT INTO Depositos (contaId, valor) VALUES (?, ?)' */
   };
 
-  private connection = mysql.createPool({
+  private static connection = mysql.createPool({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
@@ -19,7 +19,7 @@ class MyConnection implements IConnection {
   });
 
   public async run(query: string, values?: QueryVariable[]): Promise<any> {
-     const [result] = await this.connection.execute(query, values);
+     const [result] = await MyConnection.connection.execute(query, values);
      return result;
   }
 }
