@@ -22,11 +22,10 @@ class ContaModel {
     return result as IConta;
   }
 
-/*   public static async update(query: string, values: INewDeposito): Promise<number> {
-    const { contaId, valor } = values;
-    const result = await MyConnection.run(query, [contaId, valor]) as ResultSetHeader;
+  public static async update(conn: IConnection, values: number[]): Promise<number> {
+    const result = await MyConnection.run(conn.queries.update, values) as ResultSetHeader;
     return result.affectedRows;
-  } */
+  }
 }
 
 export default ContaModel;
