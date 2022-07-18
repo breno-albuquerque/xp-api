@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon --exec npx ts-node src/server.ts",
     "start": "npm run build && node ./dist/server.js",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "mocha -r ts-node/register ./src/tests/**/*.{test,spec}.[t,j]s"
   },
   "keywords": [],
   "author": "",
