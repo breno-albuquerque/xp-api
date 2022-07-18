@@ -12,16 +12,17 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-/* const deposit = async (req: Request, res: Response, next: NextFunction) => {
+const deposit = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await ContaService.deposit(req.body);
-    return res.status(201).end();
+    const { CodCliente, Valor } = req.body;
+    await ContaService.deposit(parseInt(CodCliente), parseInt(Valor));
+    return res.status(HttpStatus.CREATED).end();
   } catch (error) {
     next(error);
   }
-} */
+}
 
 export default {
   getById,
-/*   deposit */
+  deposit
 }

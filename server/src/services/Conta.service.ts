@@ -1,6 +1,7 @@
 import MyConnection from "../database/MyConnection";
 import IConta from "../interfaces/conta/IConta";
 import ContaModel from "../models/Conta.model"
+import DepositoModel from '../models/Deposito.model';
 import HttpException from "../utils/http.exception";
 import HttpStatus from "../utils/http.status";
 
@@ -11,11 +12,10 @@ class ContaService {
     return conta;
   }
 
-  public static async update(contaId: number, valor: number) {
-    const conta = await ContaModel.getById(MyConnection, contaId);
-    const newValue = conta.saldo + valor;
-    const result = await ContaModel.update(MyConnection, [newValue, contaId]);
-    return result;
+  public static async deposit(contaId: number, valor: number): Promise<void> {
+    const conta = await this.getById(contaId);
+    await DepositoModel.create(MyConnection, [valor, contaId]);
+    await ContaModel.update(MyConnection, [conta.saldo + valor, contaId]);
   }
 }
 

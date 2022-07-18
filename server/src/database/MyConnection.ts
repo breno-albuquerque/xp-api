@@ -8,7 +8,8 @@ class MyConnection implements IConnection {
     createConta: 'INSERT INTO Contas (nome, cpf, email, senha) VALUES (?, ?, ?, ?)',
     getContaById: 'SELECT * FROM Contas WHERE id = ?',
     getContaByEmail: 'SELECT * FROM Contas WHERE email = ?',
-    updateConta: 'UPDATE Contas SET cash=? WHERE id=?'
+    updateConta: 'UPDATE Contas SET cash=? WHERE id=?',
+    createDeposito: 'INSERT INTO Depositos (contaId, valor) VALUES (?, ?)'
   };
 
   private static connection = mysql.createPool({
