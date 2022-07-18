@@ -107,5 +107,27 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
         expect(result).to.be.undefined;
       });
     });
-  })
+  });
+
+  describe('Testa o método update', () => {
+    describe('Quando passa valores válidos', () => {
+      let stub: sinon.SinonStub;
+    
+      beforeEach(async () => {
+        stub = sinon.stub(MyConnection, 'run').resolves({ affectedRows: 1 });
+      });
+    
+      afterEach(async () => {
+        stub.restore();
+      });
+  
+      it('Deve retornar a conta correspondente', async () => {
+        const result = await ContaModel
+          .update(MyConnection, [100, 1]);
+  
+        expect(result).to.be.an('number');
+        expect(result).to.equal(1);
+      });
+    });
+  });
 });
