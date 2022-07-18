@@ -29,12 +29,14 @@ describe('Testa método create', () => {
     stub.restore();
   });
 
-  it('Deve retornar o id da conta inserida', async () => {
-    const [result] = await MyConnection
-      .run(MyConnection.queries.createConta, Object.values(newContaMock));
+  describe('Quando passa uma conta válida', () => {
+    it('Deve retornar o id da conta inserida', async () => {
+      const [result] = await MyConnection
+        .run(MyConnection.queries.createConta, Object.values(newContaMock));
 
-    expect(result.insertId).to.equal(1);
-  });
+      expect(result.insertId).to.equal(1);
+    });
+  })
 });
 
 describe('Testa método getById', () => {
@@ -77,3 +79,44 @@ describe('Testa método getById', () => {
     });
   });
 });
+
+describe('Testa o método getByEmail', () => {
+  describe('Quando passa um email existente', () => {
+    let stub: sinon.SinonStub;
+  
+    beforeEach(async () => {
+      stub = sinon.stub(MyConnection, 'run').resolves([contaMock]);
+    });
+  
+    afterEach(async () => {
+      stub.restore();
+    });
+
+    it('Deve retornar a conta correspondente', async () => {
+      const [result] = await MyConnection
+        .run(MyConnection.queries.getById, ['conta@mock.com']);
+
+      expect(result).to.equal(contaMock);
+      expect(result.email).to.equal('conta@mock.com');
+    });
+  });
+
+  describe('Quando passa um email inexistente', () => {
+    let stub: sinon.SinonStub;
+  
+    beforeEach(async () => {
+      stub = sinon.stub(MyConnection, 'run').resolves([undefined]);
+    });
+  
+    afterEach(async () => {
+      stub.restore();
+    });
+
+    it('Deve retornar undefined', async () => {
+      const [result] = await MyConnection
+        .run(MyConnection.queries.getById, ['email@inexistente.com']);
+
+      expect(result).to.be.undefined;
+    });
+  });
+})
