@@ -11,10 +11,12 @@ class ContaService {
     return conta;
   }
 
-/*   public static async deposit(deposito: INewDeposito) {
-    const affectedRows = await ContaModel.deposit(MyConnection.queries.deposit, deposito);
-    if (affectedRows === 0) throw new HttpException(HttpStatus.BAD_REQUEST, 'Não foi possível depositar');  
-  } */
+  public static async update(contaId: number, valor: number) {
+    const conta = await ContaModel.getById(MyConnection, contaId);
+    const newValue = conta.saldo + valor;
+    const result = await ContaModel.update(MyConnection, [newValue, contaId]);
+    return result;
+  }
 }
 
 export default ContaService;
