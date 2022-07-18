@@ -3,8 +3,9 @@ import ContaController from '../controllers/Conta.controller';
 
 const router = Router();
 
-router.get('/:contaId', ContaController.getById);
+router.get('/:codCliente', ContaController.getById);
 
-router.post('/deposit', ContaController.deposit);
+router.post('/depositar', ContaController.deposit);
+router.post('/sacar', ContaController.deposit);
 
 export default router;
