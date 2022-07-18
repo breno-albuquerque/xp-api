@@ -22,7 +22,7 @@ const deposit = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-const service = async (req: Request, res: Response, next: NextFunction) => {
+const withdrawal = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { CodCliente, Valor } = req.body;
     await ContaService.withdrawal(parseInt(CodCliente), parseFloat(Valor));
@@ -35,5 +35,5 @@ const service = async (req: Request, res: Response, next: NextFunction) => {
 export default {
   getById,
   deposit,
-  service
+  withdrawal
 }

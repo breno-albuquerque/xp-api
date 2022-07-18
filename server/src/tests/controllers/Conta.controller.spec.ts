@@ -31,4 +31,46 @@ describe('Testa funções do ContaController', () => {
       expect(response.status).to.have.been.calledWith(200);
     });
   });
+
+  describe('Função deposit', async () => {
+    let request: Partial<Request> = {
+      body: { CodCliente: '1', Valor: 100 }
+    };
+    let response: Partial<Response> = {
+      status: sinon.stub().returns(201)
+    };
+    let next = () => {};
+
+    let stub = sinon.stub(ContaService, 'deposit').resolves(undefined);
+
+    after(async () => { stub.restore() });
+
+    it('É chamado o status da Response com código 201', async () => {
+      await ContaController
+        .deposit(request as Request, response as Response, next as NextFunction);
+
+      expect(response.status).to.have.been.calledWith(201);
+    });
+  });
+
+  describe('Função withdrawal', async () => {
+    let request: Partial<Request> = {
+      body: { CodCliente: '1', Valor: 100 }
+    };
+    let response: Partial<Response> = {
+      status: sinon.stub().returns(201)
+    };
+    let next = () => {};
+
+    let stub = sinon.stub(ContaService, 'withdrawal').resolves(undefined);
+
+    after(async () => { stub.restore() });
+
+    it('É chamado o status da Response com código 201', async () => {
+      await ContaController
+        .withdrawal(request as Request, response as Response, next as NextFunction);
+
+      expect(response.status).to.have.been.calledWith(201);
+    });
+  });
 });
