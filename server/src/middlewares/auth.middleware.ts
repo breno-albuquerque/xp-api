@@ -3,17 +3,20 @@ import { NextFunction, Request, Response } from "express";
 import HttpException from "../utils/http.exception";
 import HttpStatus from "../utils/http.status";
 
-const authMiddleware = (req: Request, _res: Response, next: NextFunction) => {
+const validToken = (req: Request, _res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization;
-    if (!token) {
-      throw new HttpException(HttpStatus.BAD_REQUEST, 'Token não encontrado');
-    } 
+    if (!token) throw new HttpException(HttpStatus.BAD_REQUEST, 'Token não encontrado');
     jwt.verifyToken(token);
   } catch (error) {
     next(error);
   }
+}
+
+const validFields = (req: Request, _res: Response, next: NextFunction) => {
 
 }
 
-export default authMiddleware;
+export default {
+  validToken
+};
