@@ -6,7 +6,8 @@ type QueryVariable = string | number;
 class MyConnection implements IConnection {
   public queries: any = {
     createConta: 'INSERT INTO Contas (email, password) VALUES (?, ?)',
-    getContaById: 'SELECT * FROM Contas WHERE id = ?'
+    getContaById: 'SELECT * FROM Contas WHERE id = ?',
+    getContaByEmail: 'SELECT * FROM Contas WHERE email = ?'
   };
 
   private connection = mysql.createPool({
@@ -16,7 +17,7 @@ class MyConnection implements IConnection {
     database: process.env.MYSQL_DATABASE
   });
 
-  public async run (query: string, values?: QueryVariable[]): Promise<any> {
+  public async run(query: string, values?: QueryVariable[]): Promise<any> {
      const [result] = await this.connection.execute(query, values);
      return result;
   }
