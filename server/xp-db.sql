@@ -11,7 +11,7 @@ CREATE TABLE `xp-db`.Contas (
 CREATE TABLE `xp-db`.Ativos (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   quantidade INT DEFAULT 100,
-  simbolo VARCHAR(8) NOT NULL
+  simbolo TEXT NOT NULL
 );
 
 CREATE TABLE `xp-db`.Depositos (

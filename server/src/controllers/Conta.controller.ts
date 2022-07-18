@@ -1,13 +1,26 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import ContaService from '../services/Conta.service';
 
-const create = async (req: Request, res: Response) => {
-  await ContaService.create(req.body);
+const create = async (req: Request, res: Response, next: NextFunction) => {
+ try {
+    await ContaService.create(req.body);
+    return res.status(201).end();
+  } catch (error) {
+    next(error);
+  }
+}
 
-  return res.status(201).end();
+const getById = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { contaId } = req.params;
+    const conta = await ContaService.getById(parseInt(contaId));
+    return res.status(200).json(conta);
+  } catch (error) {
+    next(error);
+  }
 }
 
 export default {
-  create
+  create,
+  getById
 }
- 

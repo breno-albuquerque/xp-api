@@ -6,6 +6,12 @@ const create = async (conta: INewConta) => {
   await ContaModel.create(MyConnection.queries.createConta, conta);
 }
 
+const getById = async (contaId: number) => {
+  const conta = await ContaModel.getById(MyConnection.queries.getContaById, contaId);
+  return conta;
+}
+
 export default {
-  create
+  create,
+  getById
 }
