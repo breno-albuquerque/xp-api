@@ -4,12 +4,6 @@ import AtivoModel from "../../models/Ativo.model";
 import AtivoService from "../../services/Ativo.service";
 import { ativoMock } from "../mocks/ativo.mock.spec";
 
-const fullAssetMock = {
-  CodAtivo: 1,
-  QtdeAtivo: 100,
-  Valor: 30.00
-}
-
 describe('Testa métodos da classe AtivoService em Ativo.service', () => {
   describe('Método getById', () => {
     describe('Quando passa um id válido', () => {
