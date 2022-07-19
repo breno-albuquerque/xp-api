@@ -13,7 +13,7 @@ class InvestimentoModel {
   }
 
   public static async update(conn: IConnection, accountId: number, assetId: number, quantity: number) {
-    const result = await conn.run(conn.queries.createInvestimento, [accountId, assetId, quantity]) as ResultSetHeader;
+    const result = await conn.run(conn.queries.updateInvestimento, [quantity, assetId, accountId]) as ResultSetHeader;
     return result.affectedRows;
   }
 

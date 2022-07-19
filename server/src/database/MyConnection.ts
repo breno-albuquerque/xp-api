@@ -13,7 +13,8 @@ class MyConnection implements IConnection {
     getAtivoById: 'SELECT * FROM Ativos WHERE id = ?',
     getOneInvestimento: 'SELECT * FROM Investimentos WHERE contaId=? AND ativoId=?',
     createInvestimento: 'INSERT INTO Investimentos (contaId, ativoId, quantidade) VALUES (?, ?, ?)',
-    updateAtivo: 'UPDATE Ativos SET quantidade=? WHERE id=?'
+    updateAtivo: 'UPDATE Ativos SET quantidade=? WHERE id=?',
+    updateInvestimento: 'UPDATE Investimentos SET quantidade=? where ativoId=? AND contaId=?'
   };
 
   private static connection = mysql.createPool({
