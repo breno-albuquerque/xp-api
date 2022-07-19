@@ -1,7 +1,7 @@
 import { ResultSetHeader } from "mysql2";
 import IConnection from "../interfaces/connection/IConnection";
 
-class Investimento {
+class InvestimentoModel {
   public static async create(conn: IConnection, clientId: number, assetId: number, quantity: number) {
     const result = await conn.run(conn.queries.createInvestimento, [clientId, assetId, quantity]) as ResultSetHeader;
     return result.insertId;
@@ -18,4 +18,4 @@ class Investimento {
   }
 }
 
-export default Investimento;
+export default InvestimentoModel;
