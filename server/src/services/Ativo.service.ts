@@ -36,6 +36,7 @@ class AtivoService {
     const assetLatestResponse = await 
       fetch(`https://www.okanebox.com.br/api/acoes/ultima/${assertSymbol}`);
     const assetLatestData = await assetLatestResponse.json();
+    console.log(assetLatestData.PREULT)
     return assetLatestData.PREULT;
   }
 

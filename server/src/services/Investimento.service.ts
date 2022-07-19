@@ -12,10 +12,10 @@ class InvestimentoService {
 
     
     if (fullAsset.Valor > accountData.saldo) {
-      throw new HttpException(HttpStatus.CONFLICT, 'Quantidade de saldo insuficiente');
+      throw new HttpException(HttpStatus.CONFLICT, 'Saldo insuficiente');
     }
     
-    await ContaService.withdrawal(accountId, fullAsset.Valor);
+    await ContaService.withdrawal(accountId, Number((fullAsset.Valor * quantity).toFixed(2)));
 
     const previousInvestment = await InvestimentoModel.getOne(MyConnection, accountId, assetId);
 
@@ -43,10 +43,10 @@ class InvestimentoService {
 
     const fullAsset = await AtivoService.getById(assetId);
 
-    await ContaService.deposit(accountId, fullAsset.Valor);
+    await ContaService.deposit(accountId, Number((fullAsset.Valor * quantity).toFixed(2)));
 
     await AtivoService.updateWhenSold(assetId, quantity);
-    await InvestimentoModel.update(MyConnection, accountId, assetId, quantity - previousInvestment.quantidade);
+    await InvestimentoModel.update(MyConnection, accountId, assetId, previousInvestment.quantidade - quantity);
   }
 }
 

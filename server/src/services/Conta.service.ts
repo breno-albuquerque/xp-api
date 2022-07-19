@@ -14,15 +14,18 @@ class ContaService {
   }
 
   public static async deposit(accountId: number, value: number): Promise<void> {
-    const conta = await this.getById(accountId);
+    const accountData = await this.getById(accountId);
+    const newValue = Number((accountData.saldo + value).toFixed(2));
     
     await DepositoModel.create(MyConnection, [accountId, value]);
-    await ContaModel.update(MyConnection, [conta.saldo + value, accountId]);
+    await ContaModel.update(MyConnection, [newValue, accountId]);
   }
 
   public static async withdrawal(accountId: number, value: number) {
     const accountData = await this.getById(accountId);
-    const newValue = accountData.saldo - value;
+
+    const newValue = Number((accountData.saldo - value).toFixed(2));
+
     if (newValue < 0) throw new HttpException(HttpStatus.UNPROCESSABLE, 'Saldo insuficiente');
     
     await SaqueModel.create(MyConnection, [accountId, value]);

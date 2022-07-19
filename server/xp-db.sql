@@ -7,7 +7,7 @@ CREATE TABLE `xp-db`.Contas (
   nome TEXT NOT NULL,
   email TEXT NOT NULL,
   senha TEXT NOT NULL,
-  saldo FLOAT DEFAULT 0
+  saldo DOUBLE DEFAULT 0
 );
 
 CREATE TABLE `xp-db`.Ativos (
@@ -19,14 +19,14 @@ CREATE TABLE `xp-db`.Ativos (
 CREATE TABLE `xp-db`.Depositos (
 	id  INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     contaId INTEGER NOT NULL,
-    valor FLOAT NOT NULL,
+    valor DOUBLE NOT NULL,
     FOREIGN KEY (contaId) REFERENCES Contas(id)
 );
 
 CREATE TABLE `xp-db`.Saques (
 	id  INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     contaId INTEGER NOT NULL,
-    valor FLOAT NOT NULL,
+    valor DOUBLE NOT NULL,
     FOREIGN KEY (contaId) REFERENCES Contas(id)
 );
 
@@ -42,7 +42,7 @@ CREATE TABLE `xp-db`.Operações (
 	contaId  INTEGER NOT NULL,
     ativoId INTEGER NOT NULL,
     tipo VARCHAR(5) NOT NULL,
-    valor_total FLOAT NOT NULL,
+    valor_total DOUBLE NOT NULL,
     FOREIGN KEY (contaId) REFERENCES Contas(id),
     FOREIGN KEY (ativoId) REFERENCES Ativos(id)
 );
