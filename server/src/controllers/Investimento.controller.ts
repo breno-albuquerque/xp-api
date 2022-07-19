@@ -12,6 +12,17 @@ const buyAssets = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const sellAssets = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { CodCliente, CodAtivo, QtdeAtivo  } = req.body;
+    await InvestimentoService.sellAssets(CodCliente, CodAtivo, QtdeAtivo);
+    return res.status(HttpStatus.CREATED).end();
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
-  buyAssets
+  buyAssets,
+  sellAssets
 }
