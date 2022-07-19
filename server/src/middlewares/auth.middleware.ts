@@ -33,7 +33,7 @@ const validRegister = (req: Request, _res: Response, next: NextFunction) => {
     if (validation.error) {
       throw new HttpException(HttpStatus.BAD_REQUEST, validation.error.details[0].message);
     }
-    next()
+    next();
   } catch (error) {
     next(error)
   }
