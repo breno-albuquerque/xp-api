@@ -8,8 +8,8 @@ class InvestimentoModel {
   }
 
   public static async create(conn: IConnection, clientId: number, assetId: number, quantity: number) {
-    const result = await conn.run(conn.queries.createInvestimento, [clientId, assetId, quantity]) as ResultSetHeader;
-    return result.insertId;
+    const result = await conn.run(conn.queries.createInvestimento, [clientId, assetId, quantity])/*  as ResultSetHeader; */
+    return result/* .insertId; */
   }
 
   public static async update(conn: IConnection, clientId: number, assetId: number, quantity: number) {
