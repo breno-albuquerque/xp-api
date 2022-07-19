@@ -8,8 +8,8 @@ class AtivoModel {
     return result as IAtivo;
   }
 
-  public static async update(conn: IConnection, value: number): Promise<number> {
-    const result = await conn.run(conn.queries.updateAtivo, [value]) as ResultSetHeader;
+  public static async update(conn: IConnection, quantity: number, assetId: number): Promise<number> {
+    const result = await conn.run(conn.queries.updateAtivo, [quantity, assetId]) as ResultSetHeader;
     return result.affectedRows;
   }
 }

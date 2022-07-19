@@ -16,11 +16,20 @@ class AtivoService {
       return fullAsset;
   }
 
+  public static async updatePlus(assetId: number, quantity: number) {
+    const asset = await AtivoModel.getById(MyConnection, assetId);
+
+    if (asset.quantidade < quantity) {
+      throw new HttpException(HttpStatus.UNPROCESSABLE, 'Quantidade indisponível');
+    }
+
+    await AtivoModel.update(MyConnection, asset.quantidade - quantity, assetId);
+  }
+
   public static async getValue(assertSymbol: string): Promise<number> {
     const assetLatestResponse = await 
       fetch(`https://www.okanebox.com.br/api/acoes/ultima/${assertSymbol}`);
     const assetLatestData = await assetLatestResponse.json();
-    console.log(assetLatestData)
     return assetLatestData.PREULT;
   }
 
