@@ -28,11 +28,11 @@ describe('Testa métodos da classe AtivoService em Ativo.service', () => {
 
       it('Deve retornar um objeto no formato correto', async () => {
         const result = await AtivoService.getById(1)
-          expect(result).to.be.an('object');
-          expect(result).to.include.all.keys('CodAtivo', 'QtdeAtivo', 'Valor');
-          expect(result.CodAtivo).to.equal(1)
-          expect(result.QtdeAtivo).to.equal(100)
-          expect(result.Valor).to.equal(30.00)
+        expect(result).to.be.an('object');
+        expect(result).to.include.all.keys('CodAtivo', 'QtdeAtivo', 'Valor');
+        expect(result.CodAtivo).to.equal(1);
+        expect(result.QtdeAtivo).to.equal(100);
+        expect(result.Valor).to.equal(30.00);
       });
     });
   });
