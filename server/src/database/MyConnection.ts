@@ -9,7 +9,8 @@ class MyConnection implements IConnection {
     getContaById: 'SELECT * FROM Contas WHERE id = ?',
     getContaByEmail: 'SELECT * FROM Contas WHERE email = ?',
     updateConta: 'UPDATE Contas SET saldo=? WHERE id=?',
-    createDeposito: 'INSERT INTO Depositos (contaId, valor) VALUES (?, ?)'
+    createDeposito: 'INSERT INTO Depositos (contaId, valor) VALUES (?, ?)',
+    getAtivoById: 'SELECT * FROM Ativos WHERE id = ?'
   };
 
   private static connection = mysql.createPool({
