@@ -16,7 +16,7 @@ class AtivoService {
       return fullAsset;
   }
 
-  public static async updatePlus(assetId: number, quantity: number) {
+  public static async updateWhenBought(assetId: number, quantity: number) {
     const asset = await AtivoModel.getById(MyConnection, assetId);
 
     if (asset.quantidade < quantity) {
@@ -24,6 +24,12 @@ class AtivoService {
     }
 
     await AtivoModel.update(MyConnection, asset.quantidade - quantity, assetId);
+  }
+
+  public static async updateWhenSold(assetId: number, quantity: number) {
+    const asset = await AtivoModel.getById(MyConnection, assetId);
+
+    await AtivoModel.update(MyConnection, asset.quantidade + quantity, assetId);
   }
 
   public static async getValue(assertSymbol: string): Promise<number> {
