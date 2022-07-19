@@ -3,6 +3,7 @@ import AtivoModel from "../models/Ativo.model";
 import HttpException from "../utils/http.exception";
 import HttpStatus from "../utils/http.status";
 import IAtivo from "../interfaces/ativo/IAtivo";
+import fetch from 'node-fetch';
 
 class AtivoService {
   public static async getById(assetId: number) {
@@ -15,9 +16,11 @@ class AtivoService {
       return fullAsset;
   }
 
-  private static async getValue(assertSymbol: string) {
-    const assetLatestResponse = await fetch(`https://www.okanebox.com.br/api/acoes/ultima/${assertSymbol}`);
+  public static async getValue(assertSymbol: string): Promise<number> {
+    const assetLatestResponse = await 
+      fetch(`https://www.okanebox.com.br/api/acoes/ultima/${assertSymbol}`);
     const assetLatestData = await assetLatestResponse.json();
+    console.log(assetLatestData)
     return assetLatestData.PREULT;
   }
 
