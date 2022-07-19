@@ -7,10 +7,10 @@ class InvestimentoService {
 
     if (!previousInvestment) {
       await InvestimentoModel
-        .create(MyConnection.queries.createInvestment, accountId, assetId, quantity)
+        .create(MyConnection, accountId, assetId, quantity)
     } else {
       await InvestimentoModel
-        .update(MyConnection.queries.updateInvestment, accountId, assetId, quantity + previousInvestment.quantitdade)
+        .update(MyConnection, accountId, assetId, quantity + previousInvestment.quantitdade)
     }
   }
 }

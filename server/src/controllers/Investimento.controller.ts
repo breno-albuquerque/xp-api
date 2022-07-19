@@ -4,8 +4,8 @@ import HttpStatus from '../utils/http.status';
 
 const buyAssets = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { codCliente, codAtivo, qtdeAtivo  } = req.body;
-    await InvestimentoService.buyAssets(codCliente, codAtivo, qtdeAtivo);
+    const { CodCliente, CodAtivo, QtdeAtivo  } = req.body;
+    await InvestimentoService.buyAssets(CodCliente, CodAtivo, QtdeAtivo);
     return res.status(HttpStatus.CREATED).end();
   } catch (error) {
     next(error);
