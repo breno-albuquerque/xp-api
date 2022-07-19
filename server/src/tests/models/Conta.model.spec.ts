@@ -4,12 +4,14 @@ import MyConnection from "../../database/MyConnection";
 import ContaModel from "../../models/Conta.model";
 import { newContaMock, contaMock } from "../mocks/conta.mock.spec";
 
+const conn = MyConnection;
+
 describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   describe('Testa método create', () => {
     let stub: sinon.SinonStub;
   
     beforeEach(async () => {
-      stub = sinon.stub(MyConnection, 'run').resolves({ insertId: contaMock.id });
+      stub = sinon.stub(conn, 'run').resolves({ insertId: contaMock.id });
     });
   
     afterEach(async () => {
@@ -19,7 +21,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
     describe('Quando passa uma conta válida', () => {
       it('Deve retornar o id da conta inserida', async () => {
         const result = await ContaModel
-          .create(MyConnection, newContaMock);
+          .create(conn, newContaMock);
   
         expect(result).to.be.a('number');
         expect(result).to.equal(1);
@@ -32,7 +34,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
       let stub: sinon.SinonStub;
     
       beforeEach(async () => {
-        stub = sinon.stub(MyConnection, 'run').resolves([contaMock]);
+        stub = sinon.stub(conn, 'run').resolves([contaMock]);
       });
     
       afterEach(async () => {
@@ -41,7 +43,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   
       it('Deve retornar a conta correspondente', async () => {
         const result = await ContaModel
-          .getById(MyConnection, 1);
+          .getById(conn, 1);
   
         expect(result).to.equal(contaMock);
         expect(result.id).to.equal(1);
@@ -52,7 +54,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
       let stub: sinon.SinonStub;
     
       beforeEach(async () => {
-        stub = sinon.stub(MyConnection, 'run').resolves([undefined]);
+        stub = sinon.stub(conn, 'run').resolves([undefined]);
       });
     
       afterEach(async () => {
@@ -61,7 +63,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   
       it('Deve retornar undefined', async () => {
         const result = await ContaModel
-          .getById(MyConnection, 100);
+          .getById(conn, 100);
   
         expect(result).to.be.undefined;
       });
@@ -73,7 +75,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
       let stub: sinon.SinonStub;
     
       beforeEach(async () => {
-        stub = sinon.stub(MyConnection, 'run').resolves([contaMock]);
+        stub = sinon.stub(conn, 'run').resolves([contaMock]);
       });
     
       afterEach(async () => {
@@ -82,7 +84,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   
       it('Deve retornar a conta correspondente', async () => {
         const result = await ContaModel
-          .getByEmail(MyConnection, 'conta@mock.com');
+          .getByEmail(conn, 'conta@mock.com');
   
         expect(result).to.equal(contaMock);
         expect(result.email).to.equal('conta@mock.com');
@@ -93,7 +95,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
       let stub: sinon.SinonStub;
     
       beforeEach(async () => {
-        stub = sinon.stub(MyConnection, 'run').resolves([undefined]);
+        stub = sinon.stub(conn, 'run').resolves([undefined]);
       });
     
       afterEach(async () => {
@@ -102,7 +104,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   
       it('Deve retornar undefined', async () => {
         const result = await ContaModel
-          .getByEmail(MyConnection,'email@inexistente.com');
+          .getByEmail(conn,'email@inexistente.com');
   
         expect(result).to.be.undefined;
       });
@@ -114,7 +116,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
       let stub: sinon.SinonStub;
     
       beforeEach(async () => {
-        stub = sinon.stub(MyConnection, 'run').resolves({ affectedRows: 1 });
+        stub = sinon.stub(conn, 'run').resolves({ affectedRows: 1 });
       });
     
       afterEach(async () => {
@@ -123,7 +125,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   
       it('Deve retornar o número 1, correspondente a uma linha afetada', async () => {
         const result = await ContaModel
-          .update(MyConnection, [100, 1]);
+          .update(conn, [100, 1]);
   
         expect(result).to.be.an('number');
         expect(result).to.equal(1);
