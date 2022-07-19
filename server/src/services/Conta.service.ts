@@ -24,8 +24,9 @@ class ContaService {
     const accountData = await this.getById(accountId);
     const newValue = accountData.saldo - value;
     if (newValue < 0) throw new HttpException(HttpStatus.UNPROCESSABLE, 'Saldo insuficiente');
-
+    
     await SaqueModel.create(MyConnection, [accountId, value]);
+    console.log('here2')
     await ContaModel.update(MyConnection, [newValue, accountId]);
   }
 }

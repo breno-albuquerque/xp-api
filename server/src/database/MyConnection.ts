@@ -10,11 +10,12 @@ class MyConnection implements IConnection {
     getContaByEmail: 'SELECT * FROM Contas WHERE email = ?',
     updateConta: 'UPDATE Contas SET saldo=? WHERE id=?',
     createDeposito: 'INSERT INTO Depositos (contaId, valor) VALUES (?, ?)',
+    createSaque: 'INSERT INTO Saques (contaId, valor) VALUES (?, ?)',
     getAtivoById: 'SELECT * FROM Ativos WHERE id = ?',
     getOneInvestimento: 'SELECT * FROM Investimentos WHERE contaId=? AND ativoId=?',
     createInvestimento: 'INSERT INTO Investimentos (contaId, ativoId, quantidade) VALUES (?, ?, ?)',
     updateAtivo: 'UPDATE Ativos SET quantidade=? WHERE id=?',
-    updateInvestimento: 'UPDATE Investimentos SET quantidade=? where ativoId=? AND contaId=?'
+    updateInvestimento: 'UPDATE Investimentos SET quantidade=? WHERE ativoId=? AND contaId=?'
   };
 
   private static connection = mysql.createPool({
