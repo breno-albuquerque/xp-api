@@ -1,7 +1,7 @@
-import INewAtivo from "./INewAtivo";
-
-interface IAtivo extends INewAtivo {
+interface IAtivo {
   id: number,
+  quantidade: number,
+  simbolo?: string,
   valor?: number
 }
 
