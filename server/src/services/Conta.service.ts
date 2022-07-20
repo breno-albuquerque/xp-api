@@ -25,15 +25,15 @@ class ContaService {
 
   public static async deposit(accountId: number, value: number): Promise<void> {
     const accountData = await this.getById(accountId);
-    const newValue = Number((accountData.saldo + value).toFixed(2));
+    const newValue = Number((accountData.Saldo + value).toFixed(2));
     
     await DepositoModel.create(MyConnection, [accountId, value]);
     await ContaModel.update(MyConnection, newValue, accountId);
   }
 
-  public static async withdrawal(accountId: number, value: number) {
+  public static async withdrawal(accountId: number, value: number): Promise<void> {
     const accountData = await this.getById(accountId);
-    const newValue = Number((accountData.saldo - value).toFixed(2));
+    const newValue = Number((accountData.Saldo - value).toFixed(2));
 
     if (newValue < 0) throw new HttpException(HttpStatus.CONFLICT, 'Saldo insuficiente');
     

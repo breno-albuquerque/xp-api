@@ -10,23 +10,23 @@ class AtivoService {
       const asset = await AtivoModel.getById(MyConnection, assetId);
       if (!asset) throw new HttpException(HttpStatus.NOT_FOUND, 'Ativo não encontrado');
 
-      const latestValue = await this.getValue(asset.simbolo);
+      const latestValue = await this.getValue(asset.Simbolo);
       return this.formatAsset(asset, latestValue);
   }
 
   public static async updateWhenBought(assetId: number, quantity: number): Promise<void> {
     const asset = await AtivoModel.getById(MyConnection, assetId);
 
-    if (asset.quantidade < quantity) {
+    if (asset.QtdeAtivo < quantity) {
       throw new HttpException(HttpStatus.UNPROCESSABLE, 'Quantidade indisponível');
     }
 
-    await AtivoModel.update(MyConnection, asset.quantidade - quantity, assetId);
+    await AtivoModel.update(MyConnection, asset.QtdeAtivo - quantity, assetId);
   }
 
   public static async updateWhenSold(assetId: number, quantity: number): Promise<void> {
     const asset = await AtivoModel.getById(MyConnection, assetId);
-    await AtivoModel.update(MyConnection, asset.quantidade + quantity, assetId);
+    await AtivoModel.update(MyConnection, asset.QtdeAtivo + quantity, assetId);
   }
 
   public static async getValue(symbol: string): Promise<number> {
@@ -37,8 +37,8 @@ class AtivoService {
 
   private static formatAsset(asset: IAtivo, latestValue: number) {
     return {
-      CodAtivo: asset.id,
-      QtdeAtivo: asset.quantidade,
+      CodAtivo: asset.Id,
+      QtdeAtivo: asset.QtdeAtivo,
       Valor: latestValue,
     };
   }

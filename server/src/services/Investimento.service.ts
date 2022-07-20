@@ -1,4 +1,3 @@
-import { RowDataPacket } from 'mysql2';
 import MyConnection from '../database/MyConnection';
 import IInvestimento from '../interfaces/investimento/IInvestimento';
 import InvestimentoModel from '../models/Investimento.model';
@@ -20,7 +19,7 @@ class InvestimentoService {
     } else {
       await InvestimentoModel
         .update(MyConnection, { 
-          ...investment, QtdeAtivo: investment.QtdeAtivo + prevInvest.quantidade });
+          ...investment, QtdeAtivo: investment.QtdeAtivo + prevInvest.QtdeAtivo });
     }
   }
 
@@ -30,16 +29,16 @@ class InvestimentoService {
 
     await this.saleOperations(investment, prevInvest);
     await InvestimentoModel.update(MyConnection, { 
-      ...investment, QtdeAtivo: prevInvest.quantidade - investment.QtdeAtivo });
+      ...investment, QtdeAtivo: prevInvest.QtdeAtivo - investment.QtdeAtivo });
   }
 
-  private static async saleOperations(investment: IInvestimento, prevInvest: RowDataPacket) {
+  private static async saleOperations(investment: IInvestimento, prevInvest: IInvestimento) {
     const { CodAtivo, CodCliente, QtdeAtivo } = investment;
 
     if (!prevInvest) {
       throw new HttpException(HttpStatus.NOT_FOUND, 'Ativo não encontrado na carteira');
     }
-    if (prevInvest.quantidade < QtdeAtivo) {
+    if (prevInvest.QtdeAtivo < QtdeAtivo) {
       throw new HttpException(HttpStatus.CONFLICT, 'Carteira com quantidade insuficiente');
     }
 
