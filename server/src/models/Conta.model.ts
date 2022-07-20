@@ -12,9 +12,9 @@ class ContaModel {
   }
 
   public static async create(conn: IConnection, account: INewConta): Promise<number> {
-    const { nome, cpf, email, senha } = account;
+    const { Nome, Cpf, Email, Senha } = account;
     const result = await MyConnection
-      .run(conn.queries.createConta, [nome, cpf, email, senha]) as ResultSetHeader;
+      .run(conn.queries.createConta, [Nome, Cpf, Email, Senha]) as ResultSetHeader;
     return result.insertId;
   }
 
