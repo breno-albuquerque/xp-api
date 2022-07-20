@@ -44,4 +44,23 @@ describe('Testa métodos da classe AtivoService em Ativo.service', () => {
         .to.be.rejectedWith(HttpException, 'Ativo não encontrado');
     });
   });
+
+  context('Método updateWhenBought', () => {
+    it('Quando a quantidade a ser comprada é maior do que a disponível, uma excessão deve ser lançada: "Quantidade indisponível"', async () => {
+      stub1 = createAtivoModelStub(ativoMock, 'getById');
+
+      await expect(AtivoService.updateWhenBought(1, 101))
+        .to.be.rejectedWith(HttpException, 'Quantidade indisponível');
+    });
+
+    it('Quando a quantidade a ser comprada é menor do que a disponível deve retornar undefined', async () => {
+      stub1 = createAtivoModelStub(ativoMock, 'getById');
+      stub2 = createAtivoModelStub({ affectedRows: 1 }, 'update');
+
+      const result = await AtivoService
+        .updateWhenBought(1, 50);
+
+      expect(result).to.be.an('undefined');
+    });
+  });
 });
