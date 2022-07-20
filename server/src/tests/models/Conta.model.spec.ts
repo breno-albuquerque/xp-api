@@ -6,130 +6,80 @@ import { newContaMock, contaMock } from '../mocks/conta.mock.spec';
 
 const conn = MyConnection;
 
-describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
-  describe('Testa método create', () => {
-    let stub: sinon.SinonStub;
-  
-    beforeEach(async () => {
-      stub = sinon.stub(conn, 'run').resolves({ insertId: contaMock.id });
-    });
-  
-    afterEach(async () => {
-      stub.restore();
-    });
-  
-    describe('Quando passa uma conta válida', () => {
-      it('Deve retornar o id da conta inserida', async () => {
-        const result = await ContaModel
-          .create(conn, newContaMock);
-  
-        expect(result).to.be.a('number');
-        expect(result).to.equal(1);
-      });
+const createStub = (resolveValue: object): sinon.SinonStub => (
+  sinon.stub(conn, 'run').resolves(resolveValue)
+);
+
+describe('Testa métodos da classe ContaModel', () => {
+  let stub: sinon.SinonStub;
+
+  afterEach(() => {
+    stub.restore();
+  });
+
+  context('Método create', () => {
+    it('Deve retornar o id da conta inserida', async () => {
+      stub = createStub({ insertId: contaMock.Id });
+      
+      const result = await ContaModel
+        .create(conn, newContaMock);
+
+      expect(result).to.be.a('number');
+      expect(result).to.equal(1);
     });
   });
   
-  describe('Testa método getById', () => {
-    describe('Quando passa um id existente', () => {
-      let stub: sinon.SinonStub;
-    
-      beforeEach(async () => {
-        stub = sinon.stub(conn, 'run').resolves([contaMock]);
-      });
-    
-      afterEach(async () => {
-        stub.restore();
-      });
-  
-      it('Deve retornar a conta correspondente', async () => {
-        const result = await ContaModel
-          .getById(conn, 1);
-  
-        expect(result).to.equal(contaMock);
-        expect(result.id).to.equal(1);
-      });
+  context('Método getById', () => {
+    it('Ao ser passado um id válido, deve retornar a conta correspondente', async () => {
+      stub = createStub([contaMock]);
+
+      const result = await ContaModel
+        .getById(conn, 1);
+
+      expect(result).to.equal(contaMock);
+      expect(result.Id).to.equal(1);
     });
-  
-    describe('Quando passa um id inexistente', () => {
-      let stub: sinon.SinonStub;
-    
-      beforeEach(async () => {
-        stub = sinon.stub(conn, 'run').resolves([undefined]);
-      });
-    
-      afterEach(async () => {
-        stub.restore();
-      });
-  
-      it('Deve retornar undefined', async () => {
-        const result = await ContaModel
-          .getById(conn, 100);
-  
-        expect(result).to.be.undefined;
-      });
-    });
+
+    it('Ao ser passado um id inválido, deve retornar undefined', async () => {
+      stub = createStub([undefined]);
+
+      const result = await ContaModel
+        .getById(conn, 100);
+
+      expect(result).to.be.an('undefined');
   });
+});
   
-  describe('Testa o método getByEmail', () => {
-    describe('Quando passa um email existente', () => {
-      let stub: sinon.SinonStub;
-    
-      beforeEach(async () => {
-        stub = sinon.stub(conn, 'run').resolves([contaMock]);
-      });
-    
-      afterEach(async () => {
-        stub.restore();
-      });
-  
-      it('Deve retornar a conta correspondente', async () => {
+  context('Método getByEmail', () => { 
+      it('Ao ser passado um email cadastrado, deve retornar a conta correspondente', async () => {
+        stub = createStub([contaMock]);
+
         const result = await ContaModel
           .getByEmail(conn, 'conta@mock.com');
   
         expect(result).to.equal(contaMock);
-        expect(result.email).to.equal('conta@mock.com');
-      });
-    });
-  
-    describe('Quando passa um email inexistente', () => {
-      let stub: sinon.SinonStub;
-    
-      beforeEach(async () => {
-        stub = sinon.stub(conn, 'run').resolves([undefined]);
-      });
-    
-      afterEach(async () => {
-        stub.restore();
+        expect(result.Email).to.equal('conta@mock.com');
       });
   
-      it('Deve retornar undefined', async () => {
+      it('Ao ser passado um email não cadastrado, deve retornar undefined', async () => {
+        stub = createStub([undefined]);
+
         const result = await ContaModel
           .getByEmail(conn, 'email@inexistente.com');
   
-        expect(result).to.be.undefined;
+        expect(result).to.be.an('undefined');
       });
-    });
   });
 
-  describe('Testa o método update', () => {
-    describe('Quando passa valores válidos', () => {
-      let stub: sinon.SinonStub;
-    
-      beforeEach(async () => {
-        stub = sinon.stub(conn, 'run').resolves({ affectedRows: 1 });
-      });
-    
-      afterEach(async () => {
-        stub.restore();
-      });
-  
-      it('Deve retornar o número 1, correspondente a uma linha afetada', async () => {
+  context('Método update', () => {
+      it('Deve retornar 1, correspondente a uma linha afetada', async () => {
+        stub = createStub({ affectedRows: 1 });
+
         const result = await ContaModel
-          .update(conn, [100, 1]);
+          .update(conn, 100, 1);
   
         expect(result).to.be.an('number');
         expect(result).to.equal(1);
       });
     });
   });
-});

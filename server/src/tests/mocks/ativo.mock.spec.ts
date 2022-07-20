@@ -1,7 +1,9 @@
 import IAtivo from '../../interfaces/ativo/IAtivo';
 
-export const ativoMock: IAtivo = {
-  id: 1,
-  quantidade: 100,
-  simbolo: 'SYMBOL',
+const ativoMock: IAtivo = {
+  Id: 1,
+  QtdeAtivo: 100,
+  Simbolo: 'SYMBOL',
 };
+
+export default ativoMock;

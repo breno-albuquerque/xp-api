@@ -2,17 +2,14 @@ import IConta from '../../interfaces/conta/IConta';
 import INewConta from '../../interfaces/conta/INewConta';
 
 export const newContaMock: INewConta = {
-  nome: 'Conta Mock',
-  cpf: '11111111111',
-  email: 'conta@mock.com',
-  senha: '123456',
+  Nome: 'Conta Mock',
+  Cpf: '11111111111',
+  Email: 'conta@mock.com',
+  Senha: '123456',
 };
 
 export const contaMock: IConta = {
-  id: 1,
-  nome: 'Conta Mock',
-  cpf: '11111111111',
-  email: 'conta@mock.com',
-  senha: '123456',
-  saldo: 0,
+  ...newContaMock,
+  Id: 1,
+  Saldo: 0,
 };
