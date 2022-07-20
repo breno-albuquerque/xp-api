@@ -53,12 +53,24 @@ describe('Testa métodos da classe AtivoService em Ativo.service', () => {
         .to.be.rejectedWith(HttpException, 'Quantidade indisponível');
     });
 
-    it('Quando a quantidade a ser comprada é menor do que a disponível deve retornar undefined', async () => {
+    it('Quando a quantidade a ser comprada é menor do que a disponível deve retornar undefined (void)', async () => {
       stub1 = createAtivoModelStub(ativoMock, 'getById');
       stub2 = createAtivoModelStub({ affectedRows: 1 }, 'update');
 
       const result = await AtivoService
         .updateWhenBought(1, 50);
+
+      expect(result).to.be.an('undefined');
+    });
+  });
+
+  context('Método updateWhenSold', () => {
+    it('Deve retornar undefined (void)', async () => {
+      stub1 = createAtivoModelStub(ativoMock, 'getById');
+      stub2 = createAtivoModelStub({ affectedRows: 1 }, 'update');
+
+      const result = await AtivoService
+        .updateWhenSold(1, 10);
 
       expect(result).to.be.an('undefined');
     });
