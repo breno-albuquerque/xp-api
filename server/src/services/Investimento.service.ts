@@ -28,11 +28,12 @@ class InvestimentoService {
       .getOne(MyConnection, investment);
 
     await this.saleOperations(investment, prevInvest);
+
     await InvestimentoModel.update(MyConnection, { 
       ...investment, QtdeAtivo: prevInvest.QtdeAtivo - investment.QtdeAtivo });
   }
 
-  private static async saleOperations(investment: IInvestimento, prevInvest: IInvestimento) {
+  public static async saleOperations(investment: IInvestimento, prevInvest: IInvestimento) {
     const { CodAtivo, CodCliente, QtdeAtivo } = investment;
 
     if (!prevInvest) {
@@ -47,7 +48,7 @@ class InvestimentoService {
     await AtivoService.updateWhenSold(CodAtivo, QtdeAtivo);
   }
 
-  private static async purchaseOperations(invest: IInvestimento) {
+  public static async purchaseOperations(invest: IInvestimento) {
     const { CodAtivo, CodCliente, QtdeAtivo } = invest;
     const fullAsset = await AtivoService.getById(CodAtivo);  
     await ContaService.withdrawal(CodCliente, Number((fullAsset.Valor * QtdeAtivo).toFixed(2)));  

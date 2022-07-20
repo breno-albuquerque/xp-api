@@ -4,10 +4,10 @@ import HttpException from '../utils/http.exception';
 import HttpStatus from '../utils/http.status';
 
 const registerSchema = Joi.object({
-  nome: Joi.string().min(3).required(),
-  cpf: Joi.string().length(11).required(),
-  email: Joi.string().email().required(),
-  senha: Joi.string().min(6).required(),
+  Nome: Joi.string().min(3).required(),
+  Cpf: Joi.string().length(11).required(),
+  Email: Joi.string().email().required(),
+  Senha: Joi.string().min(6).required(),
 }).messages({
   'any.required': 'O campo {{#label}} é obrigatório',
   'string.base': 'O campo {{#label}} deve ser uma string',

@@ -17,7 +17,7 @@ class AuthService {
     const hash = await bcrypt.hash(account.Senha, 5);
     const insertId = await ContaService.create({ ...account, Senha: hash });
 
-    const token = jwt.generateToken({ Id: insertId, ...account });
+    const token = jwt.generateToken({ Id: insertId, Nome: account.Nome });
     return token;
   }
 
@@ -28,7 +28,7 @@ class AuthService {
       const isMatch = await bcrypt.compare(account.Senha, accountData.Senha);
       if (!isMatch) throw new HttpException(HttpStatus.UNAUTHORIZED, 'Email ou senha inválidos');
 
-      const token = jwt.generateToken({ Id: accountData.Id, ...account });
+      const token = jwt.generateToken({ Id: accountData.Id, Nome: accountData.Nome });
       return token;
   }
 }
