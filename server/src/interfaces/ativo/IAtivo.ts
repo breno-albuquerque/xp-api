@@ -1,7 +1,7 @@
 interface IAtivo {
-  id: number,
-  quantidade: number,
-  simbolo: string,
+  Id: number,
+  QtdeAtivo: number,
+  Simbolo: string,
 }
 
 export default IAtivo;

@@ -1,8 +1,6 @@
-import INewConta from './INewConta';
-
-interface IConta extends INewConta {
-  id: number,
-  saldo: number
+interface IConta {
+  Id: number,
+  Saldo: number
 }
 
 export default IConta;
