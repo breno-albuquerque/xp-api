@@ -11,9 +11,7 @@ class AtivoService {
       if (!asset) throw new HttpException(HttpStatus.NOT_FOUND, 'Ativo não encontrado');
 
       const latestValue = await this.getValue(asset.simbolo);
-      const fullAsset = this.formatAsset(asset, latestValue);
-
-      return fullAsset;
+      return this.formatAsset(asset, latestValue);
   }
 
   public static async updateWhenBought(assetId: number, quantity: number) {
@@ -28,7 +26,6 @@ class AtivoService {
 
   public static async updateWhenSold(assetId: number, quantity: number) {
     const asset = await AtivoModel.getById(MyConnection, assetId);
-
     await AtivoModel.update(MyConnection, asset.quantidade + quantity, assetId);
   }
 
@@ -36,7 +33,6 @@ class AtivoService {
     const assetLatestResponse = await 
       fetch(`https://www.okanebox.com.br/api/acoes/ultima/${assertSymbol}`);
     const assetLatestData = await assetLatestResponse.json();
-    console.log(assetLatestData.PREULT)
     return assetLatestData.PREULT;
   }
 

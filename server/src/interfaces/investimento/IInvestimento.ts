@@ -1,7 +1,7 @@
 interface IInvestimento {
-  contaId: number,
-  ativoId: number,
-  quantidade: number 
+  CodCliente: number,
+  CodAtivo: number,
+  QtdeAtivo: number 
 }
 
 export default IInvestimento;

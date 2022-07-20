@@ -1,5 +1,6 @@
 import MyConnection from "../database/MyConnection";
 import IConta from "../interfaces/conta/IConta";
+import INewConta from "../interfaces/conta/INewConta";
 import ContaModel from "../models/Conta.model"
 import DepositoModel from '../models/Deposito.model';
 import SaqueModel from "../models/Saque.model";
@@ -11,6 +12,16 @@ class ContaService {
     const conta = await ContaModel.getById(MyConnection, accountId);
     if (!conta) throw new HttpException(HttpStatus.NOT_FOUND, 'Conta não encontrada');
     return conta;
+  }
+
+  public static async getByEmail(email: string): Promise<IConta> {
+    return await ContaModel.getByEmail(MyConnection, email);
+  }
+
+  public static async create(account: INewConta): Promise<number> {
+    const { nome, cpf, email, senha } = account;
+    const insertId = await ContaModel.create(MyConnection, [nome, cpf, email, senha]);
+    return insertId;
   }
 
   public static async deposit(accountId: number, value: number): Promise<void> {
