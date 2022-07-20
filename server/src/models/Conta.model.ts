@@ -1,7 +1,8 @@
-import { ResultSetHeader, RowDataPacket } from "mysql2";
-import MyConnection from "../database/MyConnection";
-import IConnection from "../interfaces/connection/IConnection";
-import IConta from "../interfaces/conta/IConta";
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
+import MyConnection from '../database/MyConnection';
+import IConnection from '../interfaces/connection/IConnection';
+import IConta from '../interfaces/conta/IConta';
+import INewConta from '../interfaces/conta/INewConta';
 
 class ContaModel {
   public static async getById(conn: IConnection, id: number): Promise<IConta> {
@@ -10,9 +11,10 @@ class ContaModel {
     return result as IConta;
   }
 
-  public static async create(conn: IConnection, values: string[]): Promise<number> {
+  public static async create(conn: IConnection, account: INewConta): Promise<number> {
+    const { nome, cpf, email, senha } = account;
     const result = await MyConnection
-      .run(conn.queries.createConta, values) as ResultSetHeader;
+      .run(conn.queries.createConta, [nome, cpf, email, senha]) as ResultSetHeader;
     return result.insertId;
   }
 
@@ -22,9 +24,9 @@ class ContaModel {
     return result as IConta;
   }
 
-  public static async update(conn: IConnection, values: number[]): Promise<number> {
+  public static async update(conn: IConnection, saldo: number, accountId: number): Promise<number> {
     const result = await MyConnection
-      .run(conn.queries.updateConta, values) as ResultSetHeader;
+      .run(conn.queries.updateConta, [saldo, accountId]) as ResultSetHeader;
     return result.affectedRows;
   }
 }

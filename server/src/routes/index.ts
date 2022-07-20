@@ -9,6 +9,6 @@ const router = Router();
 router.use('/conta', ContaRouter);
 router.use('/auth', AuthRouter);
 router.use('/ativos', AtivoRouter);
-router.use('/investimentos', InvestimentoRouter)
+router.use('/investimentos', InvestimentoRouter);
 
 export default router;

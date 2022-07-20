@@ -1,14 +1,13 @@
-import { expect } from "chai";
+import { expect } from 'chai';
 import sinon from 'sinon';
-import MyConnection from "../../database/MyConnection";
-import InvestimentoModel from "../../models/Investimento.model";
-
+import MyConnection from '../../database/MyConnection';
+import InvestimentoModel from '../../models/Investimento.model';
 
 const investimentoMock = {
   contaId: 1,
   ativoId: 1,
-  quantidade: 10
-}
+  quantidade: 10,
+};
 
 const conn = MyConnection;
 
@@ -44,7 +43,7 @@ describe('Testa métodos da classe InvestimentoModel em Investimento.model.ts', 
 
       afterEach(async () => {
         stub.restore();
-      })
+      });
 
       it('Deve retornar o número de linhas afetadas', async () => {
         const result = await InvestimentoModel.update(MyConnection, 1, 1, 10);
@@ -65,7 +64,7 @@ describe('Testa métodos da classe InvestimentoModel em Investimento.model.ts', 
 
       afterEach(async () => {
         stub.restore();
-      })
+      });
 
       it('Deve retornar o número de linhas afetadas', async () => {
         const result = await InvestimentoModel.delete(MyConnection, 1, 1);
@@ -86,7 +85,7 @@ describe('Testa métodos da classe InvestimentoModel em Investimento.model.ts', 
 
       afterEach(async () => {
         stub.restore();
-      })
+      });
 
       it('Deve retornar o investimento correspondente', async () => {
         const result = await InvestimentoModel.getOne(MyConnection, 1, 1);

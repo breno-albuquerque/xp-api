@@ -9,7 +9,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -18,9 +18,9 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 export default {
   register,
-  login
-}
+  login,
+};

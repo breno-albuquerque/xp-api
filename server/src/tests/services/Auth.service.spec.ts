@@ -1,12 +1,12 @@
-import chai, { expect } from "chai";
-import sinon from "sinon";
-import ContaModel from "../../models/Conta.model";
-import AuthService from "../../services/Auth.service";
-import HttpException from "../../utils/http.exception";
-import jwt from "../../utils/jwt.token";
+import chai, { expect } from 'chai';
+import sinon from 'sinon';
 import bcrypt from 'bcrypt';
-import { newContaMock, contaMock } from "../mocks/conta.mock.spec";
 import chaiAsPromised = require('chai-as-promised');
+import ContaModel from '../../models/Conta.model';
+import AuthService from '../../services/Auth.service';
+import HttpException from '../../utils/http.exception';
+import jwt from '../../utils/jwt.token';
+import { newContaMock, contaMock } from '../mocks/conta.mock.spec';
 
 chai.use(chaiAsPromised);
 

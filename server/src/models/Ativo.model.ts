@@ -1,6 +1,6 @@
-import { ResultSetHeader, RowDataPacket } from "mysql2";
-import IAtivo from "../interfaces/ativo/IAtivo";
-import IConnection from "../interfaces/connection/IConnection";
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
+import IAtivo from '../interfaces/ativo/IAtivo';
+import IConnection from '../interfaces/connection/IConnection';
 
 class AtivoModel {
   public static async getById(conn: IConnection, value: number): Promise<IAtivo> {
@@ -9,9 +9,9 @@ class AtivoModel {
     return result as IAtivo;
   }
 
-  public static async update(conn: IConnection, quantity: number, assetId: number): Promise<number> {
+  public static async update(conn: IConnection, quantity: number, id: number): Promise<number> {
     const result = await conn
-      .run(conn.queries.updateAtivo, [quantity, assetId]) as ResultSetHeader;
+      .run(conn.queries.updateAtivo, [quantity, id]) as ResultSetHeader;
     return result.affectedRows;
   }
 }

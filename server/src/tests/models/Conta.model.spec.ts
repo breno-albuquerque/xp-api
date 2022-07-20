@@ -1,8 +1,8 @@
-import { expect } from "chai";
-import sinon from "sinon";
-import MyConnection from "../../database/MyConnection";
-import ContaModel from "../../models/Conta.model";
-import { newContaMock, contaMock } from "../mocks/conta.mock.spec";
+import { expect } from 'chai';
+import sinon from 'sinon';
+import MyConnection from '../../database/MyConnection';
+import ContaModel from '../../models/Conta.model';
+import { newContaMock, contaMock } from '../mocks/conta.mock.spec';
 
 const conn = MyConnection;
 
@@ -26,7 +26,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
         expect(result).to.be.a('number');
         expect(result).to.equal(1);
       });
-    })
+    });
   });
   
   describe('Testa método getById', () => {
@@ -104,7 +104,7 @@ describe('Testa métodos da classe ContaModel em Conta.model.ts', () => {
   
       it('Deve retornar undefined', async () => {
         const result = await ContaModel
-          .getByEmail(conn,'email@inexistente.com');
+          .getByEmail(conn, 'email@inexistente.com');
   
         expect(result).to.be.undefined;
       });

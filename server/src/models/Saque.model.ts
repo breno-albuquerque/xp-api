@@ -1,5 +1,5 @@
-import { ResultSetHeader } from "mysql2";
-import IConnection from "../interfaces/connection/IConnection";
+import { ResultSetHeader } from 'mysql2';
+import IConnection from '../interfaces/connection/IConnection';
 
 class SaqueModel {
   public static async create(conn: IConnection, values: number[]): Promise<number> {

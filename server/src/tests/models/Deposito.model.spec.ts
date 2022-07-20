@@ -1,7 +1,7 @@
-import { expect } from "chai";
-import sinon from "sinon";
-import MyConnection from "../../database/MyConnection";
-import DepositoModel from "../../models/Deposito.model";
+import { expect } from 'chai';
+import sinon from 'sinon';
+import MyConnection from '../../database/MyConnection';
+import DepositoModel from '../../models/Deposito.model';
 
 describe('Testa métodos da classe DepositoModel em Conta.model.ts', () => {
   describe('Testa método create', () => {

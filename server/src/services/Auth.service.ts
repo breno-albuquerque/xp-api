@@ -1,11 +1,9 @@
-import MyConnection from "../database/MyConnection";
-import INewConta from "../interfaces/conta/INewConta";
-import HttpException from "../utils/http.exception";
-import HttpStatus from "../utils/http.status";
-import  jwt from "../utils/jwt.token";
 import bcrypt from 'bcrypt';
-import ContaModel from "../models/Conta.model";
-import ContaService from "./Conta.service";
+import INewConta from '../interfaces/conta/INewConta';
+import HttpException from '../utils/http.exception';
+import HttpStatus from '../utils/http.status';
+import jwt from '../utils/jwt.token';
+import ContaService from './Conta.service';
 
 class AuthService {
   private static async verifyEmail(account: INewConta): Promise<void> {

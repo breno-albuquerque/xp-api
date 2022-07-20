@@ -1,7 +1,7 @@
-import { expect } from "chai";
+import { expect } from 'chai';
 import sinon from 'sinon';
-import MyConnection from "../../database/MyConnection";
-import AtivoModel from "../../models/Ativo.model";
+import MyConnection from '../../database/MyConnection';
+import AtivoModel from '../../models/Ativo.model';
 import { ativoMock } from '../mocks/ativo.mock.spec';
 
 const conn = MyConnection;
@@ -17,7 +17,7 @@ describe('Testa métodos da classe AtivoModel em Ativo.model.ts', () => {
 
       afterEach(async () => {
         stub.restore();
-      })
+      });
 
       it('Deve retornar o ativo correspondente', async () => {
         const result = await AtivoModel.getById(conn, 1);

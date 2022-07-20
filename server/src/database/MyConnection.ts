@@ -15,14 +15,14 @@ class MyConnection implements IConnection {
     getOneInvestimento: 'SELECT * FROM Investimentos WHERE contaId=? AND ativoId=?',
     createInvestimento: 'INSERT INTO Investimentos (contaId, ativoId, quantidade) VALUES (?, ?, ?)',
     updateAtivo: 'UPDATE Ativos SET quantidade=? WHERE id=?',
-    updateInvestimento: 'UPDATE Investimentos SET quantidade=? WHERE ativoId=? AND contaId=?'
+    updateInvestimento: 'UPDATE Investimentos SET quantidade=? WHERE ativoId=? AND contaId=?',
   };
 
   private static connection = mysql.createPool({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE
+    database: process.env.MYSQL_DATABASE,
   });
 
   public async run(query: string, values?: QueryVariable[]): Promise<any> {

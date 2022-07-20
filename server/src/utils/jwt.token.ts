@@ -1,4 +1,4 @@
-import { JwtPayload, sign, SignOptions, verify } from 'jsonwebtoken';
+import { sign, SignOptions, verify } from 'jsonwebtoken';
 import IConta from '../interfaces/conta/IConta';
 import HttpException from './http.exception';
 import HttpStatus from './http.status';
@@ -25,5 +25,5 @@ const verifyToken = (token: string) => {
 
 export default {
   generateToken,
-  verifyToken
-}
+  verifyToken,
+};

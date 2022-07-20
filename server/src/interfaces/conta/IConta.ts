@@ -1,4 +1,4 @@
-import INewConta from "./INewConta";
+import INewConta from './INewConta';
 
 interface IConta extends INewConta {
   id: number,

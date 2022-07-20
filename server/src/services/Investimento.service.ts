@@ -1,47 +1,45 @@
-import { RowDataPacket } from "mysql2";
-import MyConnection from "../database/MyConnection";
-import IInvestimento from "../interfaces/investimento/IInvestimento";
-import InvestimentoModel from "../models/Investimento.model";
-import HttpException from "../utils/http.exception";
-import HttpStatus from "../utils/http.status";
-import AtivoService from "./Ativo.service";
-import ContaService from "./Conta.service";
+import { RowDataPacket } from 'mysql2';
+import MyConnection from '../database/MyConnection';
+import IInvestimento from '../interfaces/investimento/IInvestimento';
+import InvestimentoModel from '../models/Investimento.model';
+import HttpException from '../utils/http.exception';
+import HttpStatus from '../utils/http.status';
+import AtivoService from './Ativo.service';
+import ContaService from './Conta.service';
 
 class InvestimentoService {
   public static async purchase(investment: IInvestimento): Promise<void> {
-    const previousInvestment = await InvestimentoModel
+    const prevInvest = await InvestimentoModel
       .getOne(MyConnection, investment);
 
     await this.purchaseOperations(investment);
 
-    if (!previousInvestment) {
-       await InvestimentoModel
+    if (!prevInvest) {
+      await InvestimentoModel
         .create(MyConnection, investment);
     } else {
-       await InvestimentoModel
+      await InvestimentoModel
         .update(MyConnection, { 
-          ...investment, 
-          QtdeAtivo: investment.QtdeAtivo + previousInvestment.quantidade 
-        });
+          ...investment, QtdeAtivo: investment.QtdeAtivo + prevInvest.quantidade });
     }
   }
 
   public static async sale(investment: IInvestimento): Promise<void> {
-    const previousInvestment = await InvestimentoModel
+    const prevInvest = await InvestimentoModel
       .getOne(MyConnection, investment);
 
-    await this.saleOperations(investment, previousInvestment);
-    const newQuantity = previousInvestment.quantidade - investment.QtdeAtivo;
-    await InvestimentoModel.update(MyConnection, { ...investment, QtdeAtivo: newQuantity });
+    await this.saleOperations(investment, prevInvest);
+    await InvestimentoModel.update(MyConnection, { 
+      ...investment, QtdeAtivo: prevInvest.quantidade - investment.QtdeAtivo });
   }
 
-  private static async saleOperations(investment: IInvestimento, previousInvestment: RowDataPacket): Promise<void> {
+  private static async saleOperations(investment: IInvestimento, prevInvest: RowDataPacket) {
     const { CodAtivo, CodCliente, QtdeAtivo } = investment;
 
-    if (!previousInvestment) {
+    if (!prevInvest) {
       throw new HttpException(HttpStatus.NOT_FOUND, 'Ativo não encontrado na carteira');
     }
-    if (previousInvestment.quantidade < QtdeAtivo) {
+    if (prevInvest.quantidade < QtdeAtivo) {
       throw new HttpException(HttpStatus.CONFLICT, 'Carteira com quantidade insuficiente');
     }
 
@@ -50,8 +48,8 @@ class InvestimentoService {
     await AtivoService.updateWhenSold(CodAtivo, QtdeAtivo);
   }
 
-  private static async purchaseOperations(investment: IInvestimento): Promise<void> {
-    const { CodAtivo, CodCliente, QtdeAtivo } = investment;
+  private static async purchaseOperations(invest: IInvestimento) {
+    const { CodAtivo, CodCliente, QtdeAtivo } = invest;
     const fullAsset = await AtivoService.getById(CodAtivo);  
     await ContaService.withdrawal(CodCliente, Number((fullAsset.Valor * QtdeAtivo).toFixed(2)));  
     await AtivoService.updateWhenBought(CodAtivo, QtdeAtivo);

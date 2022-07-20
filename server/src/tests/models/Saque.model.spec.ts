@@ -1,7 +1,7 @@
-import { expect } from "chai";
-import sinon from "sinon";
-import MyConnection from "../../database/MyConnection";
-import SaqueModel from "../../models/Saque.model";
+import { expect } from 'chai';
+import sinon from 'sinon';
+import MyConnection from '../../database/MyConnection';
+import SaqueModel from '../../models/Saque.model';
 
 describe('Testa métodos da classe SaqueModel em Conta.model.ts', () => {
   describe('Testa método create', () => {
@@ -23,6 +23,6 @@ describe('Testa métodos da classe SaqueModel em Conta.model.ts', () => {
         expect(result).to.be.a('number');
         expect(result).to.equal(1);
       });
-    })
+    });
   });
 });

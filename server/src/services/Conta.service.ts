@@ -1,11 +1,11 @@
-import MyConnection from "../database/MyConnection";
-import IConta from "../interfaces/conta/IConta";
-import INewConta from "../interfaces/conta/INewConta";
-import ContaModel from "../models/Conta.model"
+import MyConnection from '../database/MyConnection';
+import IConta from '../interfaces/conta/IConta';
+import INewConta from '../interfaces/conta/INewConta';
+import ContaModel from '../models/Conta.model';
 import DepositoModel from '../models/Deposito.model';
-import SaqueModel from "../models/Saque.model";
-import HttpException from "../utils/http.exception";
-import HttpStatus from "../utils/http.status";
+import SaqueModel from '../models/Saque.model';
+import HttpException from '../utils/http.exception';
+import HttpStatus from '../utils/http.status';
 
 class ContaService {
   public static async getById(accountId: number): Promise<IConta> {
@@ -15,12 +15,11 @@ class ContaService {
   }
 
   public static async getByEmail(email: string): Promise<IConta> {
-    return await ContaModel.getByEmail(MyConnection, email);
+    return ContaModel.getByEmail(MyConnection, email);
   }
 
   public static async create(account: INewConta): Promise<number> {
-    const { nome, cpf, email, senha } = account;
-    const insertId = await ContaModel.create(MyConnection, [nome, cpf, email, senha]);
+    const insertId = await ContaModel.create(MyConnection, account);
     return insertId;
   }
 
@@ -29,7 +28,7 @@ class ContaService {
     const newValue = Number((accountData.saldo + value).toFixed(2));
     
     await DepositoModel.create(MyConnection, [accountId, value]);
-    await ContaModel.update(MyConnection, [newValue, accountId]);
+    await ContaModel.update(MyConnection, newValue, accountId);
   }
 
   public static async withdrawal(accountId: number, value: number) {
@@ -39,7 +38,7 @@ class ContaService {
     if (newValue < 0) throw new HttpException(HttpStatus.CONFLICT, 'Saldo insuficiente');
     
     await SaqueModel.create(MyConnection, [accountId, value]);
-    await ContaModel.update(MyConnection, [newValue, accountId]);
+    await ContaModel.update(MyConnection, newValue, accountId);
   }
 }
 

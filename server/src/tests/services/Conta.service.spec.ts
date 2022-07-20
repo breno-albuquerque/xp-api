@@ -1,17 +1,17 @@
 import chai, { expect } from 'chai';
+import sinon from 'sinon';
+import chaiAsPromised = require('chai-as-promised');
 import ContaService from '../../services/Conta.service';
 import ContaModel from '../../models/Conta.model';
 import DepositoModel from '../../models/Deposito.model';
 import HttpException from '../../utils/http.exception';
-import sinon from 'sinon';
-import chaiAsPromised = require('chai-as-promised');
-import { contaMock } from "../mocks/conta.mock.spec";
+import { contaMock } from '../mocks/conta.mock.spec';
 import SaqueModel from '../../models/Saque.model';
 
 chai.use(chaiAsPromised);
 
 describe('Testa métodos da classe ContaService em Conta.service', () => {
-  describe('Método getById', async () => {
+  describe('Método getById', () => {
     describe('Quando passa o id de uma conta existente', () => {
       let stub: sinon.SinonStub;
   
@@ -48,7 +48,7 @@ describe('Testa métodos da classe ContaService em Conta.service', () => {
     });
   });
 
-  describe('Método deposit', async () => {
+  describe('Método deposit', () => {
     describe('Quando passa valores válidos', () => {
       let stub1: sinon.SinonStub;
       let stub2: sinon.SinonStub;
@@ -74,7 +74,7 @@ describe('Testa métodos da classe ContaService em Conta.service', () => {
     });
   });
 
-  describe('Método withdrawal', async () => {
+  describe('Método withdrawal', () => {
     describe('Quando há saldo na conta para ser sacado', () => {
       let stub1: sinon.SinonStub;
       let stub2: sinon.SinonStub;
@@ -118,7 +118,7 @@ describe('Testa métodos da classe ContaService em Conta.service', () => {
 
       it('Uma excessão deve ser lançada com a mensagem "Saldo insuficiente"', async () => {
         await expect(ContaService.withdrawal(1, 100))
-          .to.be.rejectedWith(HttpException, "Saldo insuficiente");
+          .to.be.rejectedWith(HttpException, 'Saldo insuficiente');
       });
     });
   });

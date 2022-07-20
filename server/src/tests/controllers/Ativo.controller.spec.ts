@@ -11,23 +11,23 @@ chai.use(sinonChai);
 const fullAssetMock = {
   CodAtivo: 1,
   QtdeAtivo: 100,
-  Valor: 30.00
-}
+  Valor: 30.00,
+};
 
 describe('Testa funções do AtivoController', () => {
-  describe('Função getById', async () => {
-    let request: Partial<Request> = {
-      params: { codAtivo: '1' }
+  describe('Função getById', () => {
+    const request: Partial<Request> = {
+      params: { codAtivo: '1' },
     };
-    let response: Partial<Response> = {
+    const response: Partial<Response> = {
       json: sinon.stub().returns(fullAssetMock),
-      status: sinon.stub().returns(200)
+      status: sinon.stub().returns(200),
     };
-    let next = () => {};
+    const next = () => {};
 
-    let stub = sinon.stub(AtivoService, 'getById').resolves(fullAssetMock);
+    const stub = sinon.stub(AtivoService, 'getById').resolves(fullAssetMock);
 
-    after(async () => { stub.restore() });
+    after(async () => { stub.restore(); });
 
     it('É chamado o status da Response com código 200', async () => {
       await AtivoController

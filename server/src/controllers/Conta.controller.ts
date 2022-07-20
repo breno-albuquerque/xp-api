@@ -5,35 +5,35 @@ import HttpStatus from '../utils/http.status';
 const getById = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { codCliente } = req.params;
-    const conta = await ContaService.getById(parseInt(codCliente));
+    const conta = await ContaService.getById(parseInt(codCliente, 10));
     return res.status(HttpStatus.OK).json(conta);
   } catch (error) {
     next(error);
   }
-}
+};
 
 const deposit = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { CodCliente, Valor } = req.body;
-    await ContaService.deposit(parseInt(CodCliente), parseFloat(Valor));
+    await ContaService.deposit(parseInt(CodCliente, 10), parseFloat(Valor));
     return res.status(HttpStatus.CREATED).end();
   } catch (error) {
     next(error);
   }
-}
+};
 
 const withdrawal = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { CodCliente, Valor } = req.body;
-    await ContaService.withdrawal(parseInt(CodCliente), parseFloat(Valor));
+    await ContaService.withdrawal(parseInt(CodCliente, 10), parseFloat(Valor));
     return res.status(HttpStatus.CREATED).end();
   } catch (error) {
     next(error);
   }
-}
+};
 
 export default {
   getById,
   deposit,
-  withdrawal
-}
+  withdrawal,
+};

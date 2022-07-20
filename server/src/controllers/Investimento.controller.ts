@@ -9,7 +9,7 @@ const purchase = async (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 const sale = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -18,9 +18,9 @@ const sale = async (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 export default {
   purchase,
-  sale
-}
+  sale,
+};

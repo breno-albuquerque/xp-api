@@ -1,28 +1,28 @@
 import chai, { expect } from 'chai';
 import { NextFunction, Request, Response } from 'express';
 import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
 import ContaController from '../../controllers/Conta.controller';
 import ContaService from '../../services/Conta.service';
-import sinonChai from 'sinon-chai';
-import { contaMock } from "../mocks/conta.mock.spec";
+import { contaMock } from '../mocks/conta.mock.spec';
 
 chai.should();
 chai.use(sinonChai);
 
 describe('Testa funções do ContaController', () => {
-  describe('Função getById', async () => {
-    let request: Partial<Request> = {
-      params: { contaId: '1' }
+  describe('Função getById', () => {
+    const request: Partial<Request> = {
+      params: { contaId: '1' },
     };
-    let response: Partial<Response> = {
+    const response: Partial<Response> = {
       json: sinon.stub().returns(contaMock),
-      status: sinon.stub().returns(200)
+      status: sinon.stub().returns(200),
     };
-    let next = () => {};
+    const next = () => {};
 
-    let stub = sinon.stub(ContaService, 'getById').resolves(contaMock);
+    const stub = sinon.stub(ContaService, 'getById').resolves(contaMock);
 
-    after(async () => { stub.restore() });
+    after(async () => { stub.restore(); });
 
     it('É chamado o status da Response com código 200', async () => {
       await ContaController
@@ -32,18 +32,18 @@ describe('Testa funções do ContaController', () => {
     });
   });
 
-  describe('Função deposit', async () => {
-    let request: Partial<Request> = {
-      body: { CodCliente: '1', Valor: 100 }
+  describe('Função deposit', () => {
+    const request: Partial<Request> = {
+      body: { CodCliente: '1', Valor: 100 },
     };
-    let response: Partial<Response> = {
-      status: sinon.stub().returns(201)
+    const response: Partial<Response> = {
+      status: sinon.stub().returns(201),
     };
-    let next = () => {};
+    const next = () => {};
 
-    let stub = sinon.stub(ContaService, 'deposit').resolves(undefined);
+    const stub = sinon.stub(ContaService, 'deposit').resolves(undefined);
 
-    after(async () => { stub.restore() });
+    after(async () => { stub.restore(); });
 
     it('É chamado o status da Response com código 201', async () => {
       await ContaController
@@ -53,18 +53,18 @@ describe('Testa funções do ContaController', () => {
     });
   });
 
-  describe('Função withdrawal', async () => {
-    let request: Partial<Request> = {
-      body: { CodCliente: '1', Valor: 100 }
+  describe('Função withdrawal', () => {
+    const request: Partial<Request> = {
+      body: { CodCliente: '1', Valor: 100 },
     };
-    let response: Partial<Response> = {
-      status: sinon.stub().returns(201)
+    const response: Partial<Response> = {
+      status: sinon.stub().returns(201),
     };
-    let next = () => {};
+    const next = () => {};
 
-    let stub = sinon.stub(ContaService, 'withdrawal').resolves(undefined);
+    const stub = sinon.stub(ContaService, 'withdrawal').resolves(undefined);
 
-    after(async () => { stub.restore() });
+    after(async () => { stub.restore(); });
 
     it('É chamado o status da Response com código 201', async () => {
       await ContaController
