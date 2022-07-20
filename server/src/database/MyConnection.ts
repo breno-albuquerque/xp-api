@@ -5,17 +5,18 @@ type QueryVariable = string | number;
 
 class MyConnection implements IConnection {
   public queries: any = {
-    createConta: 'INSERT INTO Contas (nome, cpf, email, senha) VALUES (?, ?, ?, ?)',
-    getContaById: 'SELECT * FROM Contas WHERE id = ?',
-    getContaByEmail: 'SELECT * FROM Contas WHERE email = ?',
-    updateConta: 'UPDATE Contas SET saldo=? WHERE id=?',
-    createDeposito: 'INSERT INTO Depositos (contaId, valor) VALUES (?, ?)',
-    createSaque: 'INSERT INTO Saques (contaId, valor) VALUES (?, ?)',
-    getAtivoById: 'SELECT * FROM Ativos WHERE id = ?',
-    getOneInvestimento: 'SELECT * FROM Investimentos WHERE contaId=? AND ativoId=?',
-    createInvestimento: 'INSERT INTO Investimentos (contaId, ativoId, quantidade) VALUES (?, ?, ?)',
-    updateAtivo: 'UPDATE Ativos SET quantidade=? WHERE id=?',
-    updateInvestimento: 'UPDATE Investimentos SET quantidade=? WHERE ativoId=? AND contaId=?',
+    createConta: 'INSERT INTO Contas (Nome, Cpf, Email, Senha) VALUES (?, ?, ?, ?)',
+    getContaById: 'SELECT * FROM Contas WHERE Id = ?',
+    getContaByEmail: 'SELECT * FROM Contas WHERE Email = ?',
+    updateConta: 'UPDATE Contas SET Saldo=? WHERE Id=?',
+    createDeposito: 'INSERT INTO Depositos (CodConta, Valor) VALUES (?, ?)',
+    createSaque: 'INSERT INTO Saques (CodConta, Valor) VALUES (?, ?)',
+    getAtivoById: 'SELECT * FROM Ativos WHERE Id = ?',
+    getOneInvestimento: 'SELECT * FROM Investimentos WHERE CodConta=? AND CodAtivo=?',
+    createInvestimento: 'INSERT INTO Investimentos (CodConta, CodAtivo, QtdeAtivo) VALUES (?, ?, ?)',
+    updateAtivo: 'UPDATE Ativos SET QtdeAtivo=? WHERE Id=?',
+    updateInvestimento: 'UPDATE Investimentos SET QtdeAtivo=? WHERE CodAtivo=? AND CodConta=?',
+    deleteInvestimento: 'DELETE FROM Investimentos WHERE CodAtivo=? AND CodConta=?',
   };
 
   private static connection = mysql.createPool({
