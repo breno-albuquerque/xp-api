@@ -7,6 +7,6 @@ const router = Router();
 router.get('/:codCliente', ContaController.getById);
 
 router.post('/depositar', contaMiddleware.validTransaction, ContaController.deposit);
-router.post('/sacar', contaMiddleware.validTransaction, ContaController.deposit);
+router.post('/sacar', contaMiddleware.validTransaction, ContaController.withdrawal);
 
 export default router;

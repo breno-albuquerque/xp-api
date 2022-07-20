@@ -31,7 +31,7 @@ class InvestimentoService {
       .getOne(MyConnection, investment);
 
     await this.saleOperations(investment, previousInvestment);
-    const newQuantity = investment.QtdeAtivo + previousInvestment.quantidade;
+    const newQuantity = previousInvestment.quantidade - investment.QtdeAtivo;
     await InvestimentoModel.update(MyConnection, { ...investment, QtdeAtivo: newQuantity });
   }
 

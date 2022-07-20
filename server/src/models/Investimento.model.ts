@@ -23,7 +23,7 @@ class InvestimentoModel {
   public static async update(conn: IConnection, investment: IInvestimento) {
     const { CodAtivo, CodCliente, QtdeAtivo } = investment
     const result = await conn
-      .run(conn.queries.updateInvestimento, [CodAtivo, CodCliente, QtdeAtivo]) as ResultSetHeader;
+      .run(conn.queries.updateInvestimento, [QtdeAtivo, CodAtivo, CodCliente]) as ResultSetHeader;
     return result.affectedRows;
   }
 
