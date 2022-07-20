@@ -7,47 +7,45 @@ import ContaService from "./Conta.service";
 
 class InvestimentoService {
   public static async buyAssets(accountId: number, assetId: number, quantity: number) {
-    const fullAsset = await AtivoService.getById(assetId);
-    const accountData = await ContaService.getById(accountId);
+    const previousInvestment = await InvestimentoModel.getOne(MyConnection, [accountId, assetId]);
 
-    
-    if (fullAsset.Valor > accountData.saldo) {
-      throw new HttpException(HttpStatus.CONFLICT, 'Saldo insuficiente');
-    }
-    
-    await ContaService.withdrawal(accountId, Number((fullAsset.Valor * quantity).toFixed(2)));
-
-    const previousInvestment = await InvestimentoModel.getOne(MyConnection, accountId, assetId);
-
-    await AtivoService.updateWhenBought(assetId, quantity);
+    await this.purchaseOperations(accountId, assetId, quantity);
 
     if (!previousInvestment) {
-      await InvestimentoModel
-        .create(MyConnection, accountId, assetId, quantity)
-    } else {
-      await InvestimentoModel
-        .update(MyConnection, accountId, assetId, quantity + previousInvestment.quantidade);
-    }
+      return await InvestimentoModel
+        .create(MyConnection, [accountId, assetId, quantity])
+    } 
+      return await InvestimentoModel
+        .update(MyConnection, [accountId, assetId, quantity + previousInvestment.quantidade]);
   }
 
   public static async sellAssets(accountId: number, assetId: number, quantity: number) {
-    const previousInvestment = await InvestimentoModel.getOne(MyConnection, accountId, assetId);
+    const previousInvestment = await InvestimentoModel.getOne(MyConnection, [accountId, assetId]);
 
     if (!previousInvestment) {
-      throw new HttpException(HttpStatus.UNPROCESSABLE, 'É preciso ter o ativo na carteira para vendê-lo');
+      throw new HttpException(HttpStatus.NOT_FOUND, 'Ativo não encontrado na carteira');
     }
 
     if (previousInvestment.quantidade < quantity) {
-      throw new HttpException(HttpStatus.UNPROCESSABLE, 'Você não tem essa quantidade disponível para venda');
+      throw new HttpException(HttpStatus.CONFLICT, 'Carteira com quantidade insuficiente');
     }
 
-    const fullAsset = await AtivoService.getById(assetId);
-
-    await ContaService.deposit(accountId, Number((fullAsset.Valor * quantity).toFixed(2)));
-
-    await AtivoService.updateWhenSold(assetId, quantity);
-    await InvestimentoModel.update(MyConnection, accountId, assetId, previousInvestment.quantidade - quantity);
+    await this.saleOperations(accountId, assetId, quantity);
+    await InvestimentoModel.update(MyConnection, [accountId, assetId, previousInvestment.quantidade - quantity]);
   }
+
+  private static async saleOperations(accountId: number, assetId: number, quantity: number) {
+    const fullAsset = await AtivoService.getById(assetId);
+    await ContaService.deposit(accountId, Number((fullAsset.Valor * quantity).toFixed(2)));
+    await AtivoService.updateWhenSold(assetId, quantity);
+  }
+
+  private static async purchaseOperations(accountId: number, assetId: number, quantity: number) {
+    const fullAsset = await AtivoService.getById(assetId);  
+    await ContaService.withdrawal(accountId, Number((fullAsset.Valor * quantity).toFixed(2)));  
+    await AtivoService.updateWhenBought(assetId, quantity);
+  }
+
 }
 
 export default InvestimentoService;

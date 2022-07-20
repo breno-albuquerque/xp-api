@@ -23,13 +23,11 @@ class ContaService {
 
   public static async withdrawal(accountId: number, value: number) {
     const accountData = await this.getById(accountId);
-
     const newValue = Number((accountData.saldo - value).toFixed(2));
 
-    if (newValue < 0) throw new HttpException(HttpStatus.UNPROCESSABLE, 'Saldo insuficiente');
+    if (newValue < 0) throw new HttpException(HttpStatus.CONFLICT, 'Saldo insuficiente');
     
     await SaqueModel.create(MyConnection, [accountId, value]);
-    console.log('here2')
     await ContaModel.update(MyConnection, [newValue, accountId]);
   }
 }
