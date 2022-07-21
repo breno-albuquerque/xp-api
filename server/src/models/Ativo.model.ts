@@ -2,6 +2,13 @@ import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import IAtivo from '../interfaces/ativo/IAtivo';
 import IConnection from '../interfaces/connection/IConnection';
 
+interface IClientAsset {
+  CodAtivo: number,
+  CodConta: number,
+  QtdeAtivo: number,
+  Simbolo: string
+}
+
 class AtivoModel {
   public static async getById(conn: IConnection, id: number): Promise<IAtivo> {
     const [result] = await conn
@@ -9,10 +16,10 @@ class AtivoModel {
     return result as IAtivo;
   }
 
-  public static async getByClient(conn: IConnection, clientId: number): Promise<IAtivo[]> {
+  public static async getByClient(conn: IConnection, clientId: number): Promise<IClientAsset[]> {
     const [result] = await conn
       .run(conn.queries.getAtivosByClient, [clientId]);
-    return result as IAtivo[];
+    return result as IClientAsset[];
   }
 
   public static async update(conn: IConnection, quantity: number, id: number): Promise<number> {
