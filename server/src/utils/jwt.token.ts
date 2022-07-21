@@ -1,11 +1,12 @@
-import { sign, SignOptions, verify } from 'jsonwebtoken';
-import IConta from '../interfaces/conta/IConta';
+import { JwtPayload, sign, SignOptions, verify } from 'jsonwebtoken';
+import { IConta } from '../interfaces/IConta';
 import HttpException from './http.exception';
 import HttpStatus from './http.status';
 
 const SECRET = process.env.JWT_SECRET || 'secret';
 
 const jwtConfig: SignOptions = {
+  expiresIn: '15m',
   algorithm: 'HS256',
 };
 
@@ -14,12 +15,11 @@ const generateToken = (payload: Omit<IConta, 'Senha' | 'Saldo' | 'Cpf' | 'Email'
   return token;
 };
 
-const verifyToken = (token: string) => {
+const verifyToken = (token: string): JwtPayload | string => {
   try {
-    const decrypted = verify(token, SECRET, jwtConfig);
-    return decrypted;
-  } catch (err) {
-    throw new HttpException(HttpStatus.BAD_REQUEST, 'Token inválido');
+    return verify(token, SECRET, jwtConfig);
+  } catch (error) {
+    throw new HttpException(HttpStatus.UNAUTHORIZED, 'Token inválido');
   }
 };
 
