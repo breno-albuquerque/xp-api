@@ -25,13 +25,13 @@ class AtivoService {
       pricePromises.push(this.getValue(asset.Simbolo));
     });
 
-    await Promise.all(pricePromises);
+    const latestValues = await Promise.all(pricePromises);
 
     return assets.map((asset, index) => ({
       CodAtivo: asset.CodAtivo,
       CodCliente: asset.CodConta,
       QtdeAtivo: asset.QtdeAtivo,
-      Valor: pricePromises[index],
+      Valor: latestValues[index],
     }));
   }
 
