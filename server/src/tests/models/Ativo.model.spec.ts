@@ -6,6 +6,13 @@ import ativoMock from '../mocks/ativo.mock.spec';
 
 const conn = MyConnection;
 
+const clientAssetMock = {
+  CodAtivo: 1,
+  CodConta: 1,
+  QtdeAtivo: 10,
+  Simbolo: 'SYMBOL',
+};
+
 const createStub = (resolveValue: object): sinon.SinonStub => (
   sinon.stub(conn, 'run').resolves(resolveValue)
 );
@@ -43,4 +50,17 @@ describe('Testa métodos da classe AtivoModel', () => {
         expect(result).to.equal(1);
       });
     });
+
+  context('Metódo getByCliente', () => {
+    it('Deve retornar um array com objeto(s) que contém o CodConta, o CodAtivo, QtdeAtivo e Simbolo', async () => {
+      stub = createStub([clientAssetMock]);
+  
+      const result = await AtivoModel
+        .getByClient(conn, 1);
+
+      expect(result).to.be.an('array');
+      expect(result[0]).to.be.an('object');
+      expect(result[0]).to.include.all.keys('CodAtivo', 'CodConta', 'QtdeAtivo', 'Simbolo');
+    });
+  });
   });
