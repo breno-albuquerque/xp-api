@@ -6,8 +6,8 @@ import InvestimentoRouter from './Investimento.route';
 
 const router = Router();
 
-router.use('/conta', ContaRouter);
 router.use('/auth', ClienteRouter);
+router.use('/conta', ContaRouter);
 router.use('/ativos', AtivoRouter);
 router.use('/investimentos', InvestimentoRouter);
 

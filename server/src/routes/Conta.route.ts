@@ -1,11 +1,31 @@
 import Router from 'express';
 import ContaController from '../controllers/Conta.controller';
+import { validateBodyId, validateParamId } from '../middlewares/cliente.middleware';
 import transactionValidation from '../middlewares/conta.middleware';
+import tokenValidation from '../middlewares/token.middleware';
 
 const router = Router();
 
-router.get('/:codCliente', ContaController.getById);
-router.post('/depositar', transactionValidation, ContaController.deposit);
-router.post('/sacar', transactionValidation, ContaController.withdrawal);
+router.use(tokenValidation);
+
+router.get(
+  '/:CodCliente',
+  validateParamId,
+  ContaController.getById,
+);
+  
+router.post(
+  '/depositar',
+  validateBodyId,
+  transactionValidation,
+  ContaController.deposit,
+);
+
+router.post(
+  '/sacar',
+  validateBodyId,
+  transactionValidation,
+  ContaController.withdrawal,
+);
 
 export default router;
