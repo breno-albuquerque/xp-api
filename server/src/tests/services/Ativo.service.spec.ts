@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import AtivoModel from '../../models/Ativo.model';
 import AtivoService from '../../services/Ativo.service';
 import HttpException from '../../utils/http.exception';
-import ativoMock from '../mocks/ativo.mock.spec';
+import { ativoMock, clientsAtivoMock } from '../mocks/ativo.mock.spec';
 
 chai.use(chaiAsPromised);
 
@@ -13,13 +13,6 @@ type AtivoModelMethods = 'getById' | 'update' | 'getByClient';
 const createAtivoModelStub = (resolveValue: any, method: AtivoModelMethods): sinon.SinonStub => (
   sinon.stub(AtivoModel, method).resolves(resolveValue)
 );
-
-const clientAssetMock = {
-  CodAtivo: 1,
-  CodConta: 1,
-  QtdeAtivo: 10,
-  Simbolo: 'SYMBOL',
-};
 
 describe('Testa métodos da classe AtivoService em Ativo.service', () => {
   let stub1: sinon.SinonStub;
@@ -84,8 +77,8 @@ describe('Testa métodos da classe AtivoService em Ativo.service', () => {
   });
 
   context('Método getByClient', () => {
-    it('Deve retornar um array com objeto(s) que contém o CodConta, o CodAtivo, QtdeAtivo e Simbolo', async () => {
-      stub1 = createAtivoModelStub([clientAssetMock], 'getByClient');
+    it('Deve retornar um array com objeto(s) que contém o CodCliente, o CodAtivo, QtdeAtivo e Simbolo', async () => {
+      stub1 = createAtivoModelStub([clientsAtivoMock], 'getByClient');
       stub2 = sinon.stub(AtivoService, 'getValue').resolves(30.00);
   
       const result = await AtivoService

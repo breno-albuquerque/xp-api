@@ -1,4 +1,4 @@
-import IInvestimento from '../../interfaces/investimento/IInvestimento';
+import IInvestimento from '../../interfaces/IInvestimento';
 
 const investimentoMock: IInvestimento = {
   CodCliente: 1,

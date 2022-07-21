@@ -1,5 +1,4 @@
-import IConta from '../../interfaces/conta/IConta';
-import INewConta from '../../interfaces/conta/INewConta';
+import { IConta, INewConta } from '../../interfaces/IConta';
 
 export const newContaMock: INewConta = {
   Nome: 'Conta Mock',

@@ -2,16 +2,9 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import MyConnection from '../../database/MyConnection';
 import AtivoModel from '../../models/Ativo.model';
-import ativoMock from '../mocks/ativo.mock.spec';
+import { ativoMock, clientsAtivoMock } from '../mocks/ativo.mock.spec';
 
 const conn = MyConnection;
-
-const clientAssetMock = {
-  CodAtivo: 1,
-  CodConta: 1,
-  QtdeAtivo: 10,
-  Simbolo: 'SYMBOL',
-};
 
 const createStub = (resolveValue: object): sinon.SinonStub => (
   sinon.stub(conn, 'run').resolves(resolveValue)
@@ -52,15 +45,15 @@ describe('Testa métodos da classe AtivoModel', () => {
     });
 
   context('Metódo getByCliente', () => {
-    it('Deve retornar um array com objeto(s) que contém o CodConta, o CodAtivo, QtdeAtivo e Simbolo', async () => {
-      stub = createStub([clientAssetMock]);
+    it('Deve retornar um array com objeto(s) que contém o CodCliente, o CodAtivo, QtdeAtivo e Simbolo', async () => {
+      stub = createStub([clientsAtivoMock]);
   
       const result = await AtivoModel
         .getByClient(conn, 1);
 
       expect(result).to.be.an('array');
       expect(result[0]).to.be.an('object');
-      expect(result[0]).to.include.all.keys('CodAtivo', 'CodConta', 'QtdeAtivo', 'Simbolo');
+      expect(result[0]).to.include.all.keys('CodAtivo', 'CodCliente', 'QtdeAtivo', 'Simbolo');
     });
   });
   });
