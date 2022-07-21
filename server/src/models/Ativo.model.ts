@@ -17,7 +17,7 @@ class AtivoModel {
   }
 
   public static async getByClient(conn: IConnection, clientId: number): Promise<IClientAsset[]> {
-    const [result] = await conn
+    const result = await conn
       .run(conn.queries.getAtivosByClient, [clientId]);
       console.log(result);
     return result as IClientAsset[];
