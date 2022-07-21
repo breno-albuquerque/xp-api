@@ -14,6 +14,13 @@ const fullAssetMock = {
   Valor: 30.00,
 };
 
+const fullAssetClientMock = {
+  CodCliente: 1,
+  CodAtivo: 1,
+  QtdeAtivo: 10,
+  Valor: 30.00,
+};
+
 //  Referência: Solução para criar spy de Request e Response com Typescript
 
 //  https://jonathanwatsonwebdevelopment.medium.com/how-to-unit-test-express-controllers-with-mocha-and-chai-5cb425c5c7db
@@ -46,6 +53,19 @@ describe('Testa funções do AtivoController', () => {
   
       await AtivoController
         .getById(request as Request, response as Response, next as NextFunction);
+
+      expect(response.status).to.have.been.calledWith(200);
+    });
+  });
+
+  context('Função getByClient', () => {
+    it('É chamado o status da Response com código 200 e o array de ativos no json', async () => {
+      stub = sinon
+        .stub(AtivoService, 'getByClient')
+        .resolves([fullAssetClientMock]);
+
+      await AtivoController
+        .getByClient(request as Request, response as Response, next as NextFunction);
 
       expect(response.status).to.have.been.calledWith(200);
     });
