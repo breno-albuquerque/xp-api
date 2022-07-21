@@ -5,7 +5,7 @@ import tokenValidation from '../middlewares/token.middleware';
 
 const router = Router();
 
-router.get('/', AtivoController.getAll);
+router.get('/all', AtivoController.getAll);
 router.get('/:CodAtivo', AtivoController.getById);
 
 router.get(
