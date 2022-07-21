@@ -6,6 +6,11 @@ import HttpStatus from '../utils/http.status';
 import IAtivo from '../interfaces/ativo/IAtivo';
 
 class AtivoService {
+  public static async getAll() {
+    const result = await AtivoModel.getAll(MyConnection);
+    return result;
+  }
+
   public static async getById(assetId: number) {
       const asset = await AtivoModel.getById(MyConnection, assetId);
       if (!asset) throw new HttpException(HttpStatus.NOT_FOUND, 'Ativo não encontrado');
@@ -17,29 +22,26 @@ class AtivoService {
   public static async getByClient(clientId: number) {
     const assets = await AtivoModel.getByClient(MyConnection, clientId);
     
-    //  if (assets.length === 0) { }
+    // Optei por não lançar essa excessão, pensando no frontend, achei melhor retornar o array vazio
+    
+    /* if (assets.length === 0) { 
+      throw new HttpException(HttpStatus.CONFLICT, 'Não há ativos na carteira');
+    } */
 
-    const pricePromises: Promise<number>[] = [];
-
+    const valuesPromises: Promise<number>[] = [];
     assets.forEach((asset) => {
-      pricePromises.push(this.getValue(asset.Simbolo));
+      valuesPromises.push(this.getValue(asset.Simbolo));
     });
+    const latestValues = await Promise.all(valuesPromises);
 
-    const latestValues = await Promise.all(pricePromises);
-
-    return assets.map((asset, index) => ({
-      CodAtivo: asset.CodAtivo,
-      CodCliente: asset.CodConta,
-      QtdeAtivo: asset.QtdeAtivo,
-      Valor: latestValues[index],
-    }));
+    return this.formatClientAsset(assets, latestValues);
   }
 
   public static async updateWhenBought(assetId: number, quantity: number): Promise<void> {
     const asset = await AtivoModel.getById(MyConnection, assetId);
 
     if (asset.QtdeAtivo < quantity) {
-      throw new HttpException(HttpStatus.UNPROCESSABLE, 'Quantidade indisponível');
+      throw new HttpException(HttpStatus.CONFLICT, 'Quantidade indisponível');
     }
 
     await AtivoModel.update(MyConnection, asset.QtdeAtivo - quantity, assetId);
@@ -62,6 +64,17 @@ class AtivoService {
       QtdeAtivo: asset.QtdeAtivo,
       Valor: latestValue,
     };
+  }
+
+  // CORRIGIR TIPAGENS:
+
+  private static formatClientAsset(assets: any, latestValues: number[]) {
+    return assets.map((asset: any, index: any) => ({
+      CodAtivo: asset.CodAtivo,
+      CodCliente: asset.CodConta,
+      QtdeAtivo: asset.QtdeAtivo,
+      Valor: latestValues[index],
+    }));
   }
 }
 
