@@ -4,16 +4,16 @@ import IInvestimento from '../interfaces/investimento/IInvestimento';
 
 class InvestimentoModel {
     public static async getOne(conn: IConnection, invest: IInvestimento): Promise<IInvestimento> {
-    const { CodAtivo, CodCliente } = invest;
+    const { CodCliente, CodAtivo } = invest;
     const [result] = await conn
-      .run(conn.queries.getOneInvestimento, [CodAtivo, CodCliente]) as RowDataPacket[];
+      .run(conn.queries.getOneInvestimento, [CodCliente, CodAtivo]) as RowDataPacket[];
     return result as IInvestimento;
   }
 
   public static async create(conn: IConnection, investment: IInvestimento): Promise<number> {
-    const { CodAtivo, CodCliente, QtdeAtivo } = investment;
+    const { CodCliente, CodAtivo, QtdeAtivo } = investment;
     const result = await conn
-      .run(conn.queries.createInvestimento, [CodAtivo, CodCliente, QtdeAtivo]) as ResultSetHeader;
+      .run(conn.queries.createInvestimento, [CodCliente, CodAtivo, QtdeAtivo]) as ResultSetHeader;
     return result.insertId;
   }
 
