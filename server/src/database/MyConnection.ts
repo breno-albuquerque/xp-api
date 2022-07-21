@@ -17,6 +17,7 @@ class MyConnection implements IConnection {
     updateAtivo: 'UPDATE Ativos SET QtdeAtivo=? WHERE Id=?',
     updateInvestimento: 'UPDATE Investimentos SET QtdeAtivo=? WHERE CodAtivo=? AND CodConta=?',
     deleteInvestimento: 'DELETE FROM Investimentos WHERE CodAtivo=? AND CodConta=?',
+    getAllAssets: 'SELECT * FROM Ativos',
     getAtivosByClient: `
     SELECT i.CodAtivo, i.CodConta, i.QtdeAtivo, a.Simbolo
     FROM Investimentos AS i
