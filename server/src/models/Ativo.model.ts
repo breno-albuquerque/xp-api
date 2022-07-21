@@ -1,18 +1,11 @@
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
-import IAtivo from '../interfaces/ativo/IAtivo';
-import IConnection from '../interfaces/connection/IConnection';
-
-interface IClientAsset {
-  CodAtivo: number,
-  CodConta: number,
-  QtdeAtivo: number,
-  Simbolo: string
-}
+import { IAtivo, IFullAtivo } from '../interfaces/IAtivo';
+import IConnection from '../interfaces/IConnection';
 
 class AtivoModel {
   public static async getAll(conn: IConnection): Promise<IAtivo[]> {
     const result = await conn
-      .run(conn.queries.getAllAssets) as RowDataPacket;
+      .run(conn.queries.getAllAtivos) as RowDataPacket;
     return result as IAtivo[];
   }
 
@@ -22,10 +15,10 @@ class AtivoModel {
     return result as IAtivo;
   }
 
-  public static async getByClient(conn: IConnection, clientId: number): Promise<IClientAsset[]> {
+  public static async getByClient(conn: IConnection, clientId: number): Promise<IFullAtivo[]> {
     const result = await conn
       .run(conn.queries.getAtivosByClient, [clientId]);
-    return result as IClientAsset[];
+    return result as IFullAtivo[];
   }
 
   public static async update(conn: IConnection, quantity: number, id: number): Promise<number> {

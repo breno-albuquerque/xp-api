@@ -1,11 +1,10 @@
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import MyConnection from '../database/MyConnection';
-import IConnection from '../interfaces/connection/IConnection';
-import IConta from '../interfaces/conta/IConta';
-import INewConta from '../interfaces/conta/INewConta';
+import IConnection from '../interfaces/IConnection';
+import { IConta, INewConta } from '../interfaces/IConta';
 
 class ContaModel {
-  public static async getById(conn: IConnection, id: number): Promise<IConta> {
+  public static async getById(conn: IConnection, id: number): Promise<Omit<IConta, 'Cpf' | 'Email' | 'Senha'>> {
     const [result] = await MyConnection
       .run(conn.queries.getContaById, [id]) as RowDataPacket[];
     return result as IConta;

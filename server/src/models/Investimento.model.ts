@@ -1,6 +1,6 @@
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
-import IConnection from '../interfaces/connection/IConnection';
-import IInvestimento from '../interfaces/investimento/IInvestimento';
+import IConnection from '../interfaces/IConnection';
+import IInvestimento from '../interfaces/IInvestimento';
 
 class InvestimentoModel {
     public static async getOne(conn: IConnection, invest: IInvestimento): Promise<IInvestimento> {
