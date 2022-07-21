@@ -4,9 +4,19 @@ import HttpStatus from '../utils/http.status';
 
 const getById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { codAtivo } = req.params;
-    const asset = await AtivoService.getById(parseInt(codAtivo, 10));
+    const { CodAtivo } = req.params;
+    const asset = await AtivoService.getById(parseInt(CodAtivo, 10));
     return res.status(HttpStatus.OK).json(asset);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getByClient = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { CodCliente } = req.params;
+    const assets = await AtivoService.getByClient(parseInt(CodCliente, 10));
+    return res.status(HttpStatus.OK).json(assets);
   } catch (error) {
     next(error);
   }
@@ -14,4 +24,5 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
 
 export default {
   getById,
+  getByClient,
 };
