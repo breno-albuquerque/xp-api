@@ -14,6 +14,27 @@ class AtivoService {
       return this.formatAsset(asset, latestValue);
   }
 
+  public static async getByClient(clientId: number) {
+    const assets = await AtivoModel.getByClient(MyConnection, clientId);
+    
+    //  if (assets.length === 0) { }
+
+    const pricePromises: Promise<number>[] = [];
+
+    assets.forEach((asset) => {
+      pricePromises.push(this.getValue(asset.Simbolo));
+    });
+
+    await Promise.all(pricePromises);
+
+    return assets.map((asset, index) => ({
+      CodAtivo: asset.CodAtivo,
+      CodCliente: asset.CodConta,
+      QtdeAtivo: asset.QtdeAtivo,
+      Valor: pricePromises[index],
+    }));
+  }
+
   public static async updateWhenBought(assetId: number, quantity: number): Promise<void> {
     const asset = await AtivoModel.getById(MyConnection, assetId);
 
