@@ -2,6 +2,15 @@ import { Request, Response, NextFunction } from 'express';
 import AtivoService from '../services/Ativo.service';
 import HttpStatus from '../utils/http.status';
 
+const getAll = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const assets = await AtivoService.getAll();
+    return res.status(HttpStatus.OK).json(assets);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getById = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { CodAtivo } = req.params;
@@ -25,4 +34,5 @@ const getByClient = async (req: Request, res: Response, next: NextFunction) => {
 export default {
   getById,
   getByClient,
+  getAll
 };
