@@ -10,41 +10,54 @@ chai.use(sinonChai);
 
 const tokenMock = 'jwt-mock';
 
+const statusJsonSpy = sinon.spy();
+const sandbox = sinon.createSandbox();
+
+let response: Partial<Response>;
+
+const request: Partial<Request> = {
+  params: { param: 'temp' },
+};
+
+const next = () => {};
+
 describe('Testa funções do AuthController', () => {
-  describe('Função create', () => {
-    const request = {};
-    const response: Partial<Response> = {
-      json: sinon.stub().returns(tokenMock),
-      status: sinon.stub().returns(201),
+  let stub: sinon.SinonStub;
+
+  beforeEach(() => {
+    response = {
+      json: sinon.spy(),
+      status: sandbox.stub().returns({ json: statusJsonSpy }),
     };
-    const next = () => {};
+  });
 
-    const stub = sinon.stub(AuthService, 'create').resolves(tokenMock);
+  afterEach(() => {
+    stub.restore();
+    sandbox.restore();
+  });
 
-    after(async () => { stub.restore(); });
-
+  context('Função register', () => {
     it('É chamado o status da Response com código 201', async () => {
+       stub = sinon
+        .stub(AuthService, 'register')
+        .resolves(tokenMock);
+      
       await AuthController
-        .create(request as Request, response as Response, next as NextFunction);
+        .register(request as Request, response as Response, next as NextFunction);
+
       expect(response.status).to.have.been.calledWith(201);
     });
   });
 
-  describe('Função login', () => {
-    const stub = sinon.stub(AuthService, 'login').resolves(tokenMock);
-
-    const request = {};
-    const response: Partial<Response> = {
-      json: sinon.stub().returns(tokenMock),
-      status: sinon.stub().returns(200),
-    };
-    const next = () => {};
-
-    after(async () => { stub.restore(); });
-
+  context('Função login', () => {
     it('É chamado o status da Response com código 200', async () => {
+       stub = sinon
+        .stub(AuthService, 'login')
+        .resolves(tokenMock);
+
       await AuthController
         .login(request as Request, response as Response, next as NextFunction);
+
       expect(response.status).to.have.been.calledWith(200);
     });
   });
