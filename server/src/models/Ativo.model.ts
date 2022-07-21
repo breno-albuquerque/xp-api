@@ -9,6 +9,12 @@ class AtivoModel {
     return result as IAtivo;
   }
 
+  public static async getByClient(conn: IConnection, clientId: number): Promise<IAtivo[]> {
+    const [result] = await conn
+      .run(conn.queries.getAtivosByClient, [clientId]);
+    return result as IAtivo[];
+  }
+
   public static async update(conn: IConnection, quantity: number, id: number): Promise<number> {
     const result = await conn
       .run(conn.queries.updateAtivo, [quantity, id]) as ResultSetHeader;
