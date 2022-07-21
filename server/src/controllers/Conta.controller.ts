@@ -4,8 +4,8 @@ import HttpStatus from '../utils/http.status';
 
 const getById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { codCliente } = req.params;
-    const conta = await ContaService.getById(parseInt(codCliente, 10));
+    const { CodCliente } = req.params;
+    const conta = await ContaService.getById(parseInt(CodCliente, 10));
     return res.status(HttpStatus.OK).json(conta);
   } catch (error) {
     next(error);
