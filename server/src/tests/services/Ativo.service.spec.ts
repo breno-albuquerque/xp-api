@@ -8,11 +8,18 @@ import ativoMock from '../mocks/ativo.mock.spec';
 
 chai.use(chaiAsPromised);
 
-type AtivoModelMethods = 'getById' | 'update';
+type AtivoModelMethods = 'getById' | 'update' | 'getByClient';
 
 const createAtivoModelStub = (resolveValue: any, method: AtivoModelMethods): sinon.SinonStub => (
   sinon.stub(AtivoModel, method).resolves(resolveValue)
 );
+
+const clientAssetMock = {
+  CodAtivo: 1,
+  CodConta: 1,
+  QtdeAtivo: 10,
+  Simbolo: 'SYMBOL',
+};
 
 describe('Testa métodos da classe AtivoService em Ativo.service', () => {
   let stub1: sinon.SinonStub;
@@ -73,6 +80,20 @@ describe('Testa métodos da classe AtivoService em Ativo.service', () => {
         .updateWhenSold(1, 10);
 
       expect(result).to.be.an('undefined');
+    });
+  });
+
+  context('Método getByClient', () => {
+    it('Deve retornar um array com objeto(s) que contém o CodConta, o CodAtivo, QtdeAtivo e Simbolo', async () => {
+      stub1 = createAtivoModelStub([clientAssetMock], 'getByClient');
+      stub2 = sinon.stub(AtivoService, 'getValue').resolves(30.00);
+  
+      const result = await AtivoService
+        .getByClient(1);
+
+      expect(result).to.be.an('array');
+      expect(result[0]).to.be.an('object');
+      expect(result[0]).to.include.all.keys('CodAtivo', 'CodCliente', 'QtdeAtivo', 'Valor');
     });
   });
 });
