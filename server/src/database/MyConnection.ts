@@ -1,30 +1,34 @@
 import mysql from 'mysql2/promise';
-import IConnection from '../interfaces/connection/IConnection';
+import IConnection from '../interfaces/IConnection';
 
 type QueryVariable = string | number;
 
 class MyConnection implements IConnection {
   public queries: any = {
     createConta: 'INSERT INTO Contas (Nome, Cpf, Email, Senha) VALUES (?, ?, ?, ?)',
-    getContaById: 'SELECT * FROM Contas WHERE Id = ?',
+    getContaById: 'SELECT Id, Nome, Saldo FROM Contas WHERE Id = ?',
     getContaByEmail: 'SELECT * FROM Contas WHERE Email = ?',
     updateConta: 'UPDATE Contas SET Saldo=? WHERE Id=?',
-    createDeposito: 'INSERT INTO Depositos (CodConta, Valor) VALUES (?, ?)',
-    createSaque: 'INSERT INTO Saques (CodConta, Valor) VALUES (?, ?)',
+
+    createDeposito: 'INSERT INTO Depositos (CodCliente, Valor) VALUES (?, ?)',
+
+    createSaque: 'INSERT INTO Saques (CodCliente, Valor) VALUES (?, ?)',
+
     getAtivoById: 'SELECT * FROM Ativos WHERE Id = ?',
-    getOneInvestimento: 'SELECT * FROM Investimentos WHERE CodConta=? AND CodAtivo=?',
-    createInvestimento: 'INSERT INTO Investimentos (CodConta, CodAtivo, QtdeAtivo) VALUES (?, ?, ?)',
     updateAtivo: 'UPDATE Ativos SET QtdeAtivo=? WHERE Id=?',
-    updateInvestimento: 'UPDATE Investimentos SET QtdeAtivo=? WHERE CodAtivo=? AND CodConta=?',
-    deleteInvestimento: 'DELETE FROM Investimentos WHERE CodAtivo=? AND CodConta=?',
-    getAllAssets: 'SELECT * FROM Ativos',
+    getAllAtivos: 'SELECT * FROM Ativos',
     getAtivosByClient: `
-    SELECT i.CodAtivo, i.CodConta, i.QtdeAtivo, a.Simbolo
+    SELECT a.Id, a.Simbolo, i.CodCliente, i.QtdeAtivo, a.Simbolo
     FROM Investimentos AS i
     INNER JOIN Ativos AS a
     ON a.Id = i.CodAtivo
-    WHERE i.CodConta = ?
+    WHERE i.CodCliente = ?
     `,
+
+    getOneInvestimento: 'SELECT * FROM Investimentos WHERE CodCliente=? AND CodAtivo=?',  
+    createInvestimento: 'INSERT INTO Investimentos (CodCliente, CodAtivo, QtdeAtivo) VALUES (?, ?, ?)',
+    updateInvestimento: 'UPDATE Investimentos SET QtdeAtivo=? WHERE CodAtivo=? AND CodCliente=?',
+    deleteInvestimento: 'DELETE FROM Investimentos WHERE CodAtivo=? AND CodCliente=?',
   };
 
   private static connection = mysql.createPool({
