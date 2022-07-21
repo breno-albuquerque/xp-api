@@ -10,6 +10,12 @@ interface IClientAsset {
 }
 
 class AtivoModel {
+  public static async getAll(conn: IConnection): Promise<IAtivo[]> {
+    const result = await conn
+      .run(conn.queries.getAllAssets) as RowDataPacket;
+    return result as IAtivo[];
+  }
+
   public static async getById(conn: IConnection, id: number): Promise<IAtivo> {
     const [result] = await conn
       .run(conn.queries.getAtivoById, [id]) as RowDataPacket[];
