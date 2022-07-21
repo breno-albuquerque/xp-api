@@ -1,5 +1,5 @@
 import MyConnection from '../database/MyConnection';
-import IInvestimento from '../interfaces/investimento/IInvestimento';
+import IInvestimento from '../interfaces/IInvestimento';
 import InvestimentoModel from '../models/Investimento.model';
 import HttpException from '../utils/http.exception';
 import HttpStatus from '../utils/http.status';

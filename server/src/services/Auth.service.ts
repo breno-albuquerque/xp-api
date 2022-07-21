@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import INewConta from '../interfaces/conta/INewConta';
+import { INewConta } from '../interfaces/IConta';
 import HttpException from '../utils/http.exception';
 import HttpStatus from '../utils/http.status';
 import jwt from '../utils/jwt.token';

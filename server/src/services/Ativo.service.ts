@@ -3,10 +3,10 @@ import MyConnection from '../database/MyConnection';
 import AtivoModel from '../models/Ativo.model';
 import HttpException from '../utils/http.exception';
 import HttpStatus from '../utils/http.status';
-import IAtivo from '../interfaces/ativo/IAtivo';
+import { IAtivo, IFullAtivo } from '../interfaces/IAtivo';
 
 class AtivoService {
-  public static async getAll() {
+  public static async getAll(): Promise<IAtivo[]> {
     const result = await AtivoModel.getAll(MyConnection);
     return result;
   }
@@ -68,11 +68,12 @@ class AtivoService {
 
   // CORRIGIR TIPAGENS:
 
-  private static formatClientAsset(assets: any, latestValues: number[]) {
-    return assets.map((asset: any, index: any) => ({
-      CodAtivo: asset.CodAtivo,
-      CodCliente: asset.CodConta,
+  private static formatClientAsset(assets: IFullAtivo[], latestValues: number[]) {
+    return assets.map((asset: IFullAtivo, index: number) => ({
+      CodAtivo: asset.Id,
+      CodCliente: asset.CodCliente,
       QtdeAtivo: asset.QtdeAtivo,
+      Simbolo: asset.Simbolo,
       Valor: latestValues[index],
     }));
   }
