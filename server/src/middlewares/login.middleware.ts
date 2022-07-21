@@ -14,15 +14,13 @@ const loginSchema = Joi.object({
 });
 
 const loginValidation = (req: Request, _res: Response, next: NextFunction) => {
-  try {
-    const validation = loginSchema.validate(req.body);
+  const validation = loginSchema.validate(req.body);
+
     if (validation.error) {
       throw new HttpException(HttpStatus.BAD_REQUEST, validation.error.details[0].message);
     }
-    next();
-  } catch (error) {
-    next(error);
-  }
+    
+  next();
 };
 
 export default loginValidation;

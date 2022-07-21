@@ -17,15 +17,13 @@ const registerSchema = Joi.object({
 });
 
 const registerValidation = (req: Request, _res: Response, next: NextFunction) => {
-  try {
-    const validation = registerSchema.validate(req.body);
-    if (validation.error) {
-      throw new HttpException(HttpStatus.BAD_REQUEST, validation.error.details[0].message);
-    }
-    next();
-  } catch (error) {
-    next(error);
+  const validation = registerSchema.validate(req.body);
+  
+  if (validation.error) {
+    throw new HttpException(HttpStatus.BAD_REQUEST, validation.error.details[0].message);
   }
+
+  next();
 };
 
 export default registerValidation;
