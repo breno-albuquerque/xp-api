@@ -18,32 +18,32 @@ CREATE TABLE `xp-db`.Ativos (
 
 CREATE TABLE `xp-db`.Depositos (
   Id  INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  CodConta INTEGER NOT NULL,
+  CodCliente INTEGER NOT NULL,
   Valor DOUBLE NOT NULL,
-  FOREIGN KEY (CodConta) REFERENCES Contas(Id)
+  FOREIGN KEY (CodCliente) REFERENCES Contas(Id)
 );
 
 CREATE TABLE `xp-db`.Saques (
   Id  INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  CodConta INTEGER NOT NULL,
+  CodCliente INTEGER NOT NULL,
   Valor DOUBLE NOT NULL,
-  FOREIGN KEY (CodConta) REFERENCES Contas(Id)
+  FOREIGN KEY (CodCliente) REFERENCES Contas(Id)
 );
 
 CREATE TABLE `xp-db`.Investimentos (
-  CodConta  INTEGER NOT NULL,
+  CodCliente  INTEGER NOT NULL,
   CodAtivo INTEGER NOT NULL,
   QtdeAtivo INTEGER NOT NULL,
-  FOREIGN KEY (CodConta) REFERENCES Contas(Id),
+  FOREIGN KEY (CodCliente) REFERENCES Contas(Id),
   FOREIGN KEY (CodAtivo) REFERENCES Ativos(Id)
 );
 
 CREATE TABLE `xp-db`.Operações (
-	CodConta  INTEGER NOT NULL,
+	CodCliente  INTEGER NOT NULL,
   CodAtivo INTEGER NOT NULL,
   Tipo VARCHAR(5) NOT NULL,
   ValorTotal DOUBLE NOT NULL,
-  FOREIGN KEY (CodConta) REFERENCES Contas(Id),
+  FOREIGN KEY (CodCliente) REFERENCES Contas(Id),
   FOREIGN KEY (CodAtivo) REFERENCES Ativos(Id)
 );
 
