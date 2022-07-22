@@ -6,12 +6,14 @@ import HttpStatus from '../utils/http.status';
 import jwtToken from '../utils/jwt.token';
 
 const tokenValidation = (req: IRequest, _res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
+    const auth = req.headers.authorization;
 
-    if (!token) {
+    if (!auth) {
       throw new HttpException(HttpStatus.UNAUTHORIZED, 'Token não encontrado');
     }
-
+    
+    const [, token] = auth.split(' ');
+    
     const user = jwtToken.verifyToken(token) as JwtPayload;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     req.user! = user;
