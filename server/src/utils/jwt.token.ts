@@ -6,7 +6,7 @@ import HttpStatus from './http.status';
 const SECRET = process.env.JWT_SECRET || 'secret';
 
 const jwtConfig: SignOptions = {
-  expiresIn: '15m',
+  //  expiresIn: '15m',
   algorithm: 'HS256',
 };
 
