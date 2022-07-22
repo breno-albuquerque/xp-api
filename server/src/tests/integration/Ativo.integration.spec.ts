@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable mocha/max-top-level-suites */
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';

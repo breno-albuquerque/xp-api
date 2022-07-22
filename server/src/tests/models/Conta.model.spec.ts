@@ -72,13 +72,21 @@ describe('Testa métodos da classe ContaModel', () => {
   });
 
   context('Método update', () => {
-      it('Deve retornar 1, correspondente a uma linha afetada', async () => {
+      it('Deve retornar um number', async () => {
         stub = createStub({ affectedRows: 1 });
 
         const result = await ContaModel
           .update(conn, 100, 1);
   
         expect(result).to.be.an('number');
+      });
+      
+      it('Deve retornar 1 linha afetada', async () => {
+        stub = createStub({ affectedRows: 1 });
+
+        const result = await ContaModel
+          .update(conn, 100, 1);
+  
         expect(result).to.equal(1);
       });
     });
