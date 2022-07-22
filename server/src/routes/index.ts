@@ -45,13 +45,13 @@ const router = Router();
  *            type: object
  *            properties:
  *              CodAtivo: 
- *                type: number
+ *                type: integer
  *              CodCliente: 
- *                type: number
+ *                type: integer
  *              Simbolo:
  *                type: string
  *              QtdeAtivo:
- *                type: number
+ *                type: integer
  *              Valor:
  *                type: number
  *            example:
@@ -65,7 +65,7 @@ const router = Router();
  *            type: object
  *            properties:
  *              Id: 
- *                type: number
+ *                type: integer
  *              Cpf: 
  *                type: string
  *              Nome:
@@ -81,7 +81,21 @@ const router = Router();
  *              Cpf: 12345678900
  *              Nome: Name Example
  *              Email: example@email.com
- *              Senha: 123456       
+ *              Senha: 123456
+ * 
+ *          Investimento:
+ *            type: object
+ *            properties:
+ *              CodCliente:
+ *                type: integer
+ *              CodAtivo:
+ *                type: integer
+ *              QtdeAtivo:
+ *                type: integer
+ *            example:
+ *              CodCliente: 1
+ *              CodAtivo: 1
+ *              QtdeAtivo: 10
  */    
 
 router.use('/auth', ClienteRouter);
@@ -321,6 +335,46 @@ router.use('/investimentos', InvestimentoRouter);
  *  tags:
  *      name: Investimentos
  *      description: Endpoints para realizar investimentos
+ */
+
+/**
+ * @swagger
+ *  /investimentos/comprar:
+ *    post:
+ *      tags: [Investimentos]
+ *      description: Cria o registro de um investimento, atualiza carteira, qtde de ativos e saldo
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              $ref: '#/components/schemas/Investimento'
+ *      responses:
+ *        201:
+ *          description: Investimento realizado com sucesso
+ *      security:
+ *        - bearerAuth: []
+ */
+
+/**
+ * @swagger
+ *  /investimentos/vender:
+ *    post:
+ *      tags: [Investimentos]
+ *      description: Vende ativos, atualiza carteira, qtde de ativos e saldo
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              $ref: '#/components/schemas/Investimento'
+ *      responses:
+ *        201:
+ *          description: Venda realizada com sucesso
+ *      security:
+ *        - bearerAuth: []
  */
 
 export default router;
