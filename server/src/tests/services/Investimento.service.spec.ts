@@ -59,10 +59,19 @@ describe('Testa métodos da classe InvestimentoService', () => {
         .to.be.rejectedWith(HttpException, 'Carteira com quantidade insuficiente');
     });
 
-    it('Quando o cliente possui quantidade suficiente para a venda, InvestimentoModel.update deve ser chamado', async () => {
+    it('Quando o cliente possui quantidade maior do que a venda, InvestimentoModel.update deve ser chamado', async () => {
       stub1 = sinon.stub(InvestimentoService, 'saleOperations').resolves(undefined);
-      stub1 = createInvestModelStub(investimentoMock, 'getOne');
-      stub2 = createInvestModelStub({ affectedRows: 1 }, 'update');
+      stub2 = createInvestModelStub({ ...investimentoMock, QtdeAtivo: 5 }, 'getOne');
+      stub3 = createInvestModelStub({ affectedRows: 1 }, 'update');
+      
+      await InvestimentoService.sale(investimentoMock);
+      expect(stub2.calledOnce).to.equal(true);
+    });
+
+    it('Quando o cliente possui quantidade igual a da venda, InvestimentoModel.delete deve ser chamado', async () => {
+      stub1 = sinon.stub(InvestimentoService, 'saleOperations').resolves(undefined);
+      stub2 = createInvestModelStub(investimentoMock, 'getOne');
+      stub3 = createInvestModelStub({ affectedRows: 1 }, 'delete');
       
       await InvestimentoService.sale(investimentoMock);
       expect(stub2.calledOnce).to.equal(true);

@@ -90,7 +90,7 @@ describe('Integração /investimentos/vender - withdrawal', () => {
       .request(server)
       .post('/investimentos/vender')
       .set('Authorization', token)
-      .send({ CodCliente: 1, CodAtivo: 1, QtdeAtivo: 10 });
+      .send({ CodCliente: 1, CodAtivo: 1, QtdeAtivo: 5 });
 
     expect(response).to.have.status(201);
   });
