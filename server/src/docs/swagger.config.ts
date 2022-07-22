@@ -10,6 +10,15 @@ const swaggerConfig = {
       url: 'http://localhost:8000',
       description: 'Servidor local',
     }],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   apis: ['./src/routes/index.ts'],
 };
