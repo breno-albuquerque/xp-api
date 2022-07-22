@@ -91,6 +91,65 @@ router.use('/auth', ClienteRouter);
  *      name: Auth
  *      description: Endpoints de autorização
  */
+
+/**
+ * @swagger
+ *  /auth/registrar:
+ *    post:
+ *      tags: [Auth]
+ *      description: Registra uma nova e retorna um JWT
+ *      responses:
+ *        201:
+ *          description: Conta cadastrada no sistema!
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                Nome:
+ *                  type: string
+ *                Cpf: 
+ *                  type: string
+ *                Email:
+ *                  type: string
+ *                Senha:
+ *                  type: string
+ *                Saldo:
+ *                  type: number
+ *              example:
+ *                Nome: Name Example
+ *                Cpf: '12345678900'
+ *                Email: example@email.com
+ *                Senha: "123456" 
+*/
+
+/**
+ * @swagger
+ *  /auth/entrar:
+ *    post:
+ *      tags: [Auth]
+ *      description: Entra em uma conta ja cadastrada e retorna um JWT
+ *      responses:
+ *        201:
+ *          description: Conta logada no sistema!
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                Email:
+ *                  type: string
+ *                Senha:
+ *                  type: string
+ *              example:
+ *                Email: example@email.com
+ *                Senha: "123456" 
+ */
+
 router.use('/conta', ContaRouter);
 /**
  * @swagger
