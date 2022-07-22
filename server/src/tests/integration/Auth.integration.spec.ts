@@ -6,7 +6,6 @@ import sinon from 'sinon';
 import server from '../../app';
 import ContaModel from '../../models/Conta.model';
 import { contaMock, newContaMock } from '../mocks/conta.mock.spec';
-import jwt from '../../utils/jwt.token';
 
 chai.use(chaiHttp);
 
@@ -15,8 +14,6 @@ type Methods = 'create' | 'getByEmail' | 'getById' | 'update';
 const createModelStub = (resolveValue: any, method: Methods): sinon.SinonStub => (
   sinon.stub(ContaModel, method).resolves(resolveValue)
 );
-
-const token = jwt.generateToken({ Id: 1, Nome: 'Conta Mock' });
 
 let response: any;
 let stub1: sinon.SinonStub;
@@ -42,10 +39,9 @@ describe('Integração /auth/registrar - register', () => {
     expect(response).to.have.status(201);
   });
 
-  it('Deve retornar o JWT correto', () => {
+  it('Deve retornar um Jason Web Token', () => {
     expect(response.body).to.have.key('token');
     expect(response.body.token).to.be.a('string');
-    expect(response.body.token).to.equal(token);
   });
 });
 
@@ -69,9 +65,8 @@ describe('Integração /auth/entrar - login', () => {
     expect(response).to.have.status(200);
   });
 
-  it('Deve retornar o JWT correto', () => {
+  it('Deve retornar um Jason Web Token', () => {
     expect(response.body).to.have.key('token');
     expect(response.body.token).to.be.a('string');
-    expect(response.body.token).to.equal(token);
   });
 });
