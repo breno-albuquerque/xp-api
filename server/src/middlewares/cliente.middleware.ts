@@ -6,7 +6,7 @@ import HttpStatus from '../utils/http.status';
 const validateBodyId = (req: IRequest, res: Response, next: NextFunction) => {
   const { CodCliente } = req.body;
   if (Number(CodCliente) !== Number(req.user?.Id)) {
-    throw new HttpException(HttpStatus.UNAUTHORIZED, 'Identificador de conta errado');
+    throw new HttpException(HttpStatus.UNAUTHORIZED, 'Identificador de conta incorreto');
   }
   next();
 };
@@ -14,7 +14,7 @@ const validateBodyId = (req: IRequest, res: Response, next: NextFunction) => {
 const validateParamId = (req: IRequest, res: Response, next: NextFunction) => {
   const { CodCliente } = req.params;
   if (Number(CodCliente) !== Number(req.user?.Id)) {
-    throw new HttpException(HttpStatus.UNAUTHORIZED, 'Identificador de conta errado');
+    throw new HttpException(HttpStatus.UNAUTHORIZED, 'Identificador de conta incorreto');
   }
   next();
 };

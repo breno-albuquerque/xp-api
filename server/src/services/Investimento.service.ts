@@ -37,7 +37,7 @@ class InvestimentoService {
     const { CodAtivo, CodCliente, QtdeAtivo } = investment;
 
     if (!prevInvest) {
-      throw new HttpException(HttpStatus.NOT_FOUND, 'Ativo não encontrado na carteira');
+      throw new HttpException(HttpStatus.CONFLICT, 'Ativo não está presente na carteira');
     }
     if (prevInvest.QtdeAtivo < QtdeAtivo) {
       throw new HttpException(HttpStatus.CONFLICT, 'Carteira com quantidade insuficiente');
