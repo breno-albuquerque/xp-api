@@ -54,7 +54,7 @@ describe('Integração /investimentos/comprar - puchase', () => {
     response = await chai
       .request(server)
       .post('/investimentos/comprar')
-      .set('Authorization', token)
+      .set('Authorization', `Baerer ${token}`)
       .send({ CodCliente: 1, CodAtivo: 1, QtdeAtivo: 10 });
 
     expect(response).to.have.status(201);
@@ -64,7 +64,7 @@ describe('Integração /investimentos/comprar - puchase', () => {
     response = await chai
       .request(server)
       .post('/investimentos/comprar')
-      .set('Authorization', token)
+      .set('Authorization', `Baerer ${token}`)
       .send({ CodCliente: 2, CodAtivo: 1, QtdeAtivo: 10 });
 
     expect(response).to.have.status(401);
@@ -89,7 +89,7 @@ describe('Integração /investimentos/vender - withdrawal', () => {
     response = await chai
       .request(server)
       .post('/investimentos/vender')
-      .set('Authorization', token)
+      .set('Authorization', `Baerer ${token}`)
       .send({ CodCliente: 1, CodAtivo: 1, QtdeAtivo: 5 });
 
     expect(response).to.have.status(201);
@@ -99,7 +99,7 @@ describe('Integração /investimentos/vender - withdrawal', () => {
     response = await chai
       .request(server)
       .post('/investimentos/vender')
-      .set('Authorization', token)
+      .set('Authorization', `Baerer ${token}`)
       .send({ CodCliente: 2, CodAtivo: 1, QtdeAtivo: 10 });
 
     expect(response).to.have.status(401);

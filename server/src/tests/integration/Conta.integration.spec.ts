@@ -49,7 +49,7 @@ describe('Integração /conta/:CodCliente - getById', () => {
     response = await chai
       .request(server)
       .get('/conta/1')
-      .set('Authorization', token);
+      .set('Authorization', `Baerer ${token}`);
   });
 
   it('Deve retornar código status 200', () => {
@@ -77,7 +77,7 @@ describe('Integração /conta/depositar - deposit', () => {
     response = await chai
     .request(server)
     .post('/conta/depositar')
-    .set('Authorization', token)
+    .set('Authorization', `Baerer ${token}`)
     .send({ CodCliente: 1, Valor: 100 });
 
     expect(response).to.have.status(201);
@@ -87,7 +87,7 @@ describe('Integração /conta/depositar - deposit', () => {
     response = await chai
     .request(server)
     .post('/conta/depositar')
-    .set('Authorization', token)
+    .set('Authorization', `Baerer ${token}`)
     .send({ CodCliente: 2, Valor: 100 });
 
     expect(response).to.have.status(401);
@@ -110,7 +110,7 @@ describe('Integração /conta/sacar - withdrawal', () => {
     response = await chai
     .request(server)
     .post('/conta/sacar')
-    .set('Authorization', token)
+    .set('Authorization', `Baerer ${token}`)
     .send({ CodCliente: 1, Valor: 30 });
 
     expect(response).to.have.status(201);
@@ -120,7 +120,7 @@ describe('Integração /conta/sacar - withdrawal', () => {
     response = await chai
     .request(server)
     .post('/conta/sacar')
-    .set('Authorization', token)
+    .set('Authorization', `Baerer ${token}`)
     .send({ CodCliente: 2, Valor: 30 });
 
     expect(response).to.have.status(401);

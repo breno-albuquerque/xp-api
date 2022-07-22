@@ -85,7 +85,7 @@ describe('Integração /ativo/cliente/:id - getByCliente', () => {
     response = await chai
       .request(server)
         .get('/ativos/cliente/1')
-        .set('Authorization', jwt.generateToken(contaMock));
+        .set('Authorization', `Baerer ${jwt.generateToken(contaMock)}`);
   });
 
   afterEach(async () => {
