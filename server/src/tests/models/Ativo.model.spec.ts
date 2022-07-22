@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import MyConnection from '../../database/MyConnection';
+import MyConnection from '../../database/connections/MyConnection';
 import AtivoModel from '../../models/Ativo.model';
 import { ativoMock, clientsAtivoMock } from '../mocks/ativo.mock.spec';
 

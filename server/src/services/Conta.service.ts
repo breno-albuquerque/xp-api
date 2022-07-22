@@ -1,4 +1,4 @@
-import MyConnection from '../database/MyConnection';
+import MyConnection from '../database/connections/MyConnection';
 import { IConta, INewConta } from '../interfaces/IConta';
 import ContaModel from '../models/Conta.model';
 import DepositoModel from '../models/Deposito.model';

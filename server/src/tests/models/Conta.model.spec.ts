@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import MyConnection from '../../database/MyConnection';
+import MyConnection from '../../database/connections/MyConnection';
 import ContaModel from '../../models/Conta.model';
 import { newContaMock, contaMock } from '../mocks/conta.mock.spec';
 

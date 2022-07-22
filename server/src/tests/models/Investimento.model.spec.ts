@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import MyConnection from '../../database/MyConnection';
+import MyConnection from '../../database/connections/MyConnection';
 import InvestimentoModel from '../../models/Investimento.model';
 import investimentoMock from '../mocks/investimento.mock.spec';
 

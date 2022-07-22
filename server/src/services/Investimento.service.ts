@@ -1,4 +1,4 @@
-import MyConnection from '../database/MyConnection';
+import MyConnection from '../database/connections/MyConnection';
 import IInvestimento from '../interfaces/IInvestimento';
 import InvestimentoModel from '../models/Investimento.model';
 import HttpException from '../utils/http.exception';

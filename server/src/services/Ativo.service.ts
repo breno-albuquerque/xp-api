@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import MyConnection from '../database/MyConnection';
+import MyConnection from '../database/connections/MyConnection';
 import AtivoModel from '../models/Ativo.model';
 import HttpException from '../utils/http.exception';
 import HttpStatus from '../utils/http.status';
