@@ -29,8 +29,14 @@ class InvestimentoService {
 
     await this.saleOperations(investment, prevInvest);
 
-    await InvestimentoModel.update(MyConnection, { 
-      ...investment, QtdeAtivo: prevInvest.QtdeAtivo - investment.QtdeAtivo });
+    const newValues = prevInvest.QtdeAtivo - investment.QtdeAtivo;
+
+    if (newValues === 0) {
+      await InvestimentoModel.delete(MyConnection, investment.CodAtivo, investment.CodCliente);
+    } else {
+        await InvestimentoModel.update(MyConnection, { 
+          ...investment, QtdeAtivo: prevInvest.QtdeAtivo - investment.QtdeAtivo });
+    }
   }
 
   public static async saleOperations(investment: IInvestimento, prevInvest: IInvestimento) {
