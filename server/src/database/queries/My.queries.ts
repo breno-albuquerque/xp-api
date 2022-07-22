@@ -19,7 +19,7 @@ export const qAtivo: IAtivoQueries = {
   getById: 'SELECT * FROM Ativos WHERE Id = ?',
   update: 'UPDATE Ativos SET QtdeAtivo=? WHERE Id=?',
   getAll: 'SELECT * FROM Ativos',
-  getByClient: `SELECT a.Id, a.Simbolo, i.CodCliente, i.QtdeAtivo, a.Simbolo
+  getByClient: `SELECT a.Id, a.Simbolo, i.CodCliente, i.QtdeAtivo
   FROM Investimentos AS i INNER JOIN Ativos AS a
   ON a.Id = i.CodAtivo WHERE i.CodCliente = ?`,
 };
