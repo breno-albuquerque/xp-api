@@ -60,6 +60,28 @@ const router = Router();
  *              Simbolo: SYMBOL
  *              QtdeAtivo: 100
  *              Valor: 30
+ * 
+ *          Conta:
+ *            type: object
+ *            properties:
+ *              Id: 
+ *                type: number
+ *              Cpf: 
+ *                type: string
+ *              Nome:
+ *                type: string
+ *              Email:
+ *                type: string
+ *              Senha:
+ *                type: string
+ *              Saldo:
+ *                type: number
+ *            example:
+ *              Id: 1
+ *              Cpf: 12345678900
+ *              Nome: Name Example
+ *              Email: example@email.com
+ *              Senha: 123456       
  */    
 
 router.use('/auth', ClienteRouter);
@@ -74,8 +96,98 @@ router.use('/conta', ContaRouter);
  * @swagger
  *  tags:
  *      name: Conta
- *      description: Endpoints de operações da conta
+ *      description: Endpoints para operações da conta do cliente
  */
+
+/**
+ * @swagger
+ *  /conta/{CodCliente}:
+ *    get:
+ *      tags: [Conta]
+ *      description: Retorna um objeto com alguns dados da Conta
+ *      parameters:
+ *        - in: path
+ *          name: CodCliente
+ *          type: string
+ *          required: true
+ *      security:
+ *        - bearerAuth: []
+ *      responses:
+ *        200:
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  Id:
+ *                    type: integer
+ *                    description: Identificador da conta (cliente)
+ *                    example: 1
+ *                  Name:
+ *                    type: string
+ *                    description: Nome do cliente
+ *                    example: Nome Example
+ *                  Saldo:
+ *                    type: number
+ *                    description: Saldo atual da conta
+ *                    example: 1000.00            
+ */
+
+/**
+ * @swagger
+ *  /conta/depositar:
+ *    post:
+ *      tags: [Conta]
+ *      description: Cria um registro do depósido no banco de dados e atualiza o saldo da conta
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                CodCliente:
+ *                  type: integer
+ *                  description: Identificador da conta (cliente)
+ *                  example: 1
+ *                Valor:
+ *                  type: integer
+ *                  description: Valor a ser depositado
+ *                  example: 1000.00
+ *      responses:
+ *        201:
+ *          description: Valor depositado com sucesso
+ *      security:
+ *        - bearerAuth: []
+ */
+
+/**
+ * @swagger
+ *  /conta/sacar:
+ *    post:
+ *      tags: [Conta]
+ *      description: Cria um registro do saque no banco de dados e atualiza o saldo da conta
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                CodCliente:
+ *                  type: integer
+ *                  description: Identificador da conta (cliente)
+ *                  example: 1
+ *                Valor:
+ *                  type: integer
+ *                  description: Valor a ser sacado
+ *                  example: 1000.00
+ *      responses:
+ *        201:
+ *          description: Valor sacado com sucesso
+ *      security:
+ *        - bearerAuth: []
+ */    
 
 router.use('/ativos', AtivoRouter);
 /**
