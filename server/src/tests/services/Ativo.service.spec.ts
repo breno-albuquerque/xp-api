@@ -86,7 +86,7 @@ describe('Testa métodos da classe AtivoService em Ativo.service', () => {
 
       expect(result).to.be.an('array');
       expect(result[0]).to.be.an('object');
-      expect(result[0]).to.include.all.keys('CodAtivo', 'CodCliente', 'QtdeAtivo', 'Valor');
+      expect(result[0]).to.include.all.keys('CodAtivo', 'CodCliente', 'QtdeAtivo', 'Valor', 'Simbolo');
     });
   });
 });

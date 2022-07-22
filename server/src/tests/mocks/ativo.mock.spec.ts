@@ -13,7 +13,7 @@ export const fullAtivoMock: IFullAtivo = {
 };
 
 export const clientsAtivoMock = {
-  CodAtivo: 1,
+  Id: 1,
   CodCliente: 1,
   QtdeAtivo: 10,
   Simbolo: 'SYMBOL',

@@ -45,11 +45,11 @@ describe('Testa métodos da classe InvestimentoService', () => {
   });
 
   context('Método sale', () => {
-    it('Quando o cliente ainda não possui o ativo que quer vender, uma excessão deve ser lançada: "Ativo não encontrado na carteira"', async () => {
+    it('Quando o cliente ainda não possui o ativo que quer vender, uma excessão deve ser lançada: "Ativo não está presente na carteira"', async () => {
       stub1 = createInvestModelStub(undefined, 'getOne');
   
       await expect(InvestimentoService.sale(investimentoMock))
-        .to.be.rejectedWith(HttpException, 'Ativo não encontrado na carteira');
+        .to.be.rejectedWith(HttpException, 'Ativo não está presente na carteira');
     });
     
     it('Quando o cliente não possui quantidade suficiente do ativo, uma excessão deve ser lançada: "Carteira com quantidade insuficiente"', async () => {

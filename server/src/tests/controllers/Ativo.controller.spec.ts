@@ -38,6 +38,7 @@ describe('Testa funções do AtivoController', () => {
         .resolves({
           CodAtivo: 1,
           QtdeAtivo: 100,
+          Simbolo: 'SYMBOL',
           Valor: 30,
         });
       request.params = { codAtivo: '1' };

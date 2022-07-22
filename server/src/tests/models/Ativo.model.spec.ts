@@ -44,7 +44,7 @@ describe('Testa métodos da classe AtivoModel', () => {
       });
     });
 
-  context('Metódo getByCliente', () => {
+  context('Metódo getByClient', () => {
     it('Deve retornar um array com objeto(s) que contém o CodCliente, o CodAtivo, QtdeAtivo e Simbolo', async () => {
       stub = createStub([clientsAtivoMock]);
   
@@ -53,7 +53,7 @@ describe('Testa métodos da classe AtivoModel', () => {
 
       expect(result).to.be.an('array');
       expect(result[0]).to.be.an('object');
-      expect(result[0]).to.include.all.keys('CodAtivo', 'CodCliente', 'QtdeAtivo', 'Simbolo');
+      expect(result[0]).to.include.all.keys('Id', 'CodCliente', 'QtdeAtivo', 'Simbolo');
     });
   });
   });
