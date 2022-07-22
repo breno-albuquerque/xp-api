@@ -61,6 +61,7 @@ class AtivoService {
   private static formatAsset(asset: IAtivo, latestValue: number) {
     return {
       CodAtivo: asset.Id,
+      Simbolo: asset.Simbolo,
       QtdeAtivo: asset.QtdeAtivo,
       Valor: latestValue,
     };
