@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Router } from 'express';
 import ContaRouter from './Conta.route';
 import ClienteRouter from './Auth.route';
@@ -10,58 +11,7 @@ const router = Router();
  * @swagger
  *  components:
  *       schemas:
- *          Ativo:
- *            type: object
- *            properties:
- *              Id: 
- *                type: number
- *              Simbolo:
- *                type: string
- *              QtdeAtivo:
- *                type: number
- *            example:
- *              Id: 1
- *              Simbolo: SYMBOL
- *              QtdeAtivo: 100
- * 
- *          AtivoCompleto:
- *            type: object
- *            properties:
- *              CodAtivo: 
- *                type: number
- *              Simbolo:
- *                type: string
- *              QtdeAtivo:
- *                type: number
- *              Valor:
- *                type: number
- *            example:
- *              CodAtivo: 1
- *              Simbolo: SYMBOL
- *              QtdeAtivo: 100
- *              Valor: 30
- *          
- *          AtivoCliente:
- *            type: object
- *            properties:
- *              CodAtivo: 
- *                type: integer
- *              CodCliente: 
- *                type: integer
- *              Simbolo:
- *                type: string
- *              QtdeAtivo:
- *                type: integer
- *              Valor:
- *                type: number
- *            example:
- *              CodCliente: 1
- *              CodAtivo: 1
- *              Simbolo: SYMBOL
- *              QtdeAtivo: 100
- *              Valor: 30
- * 
- *          Conta:
+ *          Conta_DB:
  *            type: object
  *            properties:
  *              Id: 
@@ -78,12 +28,26 @@ const router = Router();
  *                type: number
  *            example:
  *              Id: 1
- *              Cpf: 12345678900
+ *              Cpf: "12345678900"
  *              Nome: Name Example
  *              Email: example@email.com
- *              Senha: 123456
+ *              Senha: "123456"
  * 
- *          Investimento:
+ *          Ativo_DB:
+ *            type: object
+ *            properties:
+ *              Id: 
+ *                type: number
+ *              Simbolo:
+ *                type: string
+ *              QtdeAtivo:
+ *                type: number
+ *            example:
+ *              Id: 1
+ *              QtdeAtivo: 100
+ *              Simbolo: SYMBOL
+ * 
+ *          Investimento_DB:
  *            type: object
  *            properties:
  *              CodCliente:
@@ -96,6 +60,28 @@ const router = Router();
  *              CodCliente: 1
  *              CodAtivo: 1
  *              QtdeAtivo: 10
+ *          
+ *          Deposito_DB:
+ *            type: object
+ *            properties:
+ *              Id:
+ *                type: integer
+ *              Valor:
+ *                type: number
+ *            example:
+ *              Id: 1
+ *              Valor: 100.00
+ * 
+ *          Saque_DB:
+ *            type: object
+ *            properties:
+ *              Id:
+ *                type: integer
+ *              Valor:
+ *                type: number
+ *            example:
+ *              Id: 1
+ *              Valor: 100.00
  */    
 
 router.use('/auth', ClienteRouter);
@@ -111,10 +97,10 @@ router.use('/auth', ClienteRouter);
  *  /auth/registrar:
  *    post:
  *      tags: [Auth]
- *      description: Registra uma nova e retorna um JWT
+ *      description: Registra uma nova conta no sistema. Será retornado um Jason Web Token (JWT)
  *      responses:
  *        201:
- *          description: Conta cadastrada no sistema!
+ *          description: Conta cadastrada. Requisição bem sucedida
  *      requestBody:
  *        required: true
  *        content:
@@ -144,10 +130,10 @@ router.use('/auth', ClienteRouter);
  *  /auth/entrar:
  *    post:
  *      tags: [Auth]
- *      description: Entra em uma conta ja cadastrada e retorna um JWT
+ *      description: Entra em uma conta já cadastrada. Será retornado um Jason Web Token (JWT)
  *      responses:
  *        201:
- *          description: Conta logada no sistema!
+ *          description: Autorização concedida. Requisição bem sucedida.
  *      requestBody:
  *        required: true
  *        content:
@@ -177,7 +163,7 @@ router.use('/conta', ContaRouter);
  *  /conta/{CodCliente}:
  *    get:
  *      tags: [Conta]
- *      description: Retorna um objeto com alguns dados da Conta
+ *      description: Solicita os dados da conta logada passando o identificador por parâmetro. Será retornado os dados da conta.
  *      parameters:
  *        - in: path
  *          name: CodCliente
@@ -283,7 +269,7 @@ router.use('/ativos', AtivoRouter);
  *              schema:
  *                type: array
  *                items:
- *                  $ref: '#/components/schemas/Ativo'
+ *                  $ref: '#/components/schemas/Ativo_DB'
  */
 
 /**
@@ -303,7 +289,16 @@ router.use('/ativos', AtivoRouter);
  *            application/json:
  *              schema:
  *                type: object
- *                $ref: '#/components/schemas/AtivoCompleto'
+ *                items:
+ *                properties:
+ *                  CodAtivo:
+ *                    type: integer
+ *                  Simbolo:
+ *                    type: string
+ *                  QtdeAtivo:
+ *                    type: integer
+ *                  Valor:
+ *                    type: number
  */
 
 /**
@@ -311,7 +306,7 @@ router.use('/ativos', AtivoRouter);
  *  /ativos/cliente/{CodCliente}:
  *    get:
  *      tags: [Ativos]
- *      description: Retorna um array com os ativos da carteira do cliente, no formato AtivoCliente
+ *      description: Retorna um array com os ativos presentes na carteira do cliente
  *      parameters:
  *        - in: path
  *          name: CodCliente
@@ -326,7 +321,23 @@ router.use('/ativos', AtivoRouter);
  *              schema:
  *                type: array
  *                items:
- *                  $ref: '#/components/schemas/AtivoCliente'
+ *                  type: object
+ *                  properties:
+ *                    CodAtivo:
+ *                      type: integer
+ *                      example: 1
+ *                    CodCliente:
+ *                      type: integer
+ *                      example: 1
+ *                    QtdeAtivo:
+ *                      type: integer
+ *                      example: 10
+ *                    Simbolo:
+ *                      type: string
+ *                      example: SYMBOL
+ *                    Valor:
+ *                      type: number 
+ *                      example: 30.00
  */
 
 router.use('/investimentos', InvestimentoRouter);
@@ -342,17 +353,17 @@ router.use('/investimentos', InvestimentoRouter);
  *  /investimentos/comprar:
  *    post:
  *      tags: [Investimentos]
- *      description: Cria o registro de um investimento, atualiza carteira, qtde de ativos e saldo
+ *      description: Registra o investimento. Atualiza o saldo da conta. Atualiza quantidade de ativos da corretora.
  *      requestBody:
  *        required: true
  *        content:
  *          application/json:
  *            schema:
  *              type: object
- *              $ref: '#/components/schemas/Investimento'
+ *              $ref: '#/components/schemas/Investimento_DB'
  *      responses:
  *        201:
- *          description: Investimento realizado com sucesso
+ *          description: Investimento realizado com sucesso,
  *      security:
  *        - bearerAuth: []
  */
@@ -362,17 +373,17 @@ router.use('/investimentos', InvestimentoRouter);
  *  /investimentos/vender:
  *    post:
  *      tags: [Investimentos]
- *      description: Vende ativos, atualiza carteira, qtde de ativos e saldo
+ *      description: Registra a investimento. Atualiza o saldo da conta. Atualiza quantidade de ativos da corretora.
  *      requestBody:
  *        required: true
  *        content:
  *          application/json:
  *            schema:
  *              type: object
- *              $ref: '#/components/schemas/Investimento'
+ *              $ref: '#/components/schemas/Investimento_DB'
  *      responses:
  *        201:
- *          description: Venda realizada com sucesso
+ *          description: Venda realizada com sucesso,
  *      security:
  *        - bearerAuth: []
  */

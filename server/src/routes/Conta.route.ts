@@ -28,4 +28,10 @@ router.post(
   ContaController.withdrawal,
 );
 
+router.delete(
+  '/delete/:CodCliente',
+  validateParamId,
+  ContaController.remove,
+);
+
 export default router;
