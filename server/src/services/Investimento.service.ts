@@ -1,4 +1,6 @@
-import MyConnection from '../database/connections/MyConnection';
+//  import MyConnection from '../database/connections/MyConnection';
+import PgConnection from '../database/connections/PgConnection';
+import IConnection from '../interfaces/IConnection';
 import IInvestimento from '../interfaces/IInvestimento';
 import InvestimentoModel from '../models/Investimento.model';
 import HttpException from '../utils/http.exception';
@@ -7,34 +9,40 @@ import AtivoService from './Ativo.service';
 import ContaService from './Conta.service';
 
 class InvestimentoService {
+  static conn: IConnection = PgConnection;
+
   public static async purchase(investment: IInvestimento): Promise<void> {
+    console.log(0, investment);
     const prevInvest = await InvestimentoModel
-      .getOne(MyConnection, investment);
+      .getOne(this.conn, investment);
 
-    await this.purchaseOperations(investment);
-
-    if (!prevInvest) {
+      console.log('1', prevInvest);
+      
+      await this.purchaseOperations(investment);
+      
+      if (!prevInvest) {
+        console.log('2', prevInvest);
       await InvestimentoModel
-        .create(MyConnection, investment);
+        .create(this.conn, investment);
     } else {
       await InvestimentoModel
-        .update(MyConnection, { 
+        .update(this.conn, { 
           ...investment, QtdeAtivo: investment.QtdeAtivo + prevInvest.QtdeAtivo });
     }
   }
 
   public static async sale(investment: IInvestimento): Promise<void> {
     const prevInvest = await InvestimentoModel
-      .getOne(MyConnection, investment);
+      .getOne(this.conn, investment);
 
     await this.saleOperations(investment, prevInvest);
 
     const newValues = prevInvest.QtdeAtivo - investment.QtdeAtivo;
 
     if (newValues === 0) {
-      await InvestimentoModel.delete(MyConnection, investment.CodAtivo, investment.CodCliente);
+      await InvestimentoModel.delete(this.conn, investment.CodAtivo, investment.CodCliente);
     } else {
-        await InvestimentoModel.update(MyConnection, { 
+        await InvestimentoModel.update(this.conn, { 
           ...investment, QtdeAtivo: prevInvest.QtdeAtivo - investment.QtdeAtivo });
     }
   }
