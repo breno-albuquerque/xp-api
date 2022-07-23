@@ -12,16 +12,12 @@ class InvestimentoService {
   static conn: IConnection = PgConnection;
 
   public static async purchase(investment: IInvestimento): Promise<void> {
-    console.log(0, investment);
     const prevInvest = await InvestimentoModel
       .getOne(this.conn, investment);
-
-      console.log('1', prevInvest);
       
       await this.purchaseOperations(investment);
       
       if (!prevInvest) {
-        console.log('2', prevInvest);
       await InvestimentoModel
         .create(this.conn, investment);
     } else {
