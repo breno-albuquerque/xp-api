@@ -32,8 +32,19 @@ const withdrawal = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const remove = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { CodCliente } = req.params;
+    await ContaService.delete(parseInt(CodCliente, 10));
+    return res.status(HttpStatus.NO_CONTENT).end();
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   getById,
   deposit,
   withdrawal,
+  remove,
 };
