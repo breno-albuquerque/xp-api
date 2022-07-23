@@ -14,7 +14,7 @@ class ContaModel {
     const { Nome, Cpf, Email, Senha } = account;
     const result = await conn
       .run(conn.qConta.create, [Nome, Cpf, Email, Senha]) as QueryResult;
-    return result.rowCount;
+    return result.rows[0].Id;
   }
 
   public static async getByEmail(conn: IConnection, email: string): Promise<IConta> {
