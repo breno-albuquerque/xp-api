@@ -1,7 +1,7 @@
 import { IAtivoQueries, IContaQueries, IInvestimentoQueries, ITransactionQueries } from '../../interfaces/IQueries';
 
 export const qConta: IContaQueries = {
-  create: 'INSERT INTO "Contas" ("Nome", "Cpf", "Email", "Senha") VALUES ($1,$2,$3,$4)',
+  create: 'INSERT INTO "Contas" ("Nome", "Cpf", "Email", "Senha") VALUES ($1,$2,$3,$4) RETURNING "Id"',
   getById: 'SELECT "Id", "Nome", "Saldo" FROM "Contas" WHERE "Id" = $1',
   getByEmail: 'SELECT * FROM "Contas" WHERE "Email" = $1',
   update: 'UPDATE "Contas" SET "Saldo"=$1 WHERE "Id"=$2',
