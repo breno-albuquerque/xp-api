@@ -15,9 +15,9 @@ class AuthService {
     await this.verifyEmail(account);
 
     const hash = await bcrypt.hash(account.Senha, 5);
-    const insertId = await ContaService.create({ ...account, Senha: hash });
+    const rowCount = await ContaService.create({ ...account, Senha: hash });
 
-    return insertId;
+    return rowCount;
   }
 
   public static async login(account: INewConta): Promise<string> {

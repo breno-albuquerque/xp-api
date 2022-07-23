@@ -1,5 +1,5 @@
+//  import MyConnection from '../database/connections/MyConnection';
 import fetch from 'node-fetch';
-import MyConnection from '../database/connections/MyConnection';
 import PgConnection from '../database/connections/PgConnection';
 import AtivoModel from '../models/Ativo.model';
 import HttpException from '../utils/http.exception';
@@ -15,12 +15,12 @@ class AtivoService {
   public static async getById(assetId: number) {
       const asset = await AtivoModel.getById(PgConnection, assetId);
 
-      if (asset.length === 0) {
+      if (!asset) {
         throw new HttpException(HttpStatus.NOT_FOUND, 'Ativo não encontrado');
       }
 
-      const latestValue = await this.getValue(asset[0].Simbolo);
-      return this.formatAsset(asset[0], latestValue);
+      const latestValue = await this.getValue(asset.Simbolo);
+      return this.formatAsset(asset, latestValue);
   }
 
   public static async getByClient(clientId: number) {
@@ -44,16 +44,16 @@ class AtivoService {
   public static async updateWhenBought(assetId: number, quantity: number): Promise<void> {
     const asset = await AtivoModel.getById(PgConnection, assetId);
 
-    if (asset[0].QtdeAtivo < quantity) {
+    if (asset.QtdeAtivo < quantity) {
       throw new HttpException(HttpStatus.CONFLICT, 'Quantidade indisponível');
     }
 
-    await AtivoModel.update(PgConnection, asset[0].QtdeAtivo - quantity, assetId);
+    await AtivoModel.update(PgConnection, asset.QtdeAtivo - quantity, assetId);
   }
 
   public static async updateWhenSold(assetId: number, quantity: number): Promise<void> {
     const asset = await AtivoModel.getById(PgConnection, assetId);
-    await AtivoModel.update(PgConnection, asset[0].QtdeAtivo + quantity, assetId);
+    await AtivoModel.update(PgConnection, asset.QtdeAtivo + quantity, assetId);
   }
 
   public static async getValue(symbol: string): Promise<number> {
