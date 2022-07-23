@@ -40,6 +40,13 @@ class ContaService {
     await SaqueModel.create(MyConnection, [accountId, value]);
     await ContaModel.update(MyConnection, newValue, accountId);
   }
+
+  public static async delete(accountId: number): Promise<void> {
+    const rows = await ContaModel.delete(MyConnection, accountId);
+    if (!rows) {
+      throw new HttpException(HttpStatus.NOT_FOUND, 'Conta não encontrada');
+    }
+  }
 }
 
 export default ContaService;
