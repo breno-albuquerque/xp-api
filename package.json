@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon ./src/server.ts npx ts-node --poll src/server.ts",
     "start": "npm run build && node ./dist/server.js",
-    "build": "npx tsc",
+    "build": "tsc",
     "test": "mocha -r ts-node/register",
     "testAll": "mocha -r ts-node/register ./src/tests/**/*.{test,spec}.[t,j]s",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
