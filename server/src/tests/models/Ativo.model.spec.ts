@@ -56,4 +56,17 @@ describe('Testa métodos da classe AtivoModel', () => {
       expect(result[0]).to.include.all.keys('Id', 'CodCliente', 'QtdeAtivo', 'Simbolo');
     });
   });
+
+  context('Metódo getAll', () => {
+    it('Deve retornar um array com objeto(s) que contém Id, Simbolo e QtdeAtivos', async () => {
+      stub = createStub({ rows: [ativoMock] });
+  
+      const result = await AtivoModel
+        .getByClient(conn, 1);
+
+      expect(result).to.be.an('array');
+      expect(result[0]).to.be.an('object');
+      expect(result[0]).to.include.all.keys('Id', 'QtdeAtivo', 'Simbolo');
+    });
+  });
 });
