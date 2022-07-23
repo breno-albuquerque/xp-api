@@ -48,7 +48,6 @@ describe('Testa métodos da classe ContaModel', () => {
 
       expect(result).to.be.an('undefined');
   });
-});
   
   context('Método getByEmail', () => { 
       it('Ao ser passado um email cadastrado, deve retornar a conta correspondente', async () => {
@@ -82,4 +81,17 @@ describe('Testa métodos da classe ContaModel', () => {
         expect(result).to.equal(1);
       });
     });
+
+  context('Método delete', () => {
+    it('Deve retornar um number', async () => {
+      stub = createStub({ rowCount: 1 });
+
+      const result = await ContaModel
+        .delete(conn, 1);
+
+      expect(result).to.be.an('number');
+      expect(result).to.equal(1);
+    });
   });
+  });
+});
