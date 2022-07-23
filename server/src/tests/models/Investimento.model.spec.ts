@@ -18,8 +18,8 @@ describe('Testa métodos da classe InvestimentoModel', () => {
   });
 
   context('Método create', () => {
-    it('Deve retornar o id do investimento criado', async () => {
-      stub = createStub({ insertId: 1 });
+    it('Deve retornar 1, correspondente a uma coluna criada', async () => {
+      stub = createStub({ rowCount: 1 });
 
       const result = await InvestimentoModel
         .create(conn, investimentoMock);
@@ -31,7 +31,7 @@ describe('Testa métodos da classe InvestimentoModel', () => {
 
   context('Método update', () => {
     it('Deve retornar 1, correspondente a uma linha afetada', async () => {
-      stub = createStub({ affectedRows: 1 });
+      stub = createStub({ rowCount: 1 });
 
       const result = await InvestimentoModel
         .update(conn, investimentoMock);
@@ -43,7 +43,7 @@ describe('Testa métodos da classe InvestimentoModel', () => {
 
   context('Método delete', () => {
     it('Deve retornar 1, correspondente a uma linha afetada', async () => {
-      stub = createStub({ affectedRows: 1 });
+      stub = createStub({ rowCount: 1 });
 
       const result = await InvestimentoModel
         .delete(MyConnection, 1, 1);
@@ -55,7 +55,7 @@ describe('Testa métodos da classe InvestimentoModel', () => {
 
   context('Método getOne', () => {
     it('Ao serem passados valores válidos, deve retornar o investimento correspondente', async () => {
-      stub = createStub([investimentoMock]);
+      stub = createStub({ rows: [investimentoMock] });
 
       const result = await InvestimentoModel
         .getOne(MyConnection, investimentoMock);
@@ -68,7 +68,7 @@ describe('Testa métodos da classe InvestimentoModel', () => {
     });
 
     it('Ao serem passados valores inválidos, deve retornar undefined', async () => {
-      stub = createStub([undefined]);
+      stub = createStub({ rows: [undefined] });
 
       const result = await InvestimentoModel
         .getOne(MyConnection, { CodCliente: 0, CodAtivo: 0, QtdeAtivo: 0 });
