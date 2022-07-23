@@ -5,6 +5,7 @@ export const qConta: IContaQueries = {
   getById: 'SELECT Id, Nome, Saldo FROM Contas WHERE Id = ?',
   getByEmail: 'SELECT * FROM Contas WHERE Email = ?',
   update: 'UPDATE Contas SET Saldo=? WHERE Id=?',
+  delete: 'DELETE FROM Contas WHERE Id=?',
 };
 
 export const qDeposito: ITransactionQueries = {
