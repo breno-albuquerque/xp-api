@@ -10,7 +10,7 @@ import HttpStatus from '../utils/http.status';
 class ContaService {
   public static async getById(accountId: number): Promise<Omit<IConta, 'Cpf' | 'Email' | 'Senha'>> {
     const conta = await ContaModel.getById(PgConnection, accountId);
-    if (conta) throw new HttpException(HttpStatus.NOT_FOUND, 'Conta não encontrada');
+    if (!conta) throw new HttpException(HttpStatus.NOT_FOUND, 'Conta não encontrada');
     return conta;
   }
 
