@@ -97,10 +97,18 @@ router.use('/auth', ClienteRouter);
  *  /auth/registrar:
  *    post:
  *      tags: [Auth]
- *      description: Registra uma nova conta no sistema. Será retornado um Jason Web Token (JWT)
+ *      description: Registra uma nova conta no sistema. Será retornado um objeto com o código do cliente
  *      responses:
  *        201:
- *          description: Conta cadastrada. Requisição bem sucedida
+ *          description: Conta registrada no sistema. Requisição bem sucedida.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  CodCliente:
+ *                    type: integer
+ *                    example: 1
  *      requestBody:
  *        required: true
  *        content:
@@ -122,7 +130,7 @@ router.use('/auth', ClienteRouter);
  *                Nome: Name Example
  *                Cpf: '12345678900'
  *                Email: example@email.com
- *                Senha: "123456" 
+ *                Senha: "123456"
 */
 
 /**
@@ -134,6 +142,14 @@ router.use('/auth', ClienteRouter);
  *      responses:
  *        201:
  *          description: Autorização concedida. Requisição bem sucedida.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  token:
+ *                    type: string
+ *                    example: string
  *      requestBody:
  *        required: true
  *        content:
