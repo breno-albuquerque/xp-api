@@ -4,14 +4,14 @@ import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import server from '../../app';
-import MyConnection from '../../database/connections/MyConnection';
+import PgConnection from '../../database/connections/PgConnection';
 import AtivoService from '../../services/Ativo.service';
 import { ativoMock, clientsAtivoMock } from '../mocks/ativo.mock.spec';
 
 import jwt from '../../utils/jwt.token';
 import { contaMock } from '../mocks/conta.mock.spec';
 
-const conn = MyConnection;
+const conn = PgConnection;
 
 chai.use(chaiHttp);
 
@@ -29,7 +29,7 @@ describe('Integração /ativos/all - getAll', () => {
   });
 
   beforeEach(async () => {
-    stub1 = createStub([ativoMock]);
+    stub1 = createStub({ rows: [ativoMock] });
     response = await chai
       .request(server)
       .get('/ativos/all');
@@ -48,7 +48,7 @@ describe('Integração /ativos/all - getAll', () => {
 
 describe('Integração /ativo/:id - getById', () => {
   beforeEach(async () => {
-    stub1 = createStub([ativoMock]);
+    stub1 = createStub({ rows: [ativoMock] });
     stub2 = sinon
       .stub(AtivoService, 'getValue')
       .resolves(30);
@@ -77,7 +77,7 @@ describe('Integração /ativo/:id - getById', () => {
 
 describe('Integração /ativo/cliente/:id - getByCliente', () => {
   beforeEach(async () => {
-    stub1 = createStub([clientsAtivoMock]);
+    stub1 = createStub({ rows: [clientsAtivoMock] });
     stub2 = sinon
       .stub(AtivoService, 'getValue')
       .resolves(30);
