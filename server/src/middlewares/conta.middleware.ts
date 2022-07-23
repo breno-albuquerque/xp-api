@@ -5,7 +5,7 @@ import HttpStatus from '../utils/http.status';
 
 const transactionSchema = Joi.object({
    CodCliente: Joi.number().integer().required(),
-   Valor: Joi.number().min(0).required(),
+   Valor: Joi.number().greater(0).required(),
 }).messages({
   'any.required': 'O campo {{#label}} é obrigatório',
   'number.base': 'O campo {{#label}} deve ser um number',
