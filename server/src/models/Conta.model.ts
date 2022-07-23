@@ -14,7 +14,6 @@ class ContaModel {
     const { Nome, Cpf, Email, Senha } = account;
     const result = await conn
       .run(conn.qConta.create, [Nome, Cpf, Email, Senha]) as QueryResult;
-     console.log('create', result);
     return result.rowCount;
   }
 
@@ -27,7 +26,6 @@ class ContaModel {
   public static async update(conn: IConnection, saldo: number, accountId: number): Promise<number> {
     const result = await conn
       .run(conn.qConta.update, [saldo, accountId]) as QueryResult;
-      console.log('update', result);
     return result.rowCount;
   }
 
