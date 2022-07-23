@@ -21,6 +21,7 @@ CREATE TABLE `xp-db`.Depositos (
   CodCliente INTEGER NOT NULL,
   Valor DOUBLE NOT NULL,
   FOREIGN KEY (CodCliente) REFERENCES Contas(Id)
+	  ON DELETE CASCADE
 );
 
 CREATE TABLE `xp-db`.Saques (
@@ -28,6 +29,7 @@ CREATE TABLE `xp-db`.Saques (
   CodCliente INTEGER NOT NULL,
   Valor DOUBLE NOT NULL,
   FOREIGN KEY (CodCliente) REFERENCES Contas(Id)
+	  ON DELETE CASCADE
 );
 
 CREATE TABLE `xp-db`.Investimentos (
@@ -36,6 +38,7 @@ CREATE TABLE `xp-db`.Investimentos (
   QtdeAtivo INTEGER NOT NULL,
   FOREIGN KEY (CodCliente) REFERENCES Contas(Id),
   FOREIGN KEY (CodAtivo) REFERENCES Ativos(Id)
+  
 );
 
 CREATE TABLE `xp-db`.Operações (
@@ -43,7 +46,8 @@ CREATE TABLE `xp-db`.Operações (
   CodAtivo INTEGER NOT NULL,
   Tipo VARCHAR(5) NOT NULL,
   ValorTotal DOUBLE NOT NULL,
-  FOREIGN KEY (CodCliente) REFERENCES Contas(Id),
+  FOREIGN KEY (CodCliente) REFERENCES Contas(Id)
+	  ON DELETE CASCADE,
   FOREIGN KEY (CodAtivo) REFERENCES Ativos(Id)
 );
 
