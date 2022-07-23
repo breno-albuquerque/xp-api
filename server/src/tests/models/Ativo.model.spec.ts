@@ -19,7 +19,7 @@ describe('Testa métodos da classe AtivoModel', () => {
   
   context('Método getById', () => {
     it('Ao ser passado um id válido, deve retornar o ativo correspondente', async () => {
-      stub = createStub([ativoMock]);
+      stub = createStub({ rows: [ativoMock] });
 
       const result = await AtivoModel.getById(conn, 1);
 
@@ -27,7 +27,7 @@ describe('Testa métodos da classe AtivoModel', () => {
     });
 
     it('Ao ser passado um id inválido, deve retornar undefined', async () => {
-      stub = createStub([undefined]);
+      stub = createStub({ rows: [undefined] });
 
       const result = await AtivoModel.getById(conn, 10);
 
@@ -37,7 +37,7 @@ describe('Testa métodos da classe AtivoModel', () => {
 
   context('Método update', () => {
       it('Deve retornar 1, corresponsedente a uma linha afetada', async () => {
-        stub = createStub({ affectedRows: 1 });
+        stub = createStub({ rowCount: 1 });
 
         const result = await AtivoModel.update(conn, 10, 100);
         expect(result).to.equal(1);
@@ -46,7 +46,7 @@ describe('Testa métodos da classe AtivoModel', () => {
 
   context('Metódo getByClient', () => {
     it('Deve retornar um array com objeto(s) que contém o CodCliente, o CodAtivo, QtdeAtivo e Simbolo', async () => {
-      stub = createStub([clientsAtivoMock]);
+      stub = createStub({ rows: [clientsAtivoMock] });
   
       const result = await AtivoModel
         .getByClient(conn, 1);
@@ -56,4 +56,4 @@ describe('Testa métodos da classe AtivoModel', () => {
       expect(result[0]).to.include.all.keys('Id', 'CodCliente', 'QtdeAtivo', 'Simbolo');
     });
   });
-  });
+});
