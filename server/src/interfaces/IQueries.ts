@@ -3,6 +3,7 @@ export interface IContaQueries {
   getById: string;
   getByEmail: string;
   update: string;
+  delete: string;
 }
 
 export interface ITransactionQueries {
