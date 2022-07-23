@@ -20,7 +20,7 @@ export const qAtivo: IAtivoQueries = {
   getById: 'SELECT * FROM "Ativos" WHERE "Id" = $1',
   update: 'UPDATE "Ativos" SET QtdeAtivo=$1 WHERE "Id"=$2',
   getAll: 'SELECT * FROM "Ativos"',
-  getByClient: `SELECT a."Id", a.Simbolo, i."CodCliente", i.QtdeAtivo
+  getByClient: `SELECT a."Id", a."Simbolo", i."CodCliente", i."QtdeAtivo"
   FROM "Investimentos" AS i INNER JOIN "Ativos" AS a
   ON a."Id" = i."CodAtivo" WHERE i."CodCliente" = $1`,
 };
