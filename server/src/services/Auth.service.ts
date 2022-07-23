@@ -11,20 +11,19 @@ class AuthService {
     if (isRegistered) throw new HttpException(HttpStatus.CONFLICT, 'Email já cadastrado');
   }
 
-  public static async register(account: INewConta): Promise<string> {
+  public static async register(account: INewConta): Promise<number> {
     await this.verifyEmail(account);
 
     const hash = await bcrypt.hash(account.Senha, 5);
     const insertId = await ContaService.create({ ...account, Senha: hash });
 
-    const token = jwt.generateToken({ Id: insertId, Nome: account.Nome });
-    return token;
+    return insertId;
   }
 
   public static async login(account: INewConta): Promise<string> {
       const accountData = await ContaService.getByEmail(account.Email);
       if (!accountData) throw new HttpException(HttpStatus.UNAUTHORIZED, 'Email ou senha inválidos');
-
+      
       const isMatch = await bcrypt.compare(account.Senha, accountData.Senha);
       if (!isMatch) throw new HttpException(HttpStatus.UNAUTHORIZED, 'Email ou senha inválidos');
 

@@ -4,8 +4,8 @@ import HttpStatus from '../utils/http.status';
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = await AuthService.register(req.body);
-    return res.status(HttpStatus.CREATED).json({ token });
+    const insertId = await AuthService.register(req.body);
+    return res.status(HttpStatus.CREATED).json({ CodCliente: insertId });
   } catch (error) {
     next(error);
   }
