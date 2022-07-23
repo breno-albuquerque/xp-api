@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import bcrypt from 'bcrypt';
@@ -29,16 +30,15 @@ describe('Testa métodos da classe AuthService', () => {
   });
   
   context('Método create', () => {
-    it('Ao ser passada uma conta válida, deve retornar um Jason Web Token', async () => {
+    it('Ao ser passada uma conta válida, deve retornar o Id inserido', async () => {
       stub1 = createModelStub(undefined, 'getByEmail');
       stub2 = createModelStub(1, 'create');
-      stub3 = sinon.stub(jwt, 'generateToken').returns(tokenMock);
 
       const result = await AuthService
         .register(newContaMock);
 
-      expect(result).to.be.a('string');
-      expect(result).to.equal(tokenMock);
+      expect(result).to.be.a('number');
+      expect(result).to.equal(1);
     });
 
     it('Ao ser passado uma conta ja cadastrada, uma excessão deve ser lançada: "Email já cadastrado"', async () => {

@@ -40,7 +40,7 @@ describe('Testa funções do AuthController', () => {
     it('É chamado o status da Response com código 201', async () => {
        stub = sinon
         .stub(AuthService, 'register')
-        .resolves(tokenMock);
+        .resolves(1);
       
       await AuthController
         .register(request as Request, response as Response, next as NextFunction);

@@ -40,9 +40,10 @@ describe('Integração /auth/registrar - register', () => {
     expect(response).to.have.status(201);
   });
 
-  it('Deve retornar um Jason Web Token', () => {
-    expect(response.body).to.have.key('token');
-    expect(response.body.token).to.be.a('string');
+  it('Deve retornar um objeto com a chave CodCliente', () => {
+    expect(response.body).to.have.key('CodCliente');
+    expect(response.body.CodCliente).to.be.a('number');
+    expect(response.body.CodCliente).to.equal(1);
   });
 });
 
