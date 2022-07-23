@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import MyConnection from '../database/connections/MyConnection';
+import PgConnection from '../database/connections/PgConnection';
 import AtivoModel from '../models/Ativo.model';
 import HttpException from '../utils/http.exception';
 import HttpStatus from '../utils/http.status';
@@ -7,20 +8,23 @@ import { IAtivo, IFullAtivo } from '../interfaces/IAtivo';
 
 class AtivoService {
   public static async getAll(): Promise<IAtivo[]> {
-    const result = await AtivoModel.getAll(MyConnection);
+    const result = await AtivoModel.getAll(PgConnection);
     return result;
   }
 
   public static async getById(assetId: number) {
-      const asset = await AtivoModel.getById(MyConnection, assetId);
-      if (!asset) throw new HttpException(HttpStatus.NOT_FOUND, 'Ativo não encontrado');
+      const asset = await AtivoModel.getById(PgConnection, assetId);
 
-      const latestValue = await this.getValue(asset.Simbolo);
-      return this.formatAsset(asset, latestValue);
+      if (asset.length === 0) {
+        throw new HttpException(HttpStatus.NOT_FOUND, 'Ativo não encontrado');
+      }
+
+      const latestValue = await this.getValue(asset[0].Simbolo);
+      return this.formatAsset(asset[0], latestValue);
   }
 
   public static async getByClient(clientId: number) {
-    const assets = await AtivoModel.getByClient(MyConnection, clientId);
+    const assets = await AtivoModel.getByClient(PgConnection, clientId);
     
     // Optei por não lançar essa excessão, pensando no frontend, achei melhor retornar o array vazio
     
@@ -38,18 +42,18 @@ class AtivoService {
   }
 
   public static async updateWhenBought(assetId: number, quantity: number): Promise<void> {
-    const asset = await AtivoModel.getById(MyConnection, assetId);
+    const asset = await AtivoModel.getById(PgConnection, assetId);
 
-    if (asset.QtdeAtivo < quantity) {
+    if (asset[0].QtdeAtivo < quantity) {
       throw new HttpException(HttpStatus.CONFLICT, 'Quantidade indisponível');
     }
 
-    await AtivoModel.update(MyConnection, asset.QtdeAtivo - quantity, assetId);
+    await AtivoModel.update(PgConnection, asset[0].QtdeAtivo - quantity, assetId);
   }
 
   public static async updateWhenSold(assetId: number, quantity: number): Promise<void> {
-    const asset = await AtivoModel.getById(MyConnection, assetId);
-    await AtivoModel.update(MyConnection, asset.QtdeAtivo + quantity, assetId);
+    const asset = await AtivoModel.getById(PgConnection, assetId);
+    await AtivoModel.update(PgConnection, asset[0].QtdeAtivo + quantity, assetId);
   }
 
   public static async getValue(symbol: string): Promise<number> {
