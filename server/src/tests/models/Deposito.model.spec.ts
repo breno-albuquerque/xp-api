@@ -18,7 +18,7 @@ describe('Testa métodos da classe DepositoModel', () => {
 
   context('Método create', () => {
     it('Deve retornar o id do depósito inserido', async () => {
-      stub = createStub({ insertId: 1 });
+      stub = createStub({ rowCount: 1 });
 
       const result = await DepositoModel
         .create(MyConnection, [100, 1]);

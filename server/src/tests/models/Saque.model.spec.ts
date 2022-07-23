@@ -18,10 +18,10 @@ describe('Testa métodos da classe SaqueModel', () => {
   
   context('Método create', () => {
     it('Deve retornar o id do saque inserido', async () => {
-      stub = createStub({ insertId: 1 });
+      stub = createStub({ rowCount: 1 });
 
       const result = await SaqueModel
-        .create(MyConnection, [100, 1]);
+        .create(conn, [100, 1]);
 
       expect(result).to.be.a('number');
       expect(result).to.equal(1);
