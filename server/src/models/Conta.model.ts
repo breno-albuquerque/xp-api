@@ -28,6 +28,12 @@ class ContaModel {
       .run(conn.qConta.update, [saldo, accountId]) as ResultSetHeader;
     return result.affectedRows;
   }
+
+  public static async delete(conn: IConnection, accountId: number): Promise<number> {
+    const result = await MyConnection
+      .run(conn.qConta.delete, [accountId]) as ResultSetHeader;
+    return result.affectedRows;
+  }
 }
 
 export default ContaModel;
