@@ -19,7 +19,7 @@ describe('Testa métodos da classe ContaModel', () => {
 
   context('Método create', () => {
     it('Deve retornar o id da conta inserida', async () => {
-      stub = createStub({ insertId: contaMock.Id });
+      stub = createStub({ rows: [{ Id: 1 }] });
       
       const result = await ContaModel
         .create(conn, newContaMock);
@@ -31,7 +31,7 @@ describe('Testa métodos da classe ContaModel', () => {
   
   context('Método getById', () => {
     it('Ao ser passado um id válido, deve retornar a conta correspondente', async () => {
-      stub = createStub([contaMock]);
+      stub = createStub({ rows: [contaMock] });
 
       const result = await ContaModel
         .getById(conn, 1);
@@ -41,7 +41,7 @@ describe('Testa métodos da classe ContaModel', () => {
     });
 
     it('Ao ser passado um id inválido, deve retornar undefined', async () => {
-      stub = createStub([undefined]);
+      stub = createStub({ rows: [undefined] });
 
       const result = await ContaModel
         .getById(conn, 100);
@@ -52,7 +52,7 @@ describe('Testa métodos da classe ContaModel', () => {
   
   context('Método getByEmail', () => { 
       it('Ao ser passado um email cadastrado, deve retornar a conta correspondente', async () => {
-        stub = createStub([contaMock]);
+        stub = createStub({ rows: [contaMock] });
 
         const result = await ContaModel
           .getByEmail(conn, 'conta@mock.com');
@@ -62,7 +62,7 @@ describe('Testa métodos da classe ContaModel', () => {
       });
   
       it('Ao ser passado um email não cadastrado, deve retornar undefined', async () => {
-        stub = createStub([undefined]);
+        stub = createStub({ rows: [undefined] });
 
         const result = await ContaModel
           .getByEmail(conn, 'email@inexistente.com');
@@ -73,7 +73,7 @@ describe('Testa métodos da classe ContaModel', () => {
 
   context('Método update', () => {
       it('Deve retornar um number', async () => {
-        stub = createStub({ affectedRows: 1 });
+        stub = createStub({ rowCount: 1 });
 
         const result = await ContaModel
           .update(conn, 100, 1);
