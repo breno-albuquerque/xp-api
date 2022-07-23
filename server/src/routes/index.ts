@@ -197,7 +197,7 @@ router.use('/conta', ContaRouter);
  *  /conta/depositar:
  *    post:
  *      tags: [Conta]
- *      description: Cria um registro do depósido no banco de dados e atualiza o saldo da conta
+ *      description: Cria um registro do depósido no banco de dados e atualiza o saldo da conta.
  *      requestBody:
  *        required: true
  *        content:
@@ -215,7 +215,7 @@ router.use('/conta', ContaRouter);
  *                  example: 1000.00
  *      responses:
  *        201:
- *          description: Valor depositado com sucesso
+ *          description: Valor depositado com sucesso.
  *      security:
  *        - bearerAuth: []
  */
@@ -225,7 +225,7 @@ router.use('/conta', ContaRouter);
  *  /conta/sacar:
  *    post:
  *      tags: [Conta]
- *      description: Cria um registro do saque no banco de dados e atualiza o saldo da conta
+ *      description: Cria um registro do saque no banco de dados e atualiza o saldo da conta.
  *      requestBody:
  *        required: true
  *        content:
@@ -244,6 +244,24 @@ router.use('/conta', ContaRouter);
  *      responses:
  *        201:
  *          description: Valor sacado com sucesso
+ *      security:
+ *        - bearerAuth: []
+ */    
+
+/**
+ * @swagger
+ *  /conta/delete/{CodCliente}:
+ *    delete:
+ *      tags: [Conta]
+ *      description: Deleta a conta do banco de dados do sistema.
+ *      parameters:
+ *        - in: path
+ *          name: CodCliente
+ *          type: string
+ *          required: true
+ *      responses:
+ *        204:
+ *          description: Conta deletada com sucesso.
  *      security:
  *        - bearerAuth: []
  */    
