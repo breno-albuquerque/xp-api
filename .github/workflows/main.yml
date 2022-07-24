@@ -14,7 +14,7 @@ jobs:
       - name: Instala node:16
         uses: actions/setup-node@v1
         with:
-          node-version: 16:14:0
+          node-version: 16
 
       - name: Instala dependências
         run: npm install 
