@@ -9,6 +9,9 @@ const swaggerConfig = {
     servers: [{
       url: 'http://localhost:8000',
       description: 'Servidor local',
+    }, {
+      url: 'https://projeto-xp.herokuapp.com',
+      description: 'Heroku deploy',
     }],
     components: {
       securitySchemes: {
