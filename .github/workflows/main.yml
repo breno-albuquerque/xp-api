@@ -1,0 +1,28 @@
+name: Project-XP Workflow
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+        - name: Verifica repositório
+        - uses: actions/checkout@v2
+
+        - name: Instala node:16
+          uses: actions/setup-node@v1
+          with:
+            node-version: 16:14:0
+
+        - name: Instala dependências
+          run: npm install 
+
+        - name: Executa eslint
+          run: npm run lint
+        
+        - name: Executa testes
+          run: npm run testAll
