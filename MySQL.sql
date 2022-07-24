@@ -36,19 +36,9 @@ CREATE TABLE `xp-db`.Investimentos (
   CodCliente  INTEGER NOT NULL,
   CodAtivo INTEGER NOT NULL,
   QtdeAtivo INTEGER NOT NULL,
+  PRIMARY KEY (CodCliente, CodAtivo),
   FOREIGN KEY (CodCliente) REFERENCES Contas(Id),
-  FOREIGN KEY (CodAtivo) REFERENCES Ativos(Id)
-  
-);
-
-CREATE TABLE `xp-db`.Operações (
-	CodCliente  INTEGER NOT NULL,
-  CodAtivo INTEGER NOT NULL,
-  Tipo VARCHAR(5) NOT NULL,
-  ValorTotal DOUBLE NOT NULL,
-  FOREIGN KEY (CodCliente) REFERENCES Contas(Id)
-	  ON DELETE CASCADE,
-  FOREIGN KEY (CodAtivo) REFERENCES Ativos(Id)
+  FOREIGN KEY (CodAtivo) REFERENCES Ativos(Id) 
 );
 
 INSERT INTO `xp-db`.Ativos (Simbolo) 

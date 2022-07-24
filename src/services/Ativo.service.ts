@@ -74,8 +74,6 @@ class AtivoService {
     };
   }
 
-  // CORRIGIR TIPAGENS:
-
   private static formatClientAsset(assets: IFullAtivo[], latestValues: number[]) {
     return assets.map((asset: IFullAtivo, index: number) => ({
       CodAtivo: asset.Id,
