@@ -1,5 +1,13 @@
+setup:
+  config:
+    PG_DATABASE: postgres
+    PG_HOST: db.kdkjbreogdclibotcavb.supabase.co
+    PG_PASSWORD: onOh8KQnJdBYvxHg
+    PG_PORT: 5432
+    PG_USER: postgres
+
 build:
   docker:
     web: Dockerfile
-  run:
-    web: npm start
+run:
+  web: npm start
