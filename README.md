@@ -74,10 +74,10 @@ npm start
 - Utilizei a ferramenta [Swagger](https://swagger.io/) para a documentação, que está disponível na rota /docs
 - Para garantir as práticas de CI / CD, utilizei as actions do github, que estão configuradas para rodar o ESlint e os testes, tando unitários, quanto de integração. O repositório está conectado com um app do [Heroku](https://www.heroku.com/home), possibilitando uma integração contínua e deploy contínuo.
 
-#### Preços das ações:
+#### Preços das ações
 
 - Optei por trabalhar com os preços reais das ações.
-- As requisições que envolvem o valor da ação, passam por uma consulta na API [OkaneBox](https://www.okanebox.com.br/) para consultar o preço atualizado do ativo.
+- As requisições que envolvem o valor da ação, passam por uma consulta na API [OkaneBox](https://www.okanebox.com.br/) para coletar o preço atualizado do ativo.
 
 #### Estrutura de pastas e arquivos pricipais
 ```bash
@@ -202,7 +202,7 @@ XP-Api/ # Este arquivo
     - Identificador único da conta.
     - Tipo Inteiro.
 
-#### Buscar todos ativos disponíveis na corretora
+#### Buscar todos ativos disponíveis na corretora:
   * Endpoint: GET (/ativos/all)
   * Formato da resposta:
 
@@ -220,7 +220,7 @@ XP-Api/ # Este arquivo
     },
   ]
   ```
-#### Buscar um ativo disponível na corretora
+#### Buscar um ativo disponível na corretora:
   * Endpoint: GET (/ativos/{CodAtivo})
   * Parâmetro - CodAtivo:
     - Identificador único do ativo.
@@ -235,7 +235,7 @@ XP-Api/ # Este arquivo
     "Valor": 30.00
   }
   ```
-#### Buscar por ativos da carteira do cliente
+#### Buscar por ativos da carteira do cliente:
   * Endpoint: GET (/ativos/cliente/{CodCliente})
   * Requer Autorização no header
     - authorization: Baerer JWT
@@ -262,7 +262,7 @@ XP-Api/ # Este arquivo
     },
   ]
   ```
-#### Comprar ativo
+#### Comprar ativo:
   * Endpoint: POST (/investimentos/comprar)
   * Requer Autorização no header
     - authorization: Baerer JWT
@@ -280,7 +280,7 @@ XP-Api/ # Este arquivo
 - "CodAtivo": integer.
 - "QtdeAtivo": integer.
 
-#### Vender ativo
+#### Vender ativo:
   * Endpoint: POST (/investimentos/vender)
   * Requer Autorização no header
     - authorization: Baerer JWT
