@@ -74,6 +74,11 @@ npm start
 - Utilizei a ferramenta [Swagger](https://swagger.io/) para a documentação, que está disponível na rota /docs
 - Para garantir as práticas de CI / CD, utilizei as actions do github, que estão configuradas para rodar o ESlint e os testes, tando unitários, quanto de integração. O repositório está conectado com um app do [Heroku](https://www.heroku.com/home), possibilitando uma integração contínua e deploy contínuo.
 
+#### Preços das ações:
+
+- Optei por trabalhar com os preços reais das ações.
+- As requisições que envolvem o valor da ação, passam por uma consulta na API [OkaneBox](https://www.okanebox.com.br/) para consultar o preço atualizado do ativo.
+
 #### Estrutura de pastas e arquivos pricipais
 ```bash
 XP-Api/ # Este arquivo

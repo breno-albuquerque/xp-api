@@ -41,10 +41,3 @@ CREATE TABLE "Investimentos" (
   FOREIGN KEY ("CodCliente") REFERENCES "Contas"("Id"),
   FOREIGN KEY ("CodAtivo") REFERENCES "Ativos"("Id") 
 );
-
-INSERT INTO "Ativos" ("Simbolo") 
-VALUES 
-  ('RRRP3'),
-  ('TTEN3'),
-  ('EALT3'),
-  ('EALT4');
