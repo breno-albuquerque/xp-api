@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import chaiAsPromised = require('chai-as-promised');
