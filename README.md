@@ -24,7 +24,7 @@ git clone https://github.com/breno-albuquerque/xp-api
 - Nas variáveis que iniciam com PG, coloque as credenciais do banco de dados PostgreSQL
 - Utilize o arquivo Postgre.sql para criar as tabelas no formato esperado ou crie manualmente em algum serviço como [Supabase](https://supabase.com/), seguindo o formato proposto no arquivo.
 
-### Instalação e inicialização:
+#### Instalação e inicialização:
 ```bash
 cd xp-api
 npm install
@@ -35,7 +35,7 @@ npm start
 
 #### Modelagem do banco de dados
 
- * Optei por desenvolver utilizando um banco de dados SQL, as seguintes tabelas:
+ * Optei por desenvolver utilizando um banco de dados SQL, com as seguintes tabelas:
    - <strong>Contas:</strong> Dados da conta do cliente, incluindo o saldo.
    - <strong>Ativos:</strong> Dados dos ativos disponíveis na corretora.
    - <strong>Investimentos:</strong> Tabela que relaciona <strong>Contas</strong> com <strong>Ativos</strong>. Armazena os ativos investidos por cada cliente e qual quantidade cada cliente possui de cada ativo.
@@ -56,9 +56,8 @@ npm start
 
 #### Arquitetura e Paradigmas
 
-
 - Utilizei o formato de arquitetura models, services, controllers.
-- Utilizei parte do código com o paradigma orientado a objetos e parte com o paradigma funcional, alternando entre eles de acordo com o que era mais adequado para o contexto
+- Utilizei parte do código com o paradigma orientado a objetos e parte com o paradigma funcional, alternando entre eles de acordo com o que achei mais adequado para o contexto
   - As conexões com o banco de dados utiliza classes.
   - As camadas de models e de services utilizam classes.
   - As camadas de controllers e middlewares utilizam funções.
@@ -75,7 +74,7 @@ npm start
 - Utilizei a ferramenta [Swagger](https://swagger.io/) para a documentação, que está disponível na rota /docs
 - Para garantir as práticas de CI / CD, utilizei as actions do github, que estão configuradas para rodar o ESlint e os testes, tando unitários, quanto de integração. O repositório está conectado com um app do [Heroku](https://www.heroku.com/home), possibilitando uma integração contínua e deploy contínuo.
 
-## Estrutura de pastas e arquivos pricipais
+#### Estrutura de pastas e arquivos pricipais
 ```bash
 XP-Api/ # Este arquivo
 ├── .github
@@ -103,23 +102,12 @@ XP-Api/ # Este arquivo
 └── package-lock.json # Versionamento das dependências
 ```
 
-
-<!-- 
-#### Docker
-O repositório possui um Dockerfile e um docker-compose prontos para criar e subir automaticamento um container com a API e outro com um banco de dados MySQL
-
-```
-docker-compose up -d
-docker exec -it xp-api bash
-npm run dev
-``` -->
-
-
 ## Funcionalidades da API:
 
 #### Registrar conta:
   * Endpoint: POST (/auth/registrar)
   * Recebe como entrada um json no seguinte formato:
+  * É retornado o identificador único do cliente
 
   ```json
   {
@@ -138,6 +126,7 @@ npm run dev
 #### Entrar na conta:
   * Endpoint: POST (/auth/entrar)
   * Recebe como entrada um json no seguinte formato:
+  * É retornado um <strong>Jason Web Token (JWT)</strong>
 
    ```json
   {
@@ -152,6 +141,8 @@ npm run dev
 
 #### Ver detalhes da conta:
   * Endpoint: GET (/conta/{CodCliente})
+  * Requer Autorização no header
+    - authorization: Baerer JWT
   * Parâmetro - CodCliente:
     - Identificador único da conta.
     - Tipo Inteiro.
@@ -167,6 +158,8 @@ npm run dev
 
 #### Depositar:
   * Endpoint: POST (/conta/depositar)
+  * Requer Autorização no header
+    - authorization: Baerer JWT
   * Recebe como entrada um json no seguinte formato:
 
   ```json
@@ -181,6 +174,8 @@ npm run dev
 
 #### Sacar:
   * Endpoint: POST (/conta/sacar)
+  * Requer Autorização no header
+    - authorization: Baerer JWT
   * Recebe como entrada um json no seguinte formato:
 
   ```json
@@ -196,6 +191,8 @@ npm run dev
 
 #### Deletar conta:
   * Endpoint: POST (/conta/delete/{CodCliente})
+  * Requer Autorização no header
+    - authorization: Baerer JWT
     * Parâmetro - CodCliente:
     - Identificador único da conta.
     - Tipo Inteiro.
@@ -216,7 +213,6 @@ npm run dev
       "QtdeAtivo": 100,
       "Simbolo": "PETR4",
     },
-    ...
   ]
   ```
 #### Buscar um ativo disponível na corretora
@@ -236,6 +232,8 @@ npm run dev
   ```
 #### Buscar por ativos da carteira do cliente
   * Endpoint: GET (/ativos/cliente/{CodCliente})
+  * Requer Autorização no header
+    - authorization: Baerer JWT
   * Parâmetro - CodCliente:
     - Identificador único do cliente.
     - Tipo Inteiro.
@@ -257,11 +255,12 @@ npm run dev
       "Simbolo": "PETR4",
       "Valor": 20.00
     },
-    ...
   ]
   ```
 #### Comprar ativo
   * Endpoint: POST (/investimentos/comprar)
+  * Requer Autorização no header
+    - authorization: Baerer JWT
   * Recebe como entrada um json no seguinte formato:
 
   ```json
@@ -278,6 +277,8 @@ npm run dev
 
 #### Vender ativo
   * Endpoint: POST (/investimentos/vender)
+  * Requer Autorização no header
+    - authorization: Baerer JWT
   * Recebe como entrada um json no seguinte formato:
 
   ```json
